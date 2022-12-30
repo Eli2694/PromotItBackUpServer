@@ -1,0 +1,6 @@
+C:\Users\User\source\repos\PromotIt\PromotIt.Model\bin\Debug\PromotIt.Model.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Model\bin\Debug\PromotIt.Model.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.Model\obj\Debug\PromotIt.Model.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\PromotIt\PromotIt.Model\obj\Debug\PromotIt.Model.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PromotIt\PromotIt.Model\obj\Debug\PromotIt.Model.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Model\obj\Debug\PromotIt.Model.pdb

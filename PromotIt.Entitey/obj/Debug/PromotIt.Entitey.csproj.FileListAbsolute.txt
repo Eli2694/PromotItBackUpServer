@@ -1,0 +1,14 @@
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.Entitey.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.Entitey.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.DataToSql.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.Model.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.DataToSql.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.Model.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\obj\Debug\PromotIt.Entitey.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\obj\Debug\PromotIt.Entitey.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\obj\Debug\PromotIt.Entitey.csproj.CopyComplete
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\obj\Debug\PromotIt.Entitey.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\obj\Debug\PromotIt.Entitey.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.DataLayer.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.DataLayer.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PromotIt.DataLayer.dll.config

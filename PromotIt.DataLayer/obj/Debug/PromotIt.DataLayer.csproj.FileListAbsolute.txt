@@ -1,0 +1,16 @@
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\PromotIt.DataLayer.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\PromotIt.DataLayer.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\obj\Debug\PromotIt.DataLayer.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\obj\Debug\PromotIt.DataLayer.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\obj\Debug\PromotIt.DataLayer.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\obj\Debug\PromotIt.DataLayer.pdb
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\PromotIt.DataLayer.dll.config
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Configuration.ConfigurationManager.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Security.AccessControl.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Security.Permissions.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Security.Principal.Windows.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Configuration.ConfigurationManager.xml
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Security.AccessControl.xml
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Security.Permissions.xml
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\bin\Debug\System.Security.Principal.Windows.xml
+C:\Users\User\source\repos\PromotIt\PromotIt.DataLayer\obj\Debug\PromotIt.DataLayer.csproj.CopyComplete
