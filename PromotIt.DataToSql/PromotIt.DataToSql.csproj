@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAssociation.cs" />
+    <Compile Include="DataBusiness.cs" />
     <Compile Include="DataCampaign.cs" />
     <Compile Include="DataUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

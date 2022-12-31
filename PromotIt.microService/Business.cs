@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace PromotIt.microService
 {
@@ -19,7 +20,7 @@ namespace PromotIt.microService
     {
         [FunctionName("BusinessRepresentative")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Business/{action}/{param?}")] HttpRequest req, string action, string param,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Business/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
             ILogger log)
         {
 
@@ -29,14 +30,32 @@ namespace PromotIt.microService
 
             switch (action)
             {
-                case "ADD":
-                    try
+                case "Donate":
+                    requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                    Model.Product product = new Model.Product();
+                    product = JsonSerializer.Deserialize<Model.Product>(requestBody);
+                    if (product.productName == null || decimal.Parse(product.unitPrice) == 0 || int.Parse(product.unitsInStock) == 0)
                     {
+                        string response = "faild to donate product";
+
+                        return new OkObjectResult(response);
 
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine(ex.Message);
+                        try
+                        {
+                            
+                            MainManager.Instance.BusinessControl.GetProductInfo(product.productName, decimal.Parse(product.unitPrice), int.Parse(product.unitsInStock), product.CampaignId);
+
+                            string responseMessage = "Donate Product";
+                            return new OkObjectResult(responseMessage);
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Console.WriteLine(ex.Message);
+                        }
 
                     }
 
@@ -44,8 +63,12 @@ namespace PromotIt.microService
                 case "GET":
                     try
                     {
+                        List<PersonalCampagin> campaigns = MainManager.Instance.BusinessControl.ListOfCampaignsBusiness();
 
-                   
+                        string json = JsonSerializer.Serialize(campaigns);
+
+                        return new OkObjectResult(json);
+
 
                     }
                     catch (Exception ex)
@@ -53,10 +76,12 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
-                case "DELETE":
+                case "DELETEPRPDUCT":
                     try
                     {
-                        
+                        MainManager.Instance.BusinessControl.DeleteProduct(int.Parse(param), param2);
+                        string response = "successful delete";
+                        return new OkObjectResult(response);
                     }
                     catch (Exception ex)
                     {
@@ -67,6 +92,34 @@ namespace PromotIt.microService
                     try
                     {
 
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                    }
+
+                    break;
+                case "GETPRODUCTID":
+                    try
+                    {
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                    }
+
+                    break;
+                case "GETPRODUCTS":
+                    try
+                    {
+                        List<Product> products = MainManager.Instance.BusinessControl.ListOfCampaignProducts(int.Parse(param));
+
+                        string json = JsonSerializer.Serialize(products);
+
+                        return new OkObjectResult(json);
                     }
                     catch (Exception ex)
                     {

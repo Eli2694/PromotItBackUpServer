@@ -22,5 +22,6 @@ namespace PromotIt.Entitey
         public UserControl userControl = new UserControl();
         public AssociationControl AssociationControl = new AssociationControl();
         public CampaignControl CampaignControl = new CampaignControl();
+        public BusinessControl BusinessControl = new BusinessControl();
     }
 }
