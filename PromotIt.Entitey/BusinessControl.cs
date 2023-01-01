@@ -41,5 +41,19 @@ namespace PromotIt.Entitey
             delete.DelProduct(campaignId, productName);
 
         }
+
+        public int GetProductId(int campaignId,string productName)
+        {
+            DataBusiness productId = new DataBusiness();
+            
+            int id  = productId.RetriveProductID(campaignId, productName);
+            return id;
+        }
+
+        public void UpdateProduct(UpdatedProduct product)
+        {
+            DataBusiness newProduct = new DataBusiness();
+            newProduct.UProduct(product);
+        }
     }
 }

@@ -105,5 +105,34 @@ namespace PromotIt.DataLayer
                 }
             }
         }
+
+        public delegate void ExecuteScalar_delegate(SqlCommand command);
+        public static void GetSingleRowOrValue(string SqlQuery, ExecuteScalar_delegate Ptrfunc)
+        {
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string queryString = SqlQuery;
+
+                try
+                {
+                    connection.Open();
+
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return;
+
+                }
+
+                // Adapter
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    Ptrfunc(command);
+
+                }
+            }
+        }
     }
 }

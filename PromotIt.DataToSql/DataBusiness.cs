@@ -11,7 +11,9 @@ namespace PromotIt.DataToSql
 {
     public class DataBusiness
     {
+        //Global Variables
         List<PersonalCampagin> campaignsForBusiness = new List<PersonalCampagin>();
+        int ProductID;
         public void CreateListOfCampaignsForBusiness(SqlDataReader reader)
         {
 
@@ -75,6 +77,32 @@ namespace PromotIt.DataToSql
 
             SqlQuery.InsertInfoToTableInSql("delete from Products where CampaignID =" + " " + campaignId + " " + "and ProductName = " + " " +"'" + productName+"'");
 
+        }
+
+        public int RetriveProductID(int campaignId, string productName)
+        {
+            SqlQuery.GetSingleRowOrValue("select ProductID from Products where CampaignID =" + campaignId + "and ProductName =" + "'" + productName + "'", GetSingleValueOrRowFromDB);
+            return ProductID;
+        }
+
+        public void GetSingleValueOrRowFromDB(SqlCommand command)
+        {
+            try
+            {
+                 ProductID = (int)command.ExecuteScalar();
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+            
+        }
+
+        public void UProduct(UpdatedProduct product)
+        {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdataProduct " + " " + "'" + product.productName + "'" + "," +decimal.Parse(product.unitPrice)+","+int.Parse(product.unitsInStock) +"," + product.productId);
         }
     }
 }

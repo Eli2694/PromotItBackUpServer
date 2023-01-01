@@ -91,6 +91,29 @@ namespace PromotIt.microService
                 case "Update":
                     try
                     {
+                        requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                        Model.UpdatedProduct uProduct = new Model.UpdatedProduct();
+                        uProduct = JsonSerializer.Deserialize<Model.UpdatedProduct>(requestBody);
+                        if (uProduct.productName == null)
+                        {
+                            string response = "faild update";
+
+                            return new OkObjectResult(response);
+                        }
+                        else
+                        {
+                            try
+                            {
+                                MainManager.Instance.BusinessControl.UpdateProduct(uProduct);
+                                string response = "successful update";
+                                return new OkObjectResult(response);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
 
                     }
                     catch (Exception ex)
@@ -103,7 +126,10 @@ namespace PromotIt.microService
                 case "GETPRODUCTID":
                     try
                     {
+                        int productId = MainManager.Instance.BusinessControl.GetProductId(int.Parse(param), param2);
+                        string json = JsonSerializer.Serialize(productId);
 
+                        return new OkObjectResult(json);
                     }
                     catch (Exception ex)
                     {
