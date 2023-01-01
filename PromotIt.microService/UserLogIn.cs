@@ -16,9 +16,9 @@ using System.Text.Json;
 
 namespace PromotIt.microService
 {
-    public class UserPostReq
+    public class UserLogIn
     {
-        [FunctionName("Users")]
+        [FunctionName("LoginUsers")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)

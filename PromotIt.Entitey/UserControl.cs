@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PromotIt.DataToSql;
+using PromotIt.Model;
 
 namespace PromotIt.Entitey
 {
@@ -23,6 +24,14 @@ namespace PromotIt.Entitey
                 Console.WriteLine(ex.Message);
             }
             
+        }
+
+        public List<UsersCampaign> uCampaigns()
+        {
+            List<UsersCampaign> ret;
+            DataUser list = new DataUser();
+            ret = list.GetListOfCampaignsForUsers();
+            return ret;
         }
     }
 }
