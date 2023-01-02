@@ -34,7 +34,7 @@ namespace PromotIt.microService
                     requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                     Model.Product product = new Model.Product();
                     product = JsonSerializer.Deserialize<Model.Product>(requestBody);
-                    if (product.productName == null || decimal.Parse(product.unitPrice) == 0 || int.Parse(product.unitsInStock) == 0)
+                    if (product.productName == null || decimal.Parse(product.unitPrice) == 0 || int.Parse(product.unitsInStock) == 0 || product.Email == null)
                     {
                         string response = "faild to donate product";
 
@@ -46,7 +46,7 @@ namespace PromotIt.microService
                         try
                         {
                             
-                            MainManager.Instance.BusinessControl.GetProductInfo(product.productName, decimal.Parse(product.unitPrice), int.Parse(product.unitsInStock), product.CampaignId);
+                            MainManager.Instance.BusinessControl.GetProductInfo(product.productName, decimal.Parse(product.unitPrice), int.Parse(product.unitsInStock), product.CampaignId,product.Email);
 
                             string responseMessage = "Donate Product";
                             return new OkObjectResult(responseMessage);
@@ -141,7 +141,23 @@ namespace PromotIt.microService
                 case "GETPRODUCTS":
                     try
                     {
-                        List<Product> products = MainManager.Instance.BusinessControl.ListOfCampaignProducts(int.Parse(param));
+                        List<Product> products = MainManager.Instance.BusinessControl.ListOfCampaignProducts(int.Parse(param),param2);
+
+                        string json = JsonSerializer.Serialize(products);
+
+                        return new OkObjectResult(json);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                    }
+
+                    break;
+                case "PRODUCTS":
+                    try
+                    {
+                        List<Product> products = MainManager.Instance.BusinessControl.getProducts(int.Parse(param));
 
                         string json = JsonSerializer.Serialize(products);
 

@@ -60,7 +60,7 @@ namespace PromotIt.DataToSql
 
         public void deleteCampaign(int ID)
         {
-            SqlQuery.InsertInfoToTableInSql("delete from Campaigns where CampaignsID =" + ID);
+            SqlQuery.InsertInfoToTableInSql("exec deleteCampaignAndItsProducts" + " " +  ID);
         }
     }
 }

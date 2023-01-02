@@ -38,9 +38,9 @@ namespace PromotIt.DataToSql
             return campaignsForBusiness;
         }
 
-        public void DonateProductToCampaign(string name, decimal unitprice, int unitInStock, int campaignId)
+        public void DonateProductToCampaign(string name, decimal unitprice, int unitInStock, int campaignId,string email)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," + "'" + unitprice + "'" + "," + "'" + unitInStock + "'" + "," + "'" + campaignId + "'");
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," +  unitprice  + ","  + unitInStock  + ","  + campaignId  + "," + "'" + email + "'");
         }
 
         //Global
@@ -66,9 +66,15 @@ namespace PromotIt.DataToSql
             return;
         }
 
-        public List<Product> GetListOfProductsToSpecificCampaign(int Id)
+        public List<Product> GetListOfProductsToSpecificCampaign(int Id,string email)
         {
-            SqlQuery.GetAllInforamtionInSqlTable("select ProductName,UnitPrice,UnitsInStock,CampaignID from Products where CampaignID =" + Id, CreateListOfCampaignProducts);
+            SqlQuery.GetAllInforamtionInSqlTable("exec GetProductsThatBelongToMe" +" "+ Id +"," + "'" + email + "'", CreateListOfCampaignProducts);
+            return listOfProducts;
+        }
+
+        public List<Product> GetListOfProducts(int ID)
+        {
+            SqlQuery.GetAllInforamtionInSqlTable("select ProductName,UnitPrice,UnitsInStock,CampaignID from Products where CampaignID = " + ID, CreateListOfCampaignProducts);
             return listOfProducts;
         }
 

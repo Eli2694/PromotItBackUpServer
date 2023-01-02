@@ -12,6 +12,7 @@ namespace PromotIt.Model
         public string unitPrice { get; set; }
         public string unitsInStock { get; set; }
         public int CampaignId { get; set; }
+        public string Email { get; set; }
 
     }
 }

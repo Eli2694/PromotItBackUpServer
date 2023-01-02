@@ -21,17 +21,25 @@ namespace PromotIt.Entitey
 
         }
 
-        public void GetProductInfo(string name, decimal unitprice,int unitInStock,int campaignId)
+        public void GetProductInfo(string name, decimal unitprice,int unitInStock,int campaignId,string email)
         {
             DataBusiness donate = new DataBusiness();
-            donate.DonateProductToCampaign(name,unitprice,unitInStock,campaignId);
+            donate.DonateProductToCampaign(name,unitprice,unitInStock,campaignId, email);
         }
 
-        public List<Product> ListOfCampaignProducts(int campaignId)
+        public List<Product> ListOfCampaignProducts(int campaignId,string email)
         {
             List<Product> products = new List<Product>();
             DataBusiness list = new DataBusiness();
-            products =  list.GetListOfProductsToSpecificCampaign(campaignId);
+            products =  list.GetListOfProductsToSpecificCampaign(campaignId, email);
+            return products;
+        }
+
+        public List<Product> getProducts(int campaignId)
+        {
+            List<Product> products = new List<Product>();
+            DataBusiness list = new DataBusiness();
+            products = list.GetListOfProducts(campaignId);
             return products;
         }
 
