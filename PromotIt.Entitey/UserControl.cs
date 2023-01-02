@@ -33,5 +33,25 @@ namespace PromotIt.Entitey
             ret = list.GetListOfCampaignsForUsers();
             return ret;
         }
+
+        public int GetUserId(string email)
+        {
+            DataUser id = new DataUser();
+            int ID = id.ReceiveUserId(email);
+            return ID;
+            
+        }
+
+        public void UsersPurchaseInfo(Order order)
+        {
+            DataUser purchase = new DataUser();
+            purchase.UserOrder(order);
+        }
+
+        public void DecreaseUnitsInStock(int ProductId)
+        {
+            DataUser stock = new DataUser();
+            stock.decrUnitsInStock(ProductId);
+        }
     }
 }

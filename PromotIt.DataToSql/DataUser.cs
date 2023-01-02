@@ -11,6 +11,9 @@ namespace PromotIt.DataToSql
 {
     public class DataUser
     {
+        //Global Variable
+        List<UsersCampaign> uc = new List<UsersCampaign>();
+        int userID;
         public void addUserToTableInSql(string FullName, string Email)
         {
             try
@@ -27,8 +30,7 @@ namespace PromotIt.DataToSql
             
         }
 
-        //Global Variable
-        List<UsersCampaign> uc = new List<UsersCampaign>();
+        
         public void CreateListOfAssociationsAndCampaigns(SqlDataReader reader)
         {
 
@@ -54,6 +56,38 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec GetAllInfoAboutCampaigns", CreateListOfAssociationsAndCampaigns);
 
             return uc;
+        }
+
+        public int ReceiveUserId(string email)
+        {
+            SqlQuery.GetSingleRowOrValue("select UserID from Users where Email = " + "'" + email + "'", GetSingleValueOrRowFromDB);
+             
+            return userID;
+        }
+
+        public void GetSingleValueOrRowFromDB(SqlCommand command)
+        {
+            try
+            {
+                userID = (int)command.ExecuteScalar();
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        public void UserOrder(Order info)
+        {
+            SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.phoneNumber + "'" + ")");
+        }
+
+        public void decrUnitsInStock(int ProductId)
+        {
+            SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
         }
     }
 }

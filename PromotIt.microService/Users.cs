@@ -30,11 +30,11 @@ namespace PromotIt.microService
 
             switch (action)
             {
-                case "ADD":
+                case "Order":
                     requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    Model.Campaign campaign = new Model.Campaign();
-                    //campaign = JsonSerializer.Deserialize<Model.Campaign>(requestBody);
-                    if (campaign.campaignName == null || campaign.campaignWebsite == null || campaign.campaginHashtag == null)
+                    Model.Order order = new Model.Order();
+                    order = JsonSerializer.Deserialize<Model.Order>(requestBody);
+                    if (order.country == null || order.city == null || order.homeAddress == null || order.postalCode == null || order.phoneNumber == null)
                     {
                         string response = "faild to insert information into DB";
 
@@ -45,9 +45,8 @@ namespace PromotIt.microService
                     {
                         try
                         {
-                            MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag, campaign.FullName, campaign.Email);
-
-                            string responseMessage = "Insert campaign information into DB";
+                            MainManager.Instance.userControl.UsersPurchaseInfo(order);
+                            string responseMessage = "Insert order information into DB";
                             return new OkObjectResult(responseMessage);
                         }
                         catch (Exception ex)
@@ -67,6 +66,32 @@ namespace PromotIt.microService
                         string json = JsonSerializer.Serialize(listOfAssociationsAndCampaigns);
                         return new OkObjectResult(json);
 
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "GETID":
+                    try
+                    {
+
+                        int userId = MainManager.Instance.userControl.GetUserId(param);
+                        string json = JsonSerializer.Serialize(userId);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "UpdateStock":
+                    try
+                    {
+                        MainManager.Instance.userControl.DecreaseUnitsInStock(int.Parse(param));
+                        string response = "successful update";
+                        return new OkObjectResult(response);
                     }
                     catch (Exception ex)
                     {
