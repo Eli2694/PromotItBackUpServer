@@ -82,7 +82,7 @@ namespace PromotIt.DataToSql
 
         public void UserOrder(Order info)
         {
-            SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.postalCode + "'" + "," +"'" + info.phoneNumber + "'" + ")");
+            SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.postalCode + "'" + "," +"'" + info.phoneNumber + "'" + "," + "GetDate()" + "," + 0 + ")");
         }
 
         public void decrUnitsInStock(int ProductId)

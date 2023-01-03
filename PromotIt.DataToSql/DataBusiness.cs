@@ -97,6 +97,7 @@ namespace PromotIt.DataToSql
                 order.productName = reader.GetString(7);
                 order.unitPrice = (reader.GetDecimal(8)).ToString();
                 order.unitsInStock = (reader.GetInt32(9)).ToString();
+                order.date = (reader.GetDateTime(10)).ToString();
 
                 listOfOrdersToConfirm.Add(order);
             }

@@ -18,5 +18,6 @@ namespace PromotIt.Model
         public string productName { get; set; }
         public string unitPrice { get; set; }
         public string unitsInStock { get; set; }
+        public string date { get; set; }
     }
 }
