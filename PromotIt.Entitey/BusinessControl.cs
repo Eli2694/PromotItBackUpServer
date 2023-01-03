@@ -43,6 +43,15 @@ namespace PromotIt.Entitey
             return products;
         }
 
+        public List<OrdersToConfirm> getOrdersOfMyProducts(string email)
+        {
+            List<OrdersToConfirm> orders = new List<OrdersToConfirm>();
+            DataBusiness orderList = new DataBusiness();
+            orders = orderList.GetListOfPersonalOrders(email);
+
+            return orders;
+        }
+
         public void DeleteProduct(int campaignId,string productName)
         {
             DataBusiness delete = new DataBusiness();
@@ -63,5 +72,13 @@ namespace PromotIt.Entitey
             DataBusiness newProduct = new DataBusiness();
             newProduct.UProduct(product);
         }
+
+        public void OrderConfirmation(int orderId,string email)
+        {
+            DataBusiness confirmation = new DataBusiness();
+            confirmation.ConfirmationOfOrder(orderId, email);
+        }
+
+       
     }
 }

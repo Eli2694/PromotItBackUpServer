@@ -168,6 +168,37 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
 
                     }
+                    break;
+                case "GETORDERS":
+                    try
+                    {
+                        List<OrdersToConfirm> orders = MainManager.Instance.BusinessControl.getOrdersOfMyProducts(param);
+
+                        string json = JsonSerializer.Serialize(orders);
+
+                        return new OkObjectResult(json);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                    }
+                    break;
+                case "CONFIRMORDER":
+                    try
+                    {
+                        MainManager.Instance.BusinessControl.OrderConfirmation(int.Parse(param), param2);
+
+                        string response = "successful Order Confirmation";
+                        return new OkObjectResult(response);
+
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                    }
 
                     break;
                 default:

@@ -13,6 +13,8 @@ namespace PromotIt.DataToSql
     {
         //Global Variables
         List<PersonalCampagin> campaignsForBusiness = new List<PersonalCampagin>();
+        List<Product> listOfProducts = new List<Product>();
+        List<OrdersToConfirm> listOfOrdersToConfirm = new List<OrdersToConfirm>();
         int ProductID;
         public void CreateListOfCampaignsForBusiness(SqlDataReader reader)
         {
@@ -43,8 +45,8 @@ namespace PromotIt.DataToSql
             SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," +  unitprice  + ","  + unitInStock  + ","  + campaignId  + "," + "'" + email + "'");
         }
 
-        //Global
-        List<Product> listOfProducts = new List<Product>();
+        
+        
         public void CreateListOfCampaignProducts(SqlDataReader reader)
         {
 
@@ -78,6 +80,35 @@ namespace PromotIt.DataToSql
             return listOfProducts;
         }
 
+        public void CreateListOfOrdersToConfirm(SqlDataReader reader)
+        {
+
+            while (reader.Read())
+            {
+                OrdersToConfirm order = new OrdersToConfirm();
+
+                order.orderID = reader.GetInt32(0);
+                order.productId = reader.GetInt32(1);
+                order.country = reader.GetString(2);
+                order.city = reader.GetString(3);
+                order.homeAddress = reader.GetString(4);
+                order.postalCode = reader.GetString(5);
+                order.phoneNumber = reader.GetString(6);
+                order.productName = reader.GetString(7);
+                order.unitPrice = (reader.GetDecimal(8)).ToString();
+                order.unitsInStock = (reader.GetInt32(9)).ToString();
+
+                listOfOrdersToConfirm.Add(order);
+            }
+
+            return;
+        }
+        public List<OrdersToConfirm> GetListOfPersonalOrders(string email)
+        {
+            SqlQuery.GetAllInforamtionInSqlTable("exec GetOrdersThatBelongToMe" + " " + "'" + email + "'", CreateListOfOrdersToConfirm);
+            return listOfOrdersToConfirm;
+        }
+
         public void DelProduct(int campaignId, string productName)
         {
 
@@ -109,6 +140,12 @@ namespace PromotIt.DataToSql
         public void UProduct(UpdatedProduct product)
         {
             SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdataProduct " + " " + "'" + product.productName + "'" + "," +decimal.Parse(product.unitPrice)+","+int.Parse(product.unitsInStock) +"," + product.productId);
+        }
+
+        public void ConfirmationOfOrder(int orderId, string email)
+        {
+            
+            SqlQuery.InsertInfoToTableInSql("exec OrderConfirmation" + " " + orderId + "," + "'" + email + "'");
         }
     }
 }
