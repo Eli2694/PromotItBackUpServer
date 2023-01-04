@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Association.cs" />
     <Compile Include="Campaign.cs" />
+    <Compile Include="Wallet.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrdersToConfirm.cs" />
     <Compile Include="PersonalCampagin.cs" />

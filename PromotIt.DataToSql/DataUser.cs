@@ -14,6 +14,9 @@ namespace PromotIt.DataToSql
         //Global Variable
         List<UsersCampaign> uc = new List<UsersCampaign>();
         int userID;
+        string money;
+
+
         public void addUserToTableInSql(string FullName, string Email)
         {
             try
@@ -89,5 +92,47 @@ namespace PromotIt.DataToSql
         {
             SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
         }
+
+        public void initWallet(string email)
+        {
+            SqlQuery.InsertInfoToTableInSql("exec InitializeWallet" + " " + "'" + email + "'");
+
+        }
+
+        public string getUserMoneyFromDB(string email)
+        {
+            SqlQuery.GetSingleRowOrValue("select UserMoney from Wallet where Email =" + "'" + email + "'", GetStringValueFromDB);
+            return money;
+        }
+
+        public void GetStringValueFromDB(SqlCommand command)
+        {
+            try
+            {
+                decimal sqlMoney = (decimal)command.ExecuteScalar();
+                money = sqlMoney.ToString();
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        public void updateMoney(string money, string email)
+        {
+            SqlQuery.InsertInfoToTableInSql("exec UpdateUserMoney" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+
+        }
+
+        public void updateMoneyAfterPurchase(string money, string email)
+        {
+            SqlQuery.InsertInfoToTableInSql("exec DecreaseUserMoneyAfterBuy" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+
+        }
+
+
     }
 }

@@ -53,5 +53,32 @@ namespace PromotIt.Entitey
             DataUser stock = new DataUser();
             stock.decrUnitsInStock(ProductId);
         }
+
+        public void initUserWallet(string email)
+        {
+            DataUser wallet = new DataUser();
+            wallet.initWallet(email);
+        }
+
+        public string getUserMoney(string email)
+        {
+            DataUser money = new DataUser();
+            return money.getUserMoneyFromDB(email);
+            
+        }
+
+        public void updateUserMoney(string money,string email)
+        {
+            DataUser uMoney = new DataUser();
+            uMoney.updateMoney(money, email);
+
+        }
+
+        public void updateUserMoneyAfterPurchase(string money, string email)
+        {
+            DataUser uMoney = new DataUser();
+            uMoney.updateMoneyAfterPurchase(money, email);
+
+        }
     }
 }

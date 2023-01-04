@@ -20,7 +20,7 @@ namespace PromotIt.microService
     {
         [FunctionName("WebsiteUsers")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Users/{action}/{param?}")] HttpRequest req, string action, string param,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Users/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
             ILogger log)
         {
 
@@ -98,12 +98,66 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
+                case "InitWallet":
+                    try
+                    {
+                        MainManager.Instance.userControl.initUserWallet(param);
+                        string response = "wallet Initialaztion";
+                        return new OkObjectResult(response);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "GETUSERMONEY":
+                    try
+                    {
+
+                        string userMoney = MainManager.Instance.userControl.getUserMoney(param);
+                        string json = JsonSerializer.Serialize(userMoney);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "ADDMONEY":
+                    try
+                    {
+
+                        MainManager.Instance.userControl.updateUserMoney(param,param2);
+                        string json = "Add money to user";
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "DECREASEMONEY":
+                    try
+                    {
+
+                        MainManager.Instance.userControl.updateUserMoneyAfterPurchase(param, param2);
+                        string json = "Decrease money after purchase";
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
                 default:
                     break;
             }
 
 
-            return new OkObjectResult("");
+            return new OkObjectResult("Did not enter switch case");
         }
     }
 }
