@@ -46,7 +46,7 @@ namespace PromotIt.microService
                         try
                         {
                             
-                            MainManager.Instance.BusinessControl.GetProductInfo(product.productName, decimal.Parse(product.unitPrice), int.Parse(product.unitsInStock), product.CampaignId,product.Email);
+                            MainManager.Instance.BusinessControl.GetProductInfo(product.productName, decimal.Parse(product.unitPrice), int.Parse(product.unitsInStock), product.CampaignId,product.Email,product.imageURL);
 
                             string responseMessage = "Donate Product";
                             return new OkObjectResult(responseMessage);

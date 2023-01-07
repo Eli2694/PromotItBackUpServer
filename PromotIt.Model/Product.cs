@@ -13,6 +13,7 @@ namespace PromotIt.Model
         public string unitsInStock { get; set; }
         public int CampaignId { get; set; }
         public string Email { get; set; }
+        public string imageURL { get; set; }
 
     }
 }

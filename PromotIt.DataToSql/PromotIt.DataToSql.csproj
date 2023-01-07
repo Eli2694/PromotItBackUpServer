@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataActivist.cs" />
     <Compile Include="DataAssociation.cs" />
     <Compile Include="DataBusiness.cs" />
     <Compile Include="DataCampaign.cs" />
+    <Compile Include="DataOwner.cs" />
     <Compile Include="DataUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -40,9 +40,9 @@ namespace PromotIt.DataToSql
             return campaignsForBusiness;
         }
 
-        public void DonateProductToCampaign(string name, decimal unitprice, int unitInStock, int campaignId,string email)
+        public void DonateProductToCampaign(string name, decimal unitprice, int unitInStock, int campaignId,string email, string image)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," +  unitprice  + ","  + unitInStock  + ","  + campaignId  + "," + "'" + email + "'");
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," +  unitprice  + ","  + unitInStock  + ","  + campaignId  + "," + "'" + email + "'" + "," + "'" + image + "'");
         }
 
         
@@ -61,6 +61,7 @@ namespace PromotIt.DataToSql
                 product.unitPrice = unitprice.ToString();
                 product.unitsInStock = unitInStock.ToString();
                 product.CampaignId = reader.GetInt32(3);
+                product.imageURL = reader.GetString(4);
 
                 listOfProducts.Add(product);
             }
@@ -76,7 +77,7 @@ namespace PromotIt.DataToSql
 
         public List<Product> GetListOfProducts(int ID)
         {
-            SqlQuery.GetAllInforamtionInSqlTable("select ProductName,UnitPrice,UnitsInStock,CampaignID from Products where CampaignID = " + ID, CreateListOfCampaignProducts);
+            SqlQuery.GetAllInforamtionInSqlTable("select ProductName,UnitPrice,UnitsInStock,CampaignID,ImageURL from Products where CampaignID = " + ID, CreateListOfCampaignProducts);
             return listOfProducts;
         }
 

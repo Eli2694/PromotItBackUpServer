@@ -21,10 +21,10 @@ namespace PromotIt.Entitey
 
         }
 
-        public void GetProductInfo(string name, decimal unitprice,int unitInStock,int campaignId,string email)
+        public void GetProductInfo(string name, decimal unitprice,int unitInStock,int campaignId,string email,string image)
         {
             DataBusiness donate = new DataBusiness();
-            donate.DonateProductToCampaign(name,unitprice,unitInStock,campaignId, email);
+            donate.DonateProductToCampaign(name,unitprice,unitInStock,campaignId, email, image);
         }
 
         public List<Product> ListOfCampaignProducts(int campaignId,string email)
