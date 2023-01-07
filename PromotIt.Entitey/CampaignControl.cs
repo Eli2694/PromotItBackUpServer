@@ -10,12 +10,12 @@ namespace PromotIt.Entitey
 {
     public class CampaignControl
     {
-        public void GetCampaginInfo(string name, string website, string hashtag, string userName, string userEmail)
+        public void GetCampaginInfo(string name, string website, string hashtag, string userName, string userEmail,string donation)
         {
             try
             {
                 DataCampaign campaign = new DataCampaign();
-                campaign.addCampagin(name, website, hashtag, userName, userEmail);
+                campaign.addCampagin(name, website, hashtag, userName, userEmail, donation);
             }
             catch (Exception ex)
             {
@@ -45,6 +45,18 @@ namespace PromotIt.Entitey
         {
             DataCampaign delete = new DataCampaign();   
             delete.deleteCampaign(ID);
+        }
+
+        public void UpdateDonationAmount(int campaignId,string unitprice)
+        {
+            DataCampaign update = new DataCampaign();
+            update.DonationAmount(campaignId,unitprice);
+        }
+
+        public int GetCampaginID(int productID)
+        {
+            DataCampaign id = new DataCampaign();
+            return id.CampaginID(productID);
         }
     }
 }

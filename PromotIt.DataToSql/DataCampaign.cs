@@ -12,12 +12,15 @@ namespace PromotIt.DataToSql
 {
     public class DataCampaign
     {
-        public void addCampagin(string name, string website, string hashtag, string userName, string Email)
+        //Global
+        int ID;
+
+        public void addCampagin(string name, string website, string hashtag, string userName, string Email, string donation)
         {
             try
             {
 
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InsertCampagin" + " " + "'" + name + "'" + "," + "'" + hashtag + "'" + "," + "'" + website + "'" + "," + "'" + userName + "'" + "," + "'" + Email + "'");
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InsertCampagin" + " " + "'" + name + "'" + "," + "'" + hashtag + "'" + "," + "'" + website + "'" + "," + "'" + userName + "'" + "," + "'" + Email + "'" + "," + decimal.Parse(donation));
 
             }
             catch (Exception ex)
@@ -61,6 +64,33 @@ namespace PromotIt.DataToSql
         public void deleteCampaign(int ID)
         {
             SqlQuery.InsertInfoToTableInSql("exec deleteCampaignAndItsProducts" + " " +  ID);
+        }
+
+        public void DonationAmount(int campaignID,string unitPrice)
+        {
+            SqlQuery.InsertInfoToTableInSql("exec updateDonationAmount" + " " + campaignID + "," + decimal.Parse(unitPrice));
+        }
+
+        public int CampaginID(int productID)
+        {
+            SqlQuery.GetSingleRowOrValue("select CampaignID from Products where ProductID =" + productID, GetSingleValueOrRowFromDB);
+            return ID;
+
+        }
+
+        public void GetSingleValueOrRowFromDB(SqlCommand command)
+        {
+            try
+            {
+                ID = (int)command.ExecuteScalar();
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
         }
     }
 }

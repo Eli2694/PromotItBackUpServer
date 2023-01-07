@@ -13,6 +13,7 @@ namespace PromotIt.Model
         public string AssociationWebsite { get; set; }
         public string campaignName { get; set; }
         public string campaginHashtag { get; set; }
-        public string campaignWebsite { get; set; } 
+        public string campaignWebsite { get; set; }
+        public string donationAmount { get; set; }
     }
 }

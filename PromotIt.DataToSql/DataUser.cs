@@ -47,6 +47,7 @@ namespace PromotIt.DataToSql
                 user.campaignName = reader.GetString(3);
                 user.campaginHashtag = reader.GetString(4);
                 user.campaignWebsite = reader.GetString(5);
+                user.donationAmount = (reader.GetDecimal(6)).ToString();
 
                 uc.Add(user);
             }

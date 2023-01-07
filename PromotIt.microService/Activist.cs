@@ -59,24 +59,12 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
-                case "InitWallet":
-                    try
-                    {
-                        MainManager.Instance.userControl.initUserWallet(param);
-                        string response = "wallet Initialaztion";
-                        return new OkObjectResult(response);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-                case "GETUSERMONEY":
+                case "GETWEBANDHASHTAG":
                     try
                     {
 
-                        string userMoney = MainManager.Instance.userControl.getUserMoney(param);
-                        string json = JsonSerializer.Serialize(userMoney);
+                        List<string> listOfCampaignsHashtags = MainManager.Instance.ActivistControl.CampaignHashtag();
+                        string json = JsonSerializer.Serialize(listOfCampaignsHashtags);
                         return new OkObjectResult(json);
 
                     }
@@ -85,34 +73,7 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
-                case "ADDMONEY":
-                    try
-                    {
 
-                        MainManager.Instance.userControl.updateUserMoney(param, param2);
-                        string json = "Add money to user";
-                        return new OkObjectResult(json);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-                case "DECREASEMONEY":
-                    try
-                    {
-
-                        MainManager.Instance.userControl.updateUserMoneyAfterPurchase(param, param2);
-                        string json = "Decrease money after purchase";
-                        return new OkObjectResult(json);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
                 default:
                     break;
             }

@@ -24,5 +24,7 @@ namespace PromotIt.Entitey
             Hashtags =  dataActivist.Hashtags();
             return Hashtags;
         }
+
+        
     }
 }

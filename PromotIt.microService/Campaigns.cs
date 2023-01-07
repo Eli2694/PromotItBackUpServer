@@ -20,7 +20,7 @@ namespace PromotIt.microService
     {
         [FunctionName("Campaigns")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Campaign/{action}/{param?}")] HttpRequest req, string action, string param,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Campaign/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
             ILogger log)
         {
 
@@ -34,7 +34,7 @@ namespace PromotIt.microService
                     requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                     Model.Campaign campaign = new Model.Campaign();
                     campaign = JsonSerializer.Deserialize<Model.Campaign>(requestBody);
-                    if (campaign.campaignName == null || campaign.campaignWebsite == null || campaign.campaginHashtag == null)
+                    if (campaign.campaignName == null || campaign.campaignWebsite == null || campaign.campaginHashtag == null || campaign.donationAmount == null )
                     {
                         string response = "faild to insert information into DB";
 
@@ -45,7 +45,7 @@ namespace PromotIt.microService
                     {
                         try
                         {
-                            MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag, campaign.FullName, campaign.Email);
+                            MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag, campaign.FullName, campaign.Email,campaign.donationAmount);
 
                             string responseMessage = "Insert campaign information into DB";
                             return new OkObjectResult(responseMessage);
@@ -111,6 +111,35 @@ namespace PromotIt.microService
                         {
                             Console.WriteLine(ex.Message);
                         }
+                    }
+                    break;
+                case "GETCAMPAIGNID":
+                    try
+                    {
+
+                        int campaginID = MainManager.Instance.CampaignControl.GetCampaginID(int.Parse(param));
+
+                        string json = JsonSerializer.Serialize(campaginID);
+
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "DONATIONAMOUNT":
+                    try
+                    {
+                        MainManager.Instance.CampaignControl.UpdateDonationAmount(int.Parse(param),param2);
+
+                        string response = "successful update donation amount";
+                        return new OkObjectResult(response);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
                     break;
                 default:
