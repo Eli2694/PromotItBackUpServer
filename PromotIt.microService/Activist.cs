@@ -13,6 +13,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using RestSharp;
+using Newtonsoft.Json.Linq;
+using System.Collections;
+using static System.Net.WebRequestMethods;
 
 namespace PromotIt.microService
 {
@@ -20,24 +24,41 @@ namespace PromotIt.microService
     {
         [FunctionName("TwitterActivist")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Activist/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param, string param2,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4,
             ILogger log)
         {
-
             log.LogInformation("C# HTTP trigger function processed a request.");
-
+            //Global Variable
             string requestBody;
+            
+
+            
+
 
             switch (action)
             {
                 
-                case "GETWEBSITE":
+                case "USERID":
                     try
                     {
+                        var urlUsername = "https://api.twitter.com/2/users/by?usernames=param";
+                        urlUsername = urlUsername.Replace("param", param);
 
-                        List<string> listOfCampaignsWebsites = MainManager.Instance.ActivistControl.CampaignWebsites();
-                        string json = JsonSerializer.Serialize(listOfCampaignsWebsites);
-                        return new OkObjectResult(json);
+                        var client = new RestClient(urlUsername);
+                        var request = new RestRequest("", Method.Get);
+                        request.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAK1GkwEAAAAATJMQLTlD8X7QTFNRBQgMwMHopRg%3Dh29cNFKMspSJwyFMJgOHqly02SHrdSu3aHKuhUGIMNbDnsKA0r");
+
+                        var response = client.Execute(request);
+                        if (response.IsSuccessful)
+                        {
+                            // Still need to understand how and if to parse the response
+                            var json =  JObject.Parse(response.Content);
+                            return new OkObjectResult(json);
+                        }
+                        else
+                        {
+                            return new NotFoundResult();
+                        }
 
                     }
                     catch (Exception ex)
@@ -45,13 +66,35 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
-                case "GETHASHTAG":
+                case "USERTWEETS":
                     try
                     {
 
-                        List<string> listOfCampaignsHashtags = MainManager.Instance.ActivistControl.CampaignHashtag();
-                        string json = JsonSerializer.Serialize(listOfCampaignsHashtags);
-                        return new OkObjectResult(json);
+
+                        //string urlUserTweetTimeline = "https://api.twitter.com/2/users/{0}/tweets";
+                        //string urlUserTweetTimelineOutput = String.Format(urlUserTweetTimeline, param);
+
+
+                        string urlTimeline = "https://api.twitter.com/2/tweets/search/recent?tweet.fields=created_at&max_results=100&start_time={0}:00Z&query=from:{1} %23{2} url:{3} has:hashtags has:links";
+                        string urlTimelineOutput = String.Format(urlTimeline, param,param2,param3,param4);
+
+                       
+
+                        var client = new RestClient(urlTimelineOutput);
+                        var request = new RestRequest("", Method.Get);
+                        request.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAK1GkwEAAAAATJMQLTlD8X7QTFNRBQgMwMHopRg%3Dh29cNFKMspSJwyFMJgOHqly02SHrdSu3aHKuhUGIMNbDnsKA0r");
+
+                        var response = client.Execute(request);
+                        if (response.IsSuccessful)
+                        {
+                            // Still need to understand how and if to parse the response
+                            var json = JObject.Parse(response.Content);
+                            return new OkObjectResult(json);
+                        }
+                        else
+                        {
+                            return new NotFoundResult();
+                        }
 
                     }
                     catch (Exception ex)
@@ -59,13 +102,10 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
-                case "GETWEBANDHASHTAG":
+                case "GETCAMPAIGN":
                     try
                     {
 
-                        List<string> listOfCampaignsHashtags = MainManager.Instance.ActivistControl.CampaignHashtag();
-                        string json = JsonSerializer.Serialize(listOfCampaignsHashtags);
-                        return new OkObjectResult(json);
 
                     }
                     catch (Exception ex)

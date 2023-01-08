@@ -9,21 +9,7 @@ namespace PromotIt.Entitey
 {
     public class ActivistControl
     {
-        public List<string> CampaignWebsites()
-        {
-            List<string> Websites = new List<string>();
-            DataActivist dataActivist = new DataActivist();
-            Websites = dataActivist.Websites();
-            return Websites;    
-        }
-
-        public List<string> CampaignHashtag()
-        {
-            List<string> Hashtags = new List<string>();
-            DataActivist dataActivist = new DataActivist();
-            Hashtags =  dataActivist.Hashtags();
-            return Hashtags;
-        }
+        
 
         
     }
