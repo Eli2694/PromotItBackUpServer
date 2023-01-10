@@ -201,6 +201,50 @@ namespace PromotIt.microService
                     }
 
                     break;
+                case "REGISTER":
+                    requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                    Model.RegisterCompany company = new Model.RegisterCompany();
+                    company = JsonSerializer.Deserialize<Model.RegisterCompany>(requestBody);
+                    if (company.companyName == null || company.companyWebsite == null || company.Email == null)
+                    {
+                        string response = "faild registration of business company";
+
+                        return new OkObjectResult(response);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            MainManager.Instance.BusinessControl.BusinessCompanyRegistration(company);
+
+                            string response = "successful registration of business comapny ";
+                            return new OkObjectResult(response);
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+
+                        }
+                    }
+                    break;
+
+                case "GETCOMPANYNAME":
+                    try
+                    {
+                        string orders = MainManager.Instance.BusinessControl.getBusinessCompanyName(int.Parse(param));
+
+                        string json = JsonSerializer.Serialize(orders);
+
+                        return new OkObjectResult(json);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+
+                    }
+                    break;
                 default:
                     break;
             }

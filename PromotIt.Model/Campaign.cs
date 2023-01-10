@@ -11,7 +11,6 @@ namespace PromotIt.Model
         public string campaignName { get; set; }
         public string campaignWebsite { get; set; }
         public string campaginHashtag { get; set; }
-        public string FullName { get; set; }
         public string Email { get; set; }
         public string donationAmount { get; set; }
     }

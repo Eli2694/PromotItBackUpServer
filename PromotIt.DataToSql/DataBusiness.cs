@@ -16,6 +16,7 @@ namespace PromotIt.DataToSql
         List<Product> listOfProducts = new List<Product>();
         List<OrdersToConfirm> listOfOrdersToConfirm = new List<OrdersToConfirm>();
         int ProductID;
+        string companyName;
         public void CreateListOfCampaignsForBusiness(SqlDataReader reader)
         {
 
@@ -148,6 +149,32 @@ namespace PromotIt.DataToSql
         {
             
             SqlQuery.InsertInfoToTableInSql("exec OrderConfirmation" + " " + orderId + "," + "'" + email + "'");
+        }
+
+        public void CompanyRegistration(RegisterCompany company)
+        {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec CreateBusinessCompany" + " " + "'" + company.companyName + "'" + "," + "'" + company.companyWebsite + "'" + "," + "'" + company.RegisteredCompany + "'" + "," + "'" + company.Email + "'");
+        }
+
+        public string BusinessCompanyName(int ProductID)
+        {
+            SqlQuery.GetSingleRowOrValue("exec getCompanyName" + " " + ProductID, GetSingleStringFromDB);
+            return companyName;
+        }
+
+        public void GetSingleStringFromDB(SqlCommand command)
+        {
+            try
+            {
+                companyName = (string)command.ExecuteScalar();
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
+
         }
     }
 }

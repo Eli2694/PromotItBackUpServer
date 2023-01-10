@@ -79,6 +79,20 @@ namespace PromotIt.Entitey
             confirmation.ConfirmationOfOrder(orderId, email);
         }
 
-       
+        public void BusinessCompanyRegistration(RegisterCompany company)
+        {
+            DataBusiness registration = new DataBusiness();
+            registration.CompanyRegistration(company);
+        }
+
+        public string getBusinessCompanyName(int ProductID)
+        {
+            DataBusiness companyName = new DataBusiness();
+            string name = companyName.BusinessCompanyName(ProductID);
+            return name;
+        }
+
+
+
     }
 }

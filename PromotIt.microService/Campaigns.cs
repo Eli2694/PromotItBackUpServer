@@ -45,7 +45,7 @@ namespace PromotIt.microService
                     {
                         try
                         {
-                            MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag, campaign.FullName, campaign.Email,campaign.donationAmount);
+                            MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag,  campaign.Email,campaign.donationAmount);
 
                             string responseMessage = "Insert campaign information into DB";
                             return new OkObjectResult(responseMessage);

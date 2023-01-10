@@ -10,12 +10,12 @@ namespace PromotIt.Entitey
 {
     public class CampaignControl
     {
-        public void GetCampaginInfo(string name, string website, string hashtag, string userName, string userEmail,string donation)
+        public void GetCampaginInfo(string name, string website, string hashtag, string userEmail,string donation)
         {
             try
             {
                 DataCampaign campaign = new DataCampaign();
-                campaign.addCampagin(name, website, hashtag, userName, userEmail, donation);
+                campaign.addCampagin(name, website, hashtag,  userEmail, donation);
             }
             catch (Exception ex)
             {

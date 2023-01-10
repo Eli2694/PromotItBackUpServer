@@ -15,12 +15,14 @@ namespace PromotIt.DataToSql
         //Global
         int ID;
 
-        public void addCampagin(string name, string website, string hashtag, string userName, string Email, string donation)
+        public void addCampagin(string name, string website, string hashtag, string Email, string donation)
         {
             try
             {
 
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InsertCampagin" + " " + "'" + name + "'" + "," + "'" + hashtag + "'" + "," + "'" + website + "'" + "," + "'" + userName + "'" + "," + "'" + Email + "'" + "," + decimal.Parse(donation));
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InsertCampagin" + " " + "'" + name + "'" + "," + "'" + hashtag + "'" + "," + "'" + website + "'" + ","  + "'" + Email + "'" + "," + decimal.Parse(donation));
+
+
 
             }
             catch (Exception ex)
