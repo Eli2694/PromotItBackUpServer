@@ -31,39 +31,14 @@ namespace PromotIt.microService
 
             switch (action)
             {
-                case "Order":
-                    requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                    Model.Order order = new Model.Order();
-                    order = JsonSerializer.Deserialize<Model.Order>(requestBody);
-                    if (order.country == null || order.city == null || order.homeAddress == null || order.postalCode == null || order.phoneNumber == null)
-                    {
-                        string response = "faild to insert information into DB";
-
-                        return new OkObjectResult(response);
-
-                    }
-                    else
-                    {
-                        try
-                        {
-                            MainManager.Instance.userControl.UsersPurchaseInfo(order);
-                            string responseMessage = "Insert order information into DB";
-                            return new OkObjectResult(responseMessage);
-                        }
-                        catch (Exception ex)
-                        {
-
-                            Console.WriteLine(ex.Message);
-                        }
-
-                    }
-                    break;
+                
                 case "GET":
                     try
                     {
 
-                        List<UsersCampaign> listOfAssociationsAndCampaigns = MainManager.Instance.userControl.uCampaigns();
-                        string json = JsonSerializer.Serialize(listOfAssociationsAndCampaigns);
+                        ReportDifferentUsersCount Users = MainManager.Instance.OwnerControl.UsersType();
+
+                        string json = JsonSerializer.Serialize(Users);
                         return new OkObjectResult(json);
 
                     }
@@ -72,8 +47,53 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
-               
-               
+                case "GETNONPROFIT":
+                    try
+                    {
+
+                        List<ReportNonprofitUser> Users = MainManager.Instance.OwnerControl.GetNonprofitUsers();
+
+                        string json = JsonSerializer.Serialize(Users);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "GETBUSINESS":
+                    try
+                    {
+
+                        List<ReportBusinessUser> Users = MainManager.Instance.OwnerControl.GetBusinessUsers();
+
+                        string json = JsonSerializer.Serialize(Users);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "GETACTIVIST":
+                    try
+                    {
+
+                        List<ReportActivistUser> Users = MainManager.Instance.OwnerControl.GetActivistUsers();
+
+                        string json = JsonSerializer.Serialize(Users);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+
+
                 default:
                     break;
             }

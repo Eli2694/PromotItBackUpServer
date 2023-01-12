@@ -102,11 +102,11 @@ namespace PromotIt.DataToSql
 
         public string getUserMoneyFromDB(string email)
         {
-            SqlQuery.GetSingleRowOrValue("select UserMoney from Wallet where Email =" + "'" + email + "'", GetStringValueFromDB);
+            SqlQuery.GetSingleRowOrValue("exec getUserMoney" + " " + "'" + email + "'", GetValueFromDB);
             return money;
         }
 
-        public void GetStringValueFromDB(SqlCommand command)
+        public void GetValueFromDB(SqlCommand command)
         {
             try
             {
@@ -132,6 +132,11 @@ namespace PromotIt.DataToSql
         {
             SqlQuery.InsertInfoToTableInSql("exec DecreaseUserMoneyAfterBuy" + " " + decimal.Parse(money) + "," + "'" + email + "'");
 
+        }
+
+        public void UpdateUserRole(string role,string email)
+        {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdateRole" + " " + "'" + role + "'" + "," + "'" + email + "'");
         }
 
 

@@ -80,5 +80,10 @@ namespace PromotIt.Entitey
             uMoney.updateMoneyAfterPurchase(money, email);
 
         }
+        public void UpdateRole(string role,string email)
+        {
+            DataUser UserRole = new DataUser();
+            UserRole.UpdateUserRole(role, email);
+        }
     }
 }

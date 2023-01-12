@@ -152,6 +152,20 @@ namespace PromotIt.microService
                         Console.WriteLine(ex.Message);
                     }
                     break;
+                case "ROLES":
+                    try
+                    {
+
+                        MainManager.Instance.userControl.UpdateRole(param, param2);
+                        string json = "Add money to user";
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
                 default:
                     break;
             }

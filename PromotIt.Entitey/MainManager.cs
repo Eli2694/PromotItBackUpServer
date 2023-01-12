@@ -24,5 +24,6 @@ namespace PromotIt.Entitey
         public CampaignControl CampaignControl = new CampaignControl();
         public BusinessControl BusinessControl = new BusinessControl();
         public ActivistControl ActivistControl = new ActivistControl();
+        public OwnerControl OwnerControl = new OwnerControl();
     }
 }
