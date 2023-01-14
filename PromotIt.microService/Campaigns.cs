@@ -20,7 +20,7 @@ namespace PromotIt.microService
     {
         [FunctionName("Campaigns")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Campaign/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Campaign/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
             ILogger log)
         {
 
@@ -37,6 +37,7 @@ namespace PromotIt.microService
                     if (campaign.campaignName == null || campaign.campaignWebsite == null || campaign.campaginHashtag == null || campaign.donationAmount == null )
                     {
                         string response = "faild to insert information into DB";
+                        PromotIt.DataToSql.Logger.LogError("faild to insert information into DB");
 
                         return new OkObjectResult(response);
 
@@ -48,12 +49,14 @@ namespace PromotIt.microService
                             MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag,  campaign.Email,campaign.donationAmount);
 
                             string responseMessage = "Insert campaign information into DB";
+                            PromotIt.DataToSql.Logger.LogEvent("Register campaign information into DB");
                             return new OkObjectResult(responseMessage);
                         }
                         catch (Exception ex)
                         {
 
                             Console.WriteLine(ex.Message);
+                            PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to insert information into DB");
                         }
 
                     }
@@ -73,6 +76,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get personal campaigns from database");
                     }
                     break;
                 case "DELETE":
@@ -85,6 +89,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to delete campaign from database");
                         Console.WriteLine(ex.Message);
                     }
                     break;
@@ -95,6 +100,7 @@ namespace PromotIt.microService
                     if (personalCampagin.campaignName == null || personalCampagin.campaignWebsite == null || personalCampagin.campaginHashtag == null)
                     {
                         string response = "faild update";
+                        PromotIt.DataToSql.Logger.LogError("faild to update campaign");
 
                         return new OkObjectResult(response);
                     }
@@ -110,6 +116,7 @@ namespace PromotIt.microService
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.Message);
+                            PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to update campaign information in database");
                         }
                     }
                     break;
@@ -127,6 +134,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get campaign id");
                     }
                     break;
                 case "DONATIONAMOUNT":
@@ -140,6 +148,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to update donation amount of campaign");
                     }
                     break;
                 default:

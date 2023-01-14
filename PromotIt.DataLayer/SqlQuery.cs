@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
+
 namespace PromotIt.DataLayer
 {
     public class SqlQuery
@@ -68,6 +71,7 @@ namespace PromotIt.DataLayer
 
                     // Execute insert command
                     string answer = command.ExecuteScalar().ToString();
+
                     //Console.WriteLine(answer);
 
                 }
@@ -93,6 +97,7 @@ namespace PromotIt.DataLayer
                     catch (SqlException ex)
                     {
                         Console.WriteLine(ex.Message);
+
                         return;
 
                     }

@@ -21,13 +21,13 @@ namespace PromotIt.microService
 
         [FunctionName("Owner")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Owner/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param, string param2,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Owner/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param, string param2,
             ILogger log)
         {
 
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string requestBody;
+            
 
             switch (action)
             {
@@ -45,6 +45,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get statistics information about users");
                     }
                     break;
                 case "GETNONPROFIT":
@@ -59,7 +60,11 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        
+
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about nonprofit users");
+
                     }
                     break;
                 case "GETBUSINESS":
@@ -74,7 +79,9 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about business users");
                     }
                     break;
                 case "GETACTIVIST":
@@ -89,7 +96,9 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                       
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about activist users");
                     }
                     break;
 

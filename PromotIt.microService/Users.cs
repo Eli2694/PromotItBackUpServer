@@ -20,11 +20,12 @@ namespace PromotIt.microService
     {
         [FunctionName("WebsiteUsers")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Users/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Users/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
             ILogger log)
         {
 
             log.LogInformation("C# HTTP trigger function processed a request.");
+
 
             string requestBody;
 
@@ -37,7 +38,7 @@ namespace PromotIt.microService
                     if (order.country == null || order.city == null || order.homeAddress == null || order.postalCode == null || order.phoneNumber == null)
                     {
                         string response = "faild to insert information into DB";
-
+                        PromotIt.DataToSql.Logger.LogError("faild to order a product");
                         return new OkObjectResult(response);
 
                     }
@@ -53,6 +54,7 @@ namespace PromotIt.microService
                         {
 
                             Console.WriteLine(ex.Message);
+                            PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to order a product and save the inforamtion in database");
                         }
 
                     }
@@ -70,6 +72,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get list of campaigns ");
                     }
                     break;
                 case "GETID":
@@ -84,6 +87,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get user id ");
                     }
                     break;
                 case "UpdateStock":
@@ -96,6 +100,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to update product stock");
                     }
                     break;
                 case "InitWallet":
@@ -108,6 +113,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to initialze wallet of a user");
                     }
                     break;
                 case "GETUSERMONEY":
@@ -122,6 +128,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get user money from databse");
                     }
                     break;
                 case "ADDMONEY":
@@ -136,6 +143,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to add money to user");
                     }
                     break;
                 case "DECREASEMONEY":
@@ -150,6 +158,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to Decrease money after purchase");
                     }
                     break;
                 case "ROLES":
@@ -157,13 +166,15 @@ namespace PromotIt.microService
                     {
 
                         MainManager.Instance.userControl.UpdateRole(param, param2);
-                        string json = "Add money to user";
+                        string json = "update the role of a user";
                         return new OkObjectResult(json);
 
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to update user role from auth0, faild to change user role in database");
+
                     }
                     break;
                 default:

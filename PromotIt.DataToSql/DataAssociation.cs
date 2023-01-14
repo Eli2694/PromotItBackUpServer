@@ -19,7 +19,7 @@ namespace PromotIt.DataToSql
             }
             catch (Exception ex)
             {
-
+                Logger.LogError(ex.Message + "," + "faild to register association");
                 Console.WriteLine(ex.Message);
             }
 

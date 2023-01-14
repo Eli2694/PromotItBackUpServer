@@ -27,7 +27,7 @@ namespace PromotIt.DataToSql
             }
             catch (Exception ex)
             {
-
+                Logger.LogError(ex.Message + "," + "Can't insert to database  campaign :" + name + "," + website);
                 Console.WriteLine(ex.Message);
             }
 
@@ -41,8 +41,9 @@ namespace PromotIt.DataToSql
             {
                 PersonalCampagin perCamp = new PersonalCampagin();
 
-                perCamp.campaignName = reader.GetString(0);
-                perCamp.campaignWebsite = reader.GetString(1);
+             
+                perCamp.campaignName = reader.GetString(0);             
+                perCamp.campaignWebsite = reader.GetString(1); 
                 perCamp.campaginHashtag = reader.GetString(2);
                 perCamp.CampaignId = reader.GetInt32(3);
 
@@ -55,29 +56,74 @@ namespace PromotIt.DataToSql
         public List<PersonalCampagin> GetListOfPersonalCampaigns(string email)
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec GetPersonalCampaignList" + "'" + email + "'", CreateListOfPersonalCampaigns);
+            if(listOfPersonalCampaigns == null)
+            {
+                Logger.LogError("Can't find list of personal campaigns for nonprofit user");
+            }
             return listOfPersonalCampaigns;
         }
 
         public void updateCampaign(PersonalCampagin campaign)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdatePersonalCampaign" + " " + "'" + campaign.campaignName + "'" + "," + "'" + campaign.campaginHashtag + "'" + "," + "'" + campaign.campaignWebsite + "'" + "," + "'" + campaign.CampaignId + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdatePersonalCampaign" + " " + "'" + campaign.campaignName + "'" + "," + "'" + campaign.campaginHashtag + "'" + "," + "'" + campaign.campaignWebsite + "'" + "," + "'" + campaign.CampaignId + "'");
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError(ex.Message + "," + "Can't update personal campaign :" + campaign.campaignName);
+            }
+
+            
         }
 
         public void deleteCampaign(int ID)
         {
-            SqlQuery.InsertInfoToTableInSql("delete from Campaigns where CampaignsID = " + ID);
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("delete from Campaigns where CampaignsID = " + ID);
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError(ex.Message + "," + "Can't delete campaign  id:" + ID);
+            }
+
             
-            //SqlQuery.InsertInfoToTableInSql("exec deleteCampaignAndItsProducts" + " " +  ID);
+            
         }
 
         public void DonationAmount(int campaignID,string unitPrice)
         {
-            SqlQuery.InsertInfoToTableInSql("exec updateDonationAmount" + " " + campaignID + "," + decimal.Parse(unitPrice));
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec updateDonationAmount" + " " + campaignID + "," + decimal.Parse(unitPrice));
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError(ex.Message + "," + "Can't update donation amount of campaign id:" + campaignID );
+
+            }
+
+            
         }
 
         public int CampaginID(int productID)
         {
-            SqlQuery.GetSingleRowOrValue("select CampaignID from Products where ProductID =" + productID, GetSingleValueOrRowFromDB);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("select CampaignID from Products where ProductID =" + productID, GetSingleValueOrRowFromDB);
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't find campaign id that product with " +productID + " " + "belong to" + "," + ex.Message);
+            }
+
+           
+            
             return ID;
 
         }
@@ -91,8 +137,9 @@ namespace PromotIt.DataToSql
             }
             catch (Exception ex)
             {
-
+                Logger.LogError("Can't find campaign id" + "," + ex.Message);
                 Console.WriteLine(ex.Message);
+
             }
 
         }

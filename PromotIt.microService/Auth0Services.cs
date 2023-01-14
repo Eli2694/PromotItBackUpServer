@@ -30,11 +30,13 @@ namespace PromotIt.microService
             var response = client.Execute(request);
             if (response.IsSuccessful)
             {
+                PromotIt.DataToSql.Logger.LogEvent("Seccessful role assignment");
                 var json = JArray.Parse(response.Content);
                 return new OkObjectResult(json);
             }
             else
             {
+                PromotIt.DataToSql.Logger.LogError("Role Not Found");
                 return new NotFoundResult();
             }
 

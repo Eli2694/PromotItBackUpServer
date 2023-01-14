@@ -21,6 +21,10 @@ namespace PromotIt.DataToSql
         public ReportDifferentUsersCount UserStatistics()
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec CountDifferentUsers", GetStatistics);
+            if (users == null)
+            {
+                Logger.LogError("Can't report users statistics");
+            }
             return users;
         }
 
@@ -43,6 +47,11 @@ namespace PromotIt.DataToSql
         public List<ReportNonprofitUser> NonprofitUserList()
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec Nonprofit", Nonprofit);
+
+            if (nonprofitUsers == null)
+            {
+                Logger.LogError("Can't report nonprofit users");
+            }
             return nonprofitUsers;
         }
 
@@ -52,27 +61,10 @@ namespace PromotIt.DataToSql
             while (reader.Read())
             {
                 ReportNonprofitUser nonprofit = new ReportNonprofitUser();
-
-                if(reader.GetString(0) == null)
-                {
-                    nonprofit.email = "none";
-                }
-                else
-                {
-                    nonprofit.email = reader.GetString(0);
-                }
-
-                if (reader.GetString(1) == null)
-                {
-                    nonprofit.associationName = "none";
-                }
-                else
-                {
-                    nonprofit.associationName = reader.GetString(1);
-                }
-
+     
+                nonprofit.email = reader.GetString(0);
+                nonprofit.associationName = reader.GetString(1);
                 nonprofit.createdCampaigns = reader.GetInt32(2);
-
                 nonprofitUsers.Add(nonprofit);
 
             }
@@ -83,6 +75,11 @@ namespace PromotIt.DataToSql
         public List<ReportBusinessUser> BusinessUserList()
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec Buisness", Buisness);
+
+            if(reportBusinessUsers == null)
+            {
+                Logger.LogError("Can't report business users");
+            }
             return reportBusinessUsers;
         }
 
@@ -91,26 +88,9 @@ namespace PromotIt.DataToSql
 
             while (reader.Read())
             {
-                ReportBusinessUser businessUsers = new ReportBusinessUser();
-
-                if (reader.GetString(0) == null)
-                {
-                    businessUsers.email = "none";
-                }
-                else
-                {
-                    businessUsers.email = reader.GetString(0);
-                }
-
-                if (reader.GetString(1) == null)
-                {
-                    businessUsers.companyName = "none";
-                }
-                else
-                {
-                    businessUsers.companyName = reader.GetString(1);
-                }
-
+                ReportBusinessUser businessUsers = new ReportBusinessUser();  
+                businessUsers.email = reader.GetString(0);
+                businessUsers.companyName = reader.GetString(1);
                 businessUsers.donatedProductAmount = reader.GetInt32(2);
 
                 reportBusinessUsers.Add(businessUsers);
@@ -123,6 +103,10 @@ namespace PromotIt.DataToSql
         public List<ReportActivistUser> ActivistUserList()
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec Activist", Activist);
+            if(reportActivistUsers == null)
+            {
+                Logger.LogError("Can't report activist users");
+            }
             return reportActivistUsers;
         }
 
@@ -133,36 +117,10 @@ namespace PromotIt.DataToSql
             {
                 ReportActivistUser activist = new ReportActivistUser();
 
-                if (reader.GetString(0) == null)
-                {
-                    activist.email = "none";
-                }
-                else
-                {
-                    activist.email = reader.GetString(0);
-                }
-
-                if (reader.GetString(1) == null)
-                {
-                    activist.campaignName = "none";
-                }
-                else
-                {
-                    activist.campaignName = reader.GetString(1);
-                }
-
+                activist.email = reader.GetString(0);
+                activist.campaignName = reader.GetString(1);
                 activist.numberOfTweets = reader.GetInt32(2);
-
-
-                if (reader.GetDateTime(3) == null)
-                {
-                    activist.lastDayOfWork = "none";
-                }
-                else
-                {
-                    activist.campaignName = reader.GetDateTime(3).ToString();
-                }
-
+                activist.lastDayOfWork = reader.GetDateTime(3).ToString();
                 reportActivistUsers.Add(activist);
 
             }

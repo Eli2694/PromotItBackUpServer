@@ -12,7 +12,7 @@ namespace PromotIt.DataToSql
     public class DataUser
     {
         //Global Variable
-        List<UsersCampaign> uc = new List<UsersCampaign>();
+        List<UsersCampaign> uscampaigns = new List<UsersCampaign>();
         int userID;
         string money;
 
@@ -49,7 +49,7 @@ namespace PromotIt.DataToSql
                 user.campaignWebsite = reader.GetString(5);
                 user.donationAmount = (reader.GetDecimal(6)).ToString();
 
-                uc.Add(user);
+                uscampaigns.Add(user);
             }
 
             return;
@@ -58,13 +58,24 @@ namespace PromotIt.DataToSql
         public List<UsersCampaign> GetListOfCampaignsForUsers()
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec GetAllInfoAboutCampaigns", CreateListOfAssociationsAndCampaigns);
-
-            return uc;
+            if(uscampaigns == null)
+            {
+                Logger.LogError("Can't get user campaigns from database");
+            }
+            return uscampaigns;
         }
 
         public int ReceiveUserId(string email)
         {
-            SqlQuery.GetSingleRowOrValue("select UserID from Users where Email = " + "'" + email + "'", GetSingleValueOrRowFromDB);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("select UserID from Users where Email = " + "'" + email + "'", GetSingleValueOrRowFromDB);
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't get user id from database" + "," + ex.Message + "," + "user email:" + email);
+            }
              
             return userID;
         }
@@ -78,7 +89,7 @@ namespace PromotIt.DataToSql
             }
             catch (Exception ex)
             {
-
+                Logger.LogError("Can't get  user id from database" + "," + ex.Message);
                 Console.WriteLine(ex.Message);
             }
 
@@ -86,24 +97,66 @@ namespace PromotIt.DataToSql
 
         public void UserOrder(Order info)
         {
-            SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.postalCode + "'" + "," +"'" + info.phoneNumber + "'" + "," + "GetDate()" + "," + 0 + ")");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.postalCode + "'" + "," + "'" + info.phoneNumber + "'" + "," + "GetDate()" + "," + 0 + ")");
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't insert purchase order into database" + "," + ex.Message + "," + "user id:" + info.userId);
+            }
+
+            
         }
 
         public void decrUnitsInStock(int ProductId)
         {
-            SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't update units stock of product after purchase" + "," + ex.Message + "," + "product id:" + ProductId);
+            }
+
+            
         }
 
         public void initWallet(string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec InitializeWallet" + " " + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec InitializeWallet" + " " + "'" + email + "'");
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't initialize user wallet in database " + "," + ex.Message + "," + "user email:" + email);
+            }
+
+            
 
         }
 
         public string getUserMoneyFromDB(string email)
         {
-            SqlQuery.GetSingleRowOrValue("exec getUserMoney" + " " + "'" + email + "'", GetValueFromDB);
-            return money;
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("exec getUserMoney" + " " + "'" + email + "'", GetValueFromDB);
+
+                return money;
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't get user money from database " + "," + ex.Message + "," + "user email:" + email);
+            }
+
+
+            return money = "0";
         }
 
         public void GetValueFromDB(SqlCommand command)
@@ -116,7 +169,7 @@ namespace PromotIt.DataToSql
             }
             catch (Exception ex)
             {
-
+                Logger.LogError("Can't get the money from database" + "," + ex.Message);
                 Console.WriteLine(ex.Message);
             }
 
@@ -124,19 +177,50 @@ namespace PromotIt.DataToSql
 
         public void updateMoney(string money, string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec UpdateUserMoney" + " " + decimal.Parse(money) + "," + "'" + email + "'");
 
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec UpdateUserMoney" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't update user money in database" + "," + ex.Message + "," + "user email:" + email);
+            }
+            
         }
 
         public void updateMoneyAfterPurchase(string money, string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec DecreaseUserMoneyAfterBuy" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec DecreaseUserMoneyAfterBuy" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+            }
+            catch (Exception ex)
+            {
+                
+
+                Logger.LogError("Can't decrease user money after purchase" + "," + ex.Message + "," +"user email:" + email);
+            }
+
+            
 
         }
 
         public void UpdateUserRole(string role,string email)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdateRole" + " " + "'" + role + "'" + "," + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdateRole" + " " + "'" + role + "'" + "," + "'" + email + "'");
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Can't update user role" + "," + ex.Message + "," + "user email:" + email);
+            }
+
+            
         }
 
 

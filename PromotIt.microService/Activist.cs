@@ -26,13 +26,10 @@ namespace PromotIt.microService
     {
         [FunctionName("TwitterActivist")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete","put", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            //Global Variable
-            string requestBody;
-           
 
             switch (action)
             {
@@ -40,6 +37,8 @@ namespace PromotIt.microService
                 case "USERID":
                     try
                     {
+                        // Get Username,name and id of twitter user
+
                         var urlUsername = "https://api.twitter.com/2/users/by?usernames=param";
                         urlUsername = urlUsername.Replace("param", param);
 
@@ -56,12 +55,19 @@ namespace PromotIt.microService
                         }
                         else
                         {
+                            PromotIt.DataToSql.Logger.LogError("Twitter user was not found");
                             return new NotFoundResult();
                         }
 
                     }
+                    catch (TwitterException e)
+                    {
+                        PromotIt.DataToSql.Logger.LogError(e.Message);
+                        Console.WriteLine(e.ToString());
+                    }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message);
                         Console.WriteLine(ex.Message);
                     }
                     break;
@@ -75,10 +81,10 @@ namespace PromotIt.microService
 
                         //string rfc3339DateTime = DateTimeOffset.Parse(param).ToString("yyyy-MM-ddTHH:mm:ssZ");
 
+                        //Search for user tweets that include campaign website and campaign hashtag.
+
                         string urlTimeline = "https://api.twitter.com/2/tweets/search/recent?tweet.fields=created_at&max_results=100&start_time={0}:00Z&query=from:{1} %23{2} url:{3} has:hashtags has:links";
                         string urlTimelineOutput = String.Format(urlTimeline, param,param2,param3,param4);
-
-                       
 
                         var client = new RestClient(urlTimelineOutput);
                         var request = new RestRequest("", Method.Get);
@@ -87,24 +93,33 @@ namespace PromotIt.microService
                         var response = client.Execute(request);
                         if (response.IsSuccessful)
                         {
-                            // Still need to understand how and if to parse the response
                             var json = JObject.Parse(response.Content);
                             return new OkObjectResult(json);
                         }
                         else
                         {
+                            PromotIt.DataToSql.Logger.LogError("Twitter user tweets about promotong a campaign was not found");
                             return new NotFoundResult();
                         }
 
                     }
+                    catch (TwitterException e)
+                    {
+                        PromotIt.DataToSql.Logger.LogError(e.Message);
+                        Console.WriteLine(e.ToString());
+                    }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message);
                         Console.WriteLine(ex.Message);
                     }
                     break;
                 case "INITIATECAMPAIGN":
                     try
                     {
+                        // When User choose to promote a campaign and press the button "Promote"
+                        // User id,campaign id and number of tweets zero will be input in sql server.
+
                         MainManager.Instance.ActivistControl.initiateCampaginPromotion(int.Parse(param),param2);
                         string json = "Initiate Promotion For Campaign";
                         return new OkObjectResult(json);
@@ -112,12 +127,15 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam in intiating a campaign");
                         Console.WriteLine(ex.Message);
                     }
                     break;
                 case "INITIATEPOINTS":
                     try
                     {
+                        //Create a row of user id and 0 points in sql server
+
                         MainManager.Instance.ActivistControl.initiateActivistPoints(param);
                         string json = "Initiate Activist Points";
                         return new OkObjectResult(json);
@@ -125,12 +143,14 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam Initiate Activist Points");
                         Console.WriteLine(ex.Message);
                     }
                     break;
                 case "UPDATEPOINTS":
                     try
                     {
+                        //after twitter user promote a campaign seccessfully, he will get points that will allow him to buy products
 
                         MainManager.Instance.ActivistControl.UpdateUserPoints(param, int.Parse(param2));
                         string json = "Update User Points After Tweets";
@@ -138,19 +158,23 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam Update User Points After Tweets");
                         Console.WriteLine(ex.Message);
                     }
                     break;
                 case "UPDATETWEETSAMOUNT":
                     try
                     {
+                        //update how many times twitter user promoted a specific campaign
+
                         MainManager.Instance.ActivistControl.UpdateTweetsAmount(param, int.Parse(param2), int.Parse(param3));
-                        string json = "Update User Points After Tweets";
+                        string json = "Update Campagin Tweets Amount";
                         return new OkObjectResult(json);
 
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam Update Campagin Tweets Amount");
                         Console.WriteLine(ex.Message);
                     }
                     break;
@@ -158,6 +182,8 @@ namespace PromotIt.microService
                 case "GETPOINTS":
                     try
                     {
+                        // will retrieve the user's current number of points from sql server
+
                         int points = MainManager.Instance.ActivistControl.GetActivistPoints(param);
                         string json = JsonSerializer.Serialize(points);
                         return new OkObjectResult(json);
@@ -165,25 +191,32 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "get twitter user points");
                         Console.WriteLine(ex.Message);
                     }
                     break;
                 case "DROPOINTS":
                     try
                     {
+                        //Following the purchase of a product with the help of points, the amount of the user's points will be reduced
+
                         MainManager.Instance.ActivistControl.DecreasePointsAmount(int.Parse(param2), param);
-                        string json = "Update User Points After Tweets";
+                        string json = " decrease user points after purchase";
                         return new OkObjectResult(json);
 
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "problam decrease user points after purchase");
                         Console.WriteLine(ex.Message);
                     }
                     break;
                 case "TWITTERMESSAGE":
                     try
                     {
+                        //After buying a product using points,The site will post a notice about it
+                        
+
                         var userClient = new TwitterClient("rMkWttO130zoQ6UJ0lYRoCvj2", "9IeGrLFCn6SGBfCiNLfNkel7mpFCD4OoaR5vXHJW61KT7gqciv", "1525509104617279489-wD0UG7IFlDWYd7TXG9ONCZu9jIs1G5", "vzWvPtrtx3otb2x3tx9SMYAusbFIUrZsqzl9AUMWkykCg");
 
                         Console.WriteLine(userClient);
@@ -195,10 +228,12 @@ namespace PromotIt.microService
                     }
                     catch (TwitterException e)
                     {
+                        PromotIt.DataToSql.Logger.LogError(e.Message + "," + " problam sending a tweet about user purchase with points");
                         Console.WriteLine(e.ToString());
                     }
                     catch (Exception ex)
                     {
+                        PromotIt.DataToSql.Logger.LogError(ex.Message);
                         Console.WriteLine(ex.Message);
                     }
                     break;
@@ -207,8 +242,8 @@ namespace PromotIt.microService
                     break;
             }
 
-
-            return new OkObjectResult("Did not enter switch case");
+            
+            return new OkObjectResult("");
         }
     }
 }

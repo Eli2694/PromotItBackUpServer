@@ -47,6 +47,7 @@
     <Compile Include="DataCampaign.cs" />
     <Compile Include="DataOwner.cs" />
     <Compile Include="DataUser.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

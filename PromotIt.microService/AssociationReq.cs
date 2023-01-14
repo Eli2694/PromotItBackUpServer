@@ -41,12 +41,12 @@ namespace PromotIt.microService
                 {
                     MainManager.Instance.AssociationControl.AssociationInforamtion(association.AssociationName, association.AssociationEmail, association.AssociationWebsite, association.RegisteredAssociation, association.FullName, association.Email);
 
-                    string responseMessage = "Insert association information into DB";
+                    string responseMessage = "register association information into DB";
                     return new OkObjectResult(responseMessage);
                 }
                 catch (Exception ex)
                 {
-
+                    PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "register association information into DB");
                     Console.WriteLine(ex.Message);
                 }
 
