@@ -1,0 +1,136 @@
+15/01/2023 15:51:31 - Event - Seccessful role assignment
+15/01/2023 15:51:31 - Event - Insert User information into DB
+15/01/2023 15:51:32 - Event - Seccessful role assignment
+15/01/2023 15:51:32 - Event - Insert User information into DB
+15/01/2023 15:53:37 - Event - Seccessful role assignment
+15/01/2023 15:53:37 - Event - Insert User information into DB
+15/01/2023 15:53:38 - Event - Seccessful role assignment
+15/01/2023 15:53:38 - Event - Insert User information into DB
+15/01/2023 15:54:14 - Event - Seccessful role assignment
+15/01/2023 15:54:14 - Event - Insert User information into DB
+15/01/2023 15:54:15 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 15:54:15 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 15:54:15 - Error - Procedure or function 'getDonationAmountOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with donation amount
+15/01/2023 15:54:15 - Error - Procedure or function 'getDonationAmountOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with donation amount
+15/01/2023 15:54:15 - Error - Procedure or function 'getTweetsOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with number of tweets in twitter by activist user
+15/01/2023 15:54:15 - Error - Procedure or function 'getTweetsOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with number of tweets in twitter by activist user
+15/01/2023 15:54:28 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 15:54:28 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 15:54:28 - Error - Procedure or function 'getDonationAmountOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with donation amount
+15/01/2023 15:54:28 - Error - Procedure or function 'getDonationAmountOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with donation amount
+15/01/2023 15:54:28 - Error - Procedure or function 'getTweetsOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with number of tweets in twitter by activist user
+15/01/2023 15:54:28 - Error - Procedure or function 'getTweetsOfCampaigns' expects parameter '@campaignDate', which was not supplied.,faild to get list of campaigns with number of tweets in twitter by activist user
+15/01/2023 15:57:59 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 15:57:59 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 16:00:12 - Event - Seccessful role assignment
+15/01/2023 16:00:12 - Event - Insert User information into DB
+15/01/2023 16:00:13 - Event - Seccessful role assignment
+15/01/2023 16:00:13 - Event - Insert User information into DB
+15/01/2023 16:00:29 - Error - Procedure or function 'AllCampaignsForOwner' expects parameter '@campaignDate', which was not supplied.,faild to get all registered campaigns 
+15/01/2023 16:04:19 - Event - Seccessful role assignment
+15/01/2023 16:04:19 - Event - Insert User information into DB
+15/01/2023 16:04:19 - Event - Seccessful role assignment
+15/01/2023 16:04:19 - Event - Insert User information into DB
+15/01/2023 16:04:25 - Error - Incorrect syntax near '-'.,faild to get all registered campaigns 
+15/01/2023 16:04:34 - Error - Incorrect syntax near '-'.,faild to get all registered campaigns 
+15/01/2023 16:04:39 - Error - Incorrect syntax near '-'.,faild to get list of campaigns with donation amount
+15/01/2023 16:04:41 - Error - Incorrect syntax near '-'.,faild to get list of campaigns with donation amount
+15/01/2023 16:04:43 - Error - Incorrect syntax near '-'.,faild to get list of campaigns with number of tweets in twitter by activist user
+15/01/2023 16:04:44 - Error - Incorrect syntax near '-'.,faild to get list of campaigns with number of tweets in twitter by activist user
+15/01/2023 16:12:16 - Event - Seccessful role assignment
+15/01/2023 16:12:17 - Event - Insert User information into DB
+15/01/2023 16:12:17 - Event - Seccessful role assignment
+15/01/2023 16:12:17 - Event - Insert User information into DB
+15/01/2023 16:12:43 - Event - Seccessful role assignment
+15/01/2023 16:12:43 - Event - Insert User information into DB
+15/01/2023 16:12:44 - Event - Seccessful role assignment
+15/01/2023 16:12:44 - Event - Insert User information into DB
+15/01/2023 16:18:08 - Event - Seccessful role assignment
+15/01/2023 16:18:09 - Event - Insert User information into DB
+15/01/2023 16:18:09 - Event - Seccessful role assignment
+15/01/2023 16:18:09 - Event - Insert User information into DB
+15/01/2023 16:18:39 - Error - Unable to cast object of type 'System.Decimal' to type 'System.Int32'.,faild to get list of campaigns with donation amount
+15/01/2023 16:18:40 - Error - Unable to cast object of type 'System.Decimal' to type 'System.Int32'.,faild to get list of campaigns with donation amount
+15/01/2023 16:18:57 - Error - Unable to cast object of type 'System.Decimal' to type 'System.Int32'.,faild to get list of campaigns with donation amount
+15/01/2023 16:18:57 - Error - Unable to cast object of type 'System.Decimal' to type 'System.Int32'.,faild to get list of campaigns with donation amount
+15/01/2023 16:20:58 - Error - Unable to cast object of type 'System.Decimal' to type 'System.Int32'.,faild to get list of campaigns with donation amount
+15/01/2023 16:28:33 - Event - Seccessful role assignment
+15/01/2023 16:28:33 - Event - Insert User information into DB
+15/01/2023 16:28:34 - Event - Seccessful role assignment
+15/01/2023 16:28:40 - Event - Insert User information into DB
+15/01/2023 17:13:00 - Event - Seccessful role assignment
+15/01/2023 17:13:00 - Event - Insert User information into DB
+15/01/2023 17:13:01 - Event - Seccessful role assignment
+15/01/2023 17:13:01 - Event - Insert User information into DB
+15/01/2023 17:16:46 - Event - Seccessful role assignment
+15/01/2023 17:16:46 - Event - Insert User information into DB
+15/01/2023 17:16:47 - Event - Seccessful role assignment
+15/01/2023 17:16:47 - Event - Insert User information into DB
+15/01/2023 17:19:32 - Event - Seccessful role assignment
+15/01/2023 17:19:32 - Event - Insert User information into DB
+15/01/2023 17:19:32 - Event - Seccessful role assignment
+15/01/2023 17:19:32 - Event - Insert User information into DB
+15/01/2023 17:20:50 - Event - Seccessful role assignment
+15/01/2023 17:20:50 - Event - Insert User information into DB
+15/01/2023 17:20:51 - Event - Seccessful role assignment
+15/01/2023 17:20:51 - Event - Insert User information into DB
+15/01/2023 17:25:45 - Event - Seccessful role assignment
+15/01/2023 17:25:45 - Event - Insert User information into DB
+15/01/2023 17:25:45 - Event - Seccessful role assignment
+15/01/2023 17:25:46 - Event - Insert User information into DB
+15/01/2023 17:25:47 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:25:47 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:25:52 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:25:52 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:46:11 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:46:11 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:47:09 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:47:09 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:47:10 - Event - Seccessful role assignment
+15/01/2023 17:47:10 - Event - Insert User information into DB
+15/01/2023 17:47:11 - Event - Seccessful role assignment
+15/01/2023 17:47:11 - Event - Insert User information into DB
+15/01/2023 17:47:20 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:47:20 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:47:20 - Event - Seccessful role assignment
+15/01/2023 17:47:20 - Event - Insert User information into DB
+15/01/2023 17:47:21 - Event - Seccessful role assignment
+15/01/2023 17:47:21 - Event - Insert User information into DB
+15/01/2023 17:49:32 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:49:32 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:49:35 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:49:35 - Error - Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.,faild to get active points
+15/01/2023 17:51:58 - Event - Seccessful role assignment
+15/01/2023 17:51:58 - Event - Insert User information into DB
+15/01/2023 17:51:59 - Event - Seccessful role assignment
+15/01/2023 17:51:59 - Event - Insert User information into DB
+15/01/2023 17:53:08 - Event - Seccessful role assignment
+15/01/2023 17:53:08 - Event - Insert User information into DB
+15/01/2023 17:53:09 - Event - Seccessful role assignment
+15/01/2023 17:53:09 - Event - Insert User information into DB
+15/01/2023 17:54:51 - Event - Seccessful role assignment
+15/01/2023 17:54:51 - Event - Insert User information into DB
+15/01/2023 17:54:51 - Event - Seccessful role assignment
+15/01/2023 17:54:51 - Event - Insert User information into DB
+15/01/2023 17:57:09 - Event - Seccessful role assignment
+15/01/2023 17:57:09 - Event - Insert User information into DB
+15/01/2023 17:57:10 - Event - Seccessful role assignment
+15/01/2023 17:57:10 - Event - Insert User information into DB
+15/01/2023 18:02:55 - Event - Seccessful role assignment
+15/01/2023 18:02:55 - Event - Insert User information into DB
+15/01/2023 18:02:56 - Event - Seccessful role assignment
+15/01/2023 18:02:56 - Event - Insert User information into DB

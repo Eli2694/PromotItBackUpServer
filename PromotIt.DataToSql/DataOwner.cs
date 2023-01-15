@@ -17,6 +17,10 @@ namespace PromotIt.DataToSql
         List<ReportNonprofitUser> nonprofitUsers = new List<ReportNonprofitUser>();
         List<ReportBusinessUser> reportBusinessUsers = new List<ReportBusinessUser>();
         List<ReportActivistUser> reportActivistUsers = new List<ReportActivistUser>();
+        int totalCampaignCount;
+        List<CampaignReportGeneral> generalCampaignReport = new List<CampaignReportGeneral>();
+        List<CampaignReportDonationAndTweets> campaignReportDonationOrTweets = new List<CampaignReportDonationAndTweets>();
+        int determineDonationOrTweets;
 
         public ReportDifferentUsersCount UserStatistics()
         {
@@ -126,6 +130,100 @@ namespace PromotIt.DataToSql
             }
 
             return;
+        }
+
+        public int CampaignStats()
+        {
+            SqlQuery.GetSingleRowOrValue("select count(*) from Campaigns", GetTotalCampaginCount);
+            return totalCampaignCount;
+        }
+
+        public void GetTotalCampaginCount(SqlCommand command)
+        {
+            try
+            {
+                totalCampaignCount = (int)command.ExecuteScalar();
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+                Logger.LogError("Can't get number of campaigns" + "," + ex.Message);
+            }
+
+        }
+
+        public List<CampaignReportGeneral> AllRegisteredCampaigns(string date)
+        {
+            SqlQuery.GetAllInforamtionInSqlTable("exec AllCampaignsForOwner" + " " + "'" + date + "'", GeneralCampaigns);
+
+            if(generalCampaignReport == null)
+            {
+                Logger.LogError("Can't find campaigns for owner report");
+            }
+
+            return generalCampaignReport;
+        }
+
+        public void GeneralCampaigns(SqlDataReader reader)
+        {
+
+            while (reader.Read())
+            {
+                CampaignReportGeneral campaigns = new CampaignReportGeneral();
+
+                campaigns.associationName = reader.GetString(0);
+                campaigns.campaignName = reader.GetString(1);
+                campaigns.creationDate = (reader.GetDateTime(2)).ToString();
+
+                generalCampaignReport.Add(campaigns);
+
+            }
+
+            return;
+        }
+
+        public List<CampaignReportDonationAndTweets> GetCampaignDonation(string date)
+        {
+            determineDonationOrTweets = 1;
+            SqlQuery.GetAllInforamtionInSqlTable("exec getDonationAmountOfCampaigns" + " " + "'" + date + "'" , DonationAmountOfCampaignsOrNumberOfTweets);
+            return campaignReportDonationOrTweets;
+        }
+
+        public void DonationAmountOfCampaignsOrNumberOfTweets(SqlDataReader reader)
+        {
+
+            while (reader.Read())
+            {
+                CampaignReportDonationAndTweets campaigns = new CampaignReportDonationAndTweets();
+
+                if(determineDonationOrTweets ==1)
+                {
+                    campaigns.date = (reader.GetDateTime(0)).ToString();
+                    campaigns.name = reader.GetString(1);
+                    campaigns.amount = reader.GetDecimal(2).ToString();
+                }
+
+                if(determineDonationOrTweets == 2)
+                {
+                    campaigns.date = (reader.GetDateTime(0)).ToString();
+                    campaigns.name = reader.GetString(1);
+                    campaigns.amount = reader.GetInt32(2).ToString();
+                } 
+
+                campaignReportDonationOrTweets.Add(campaigns);
+
+            }
+
+            return;
+        }
+
+        public List<CampaignReportDonationAndTweets> TweetsAboutCampaigns(string date)
+        {
+            determineDonationOrTweets = 2;
+            SqlQuery.GetAllInforamtionInSqlTable("exec getTweetsOfCampaigns" + " " + "'" +  date + "'", DonationAmountOfCampaignsOrNumberOfTweets);
+            return campaignReportDonationOrTweets;
         }
     }
 }

@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Association.cs" />
     <Compile Include="Campaign.cs" />
+    <Compile Include="CampaignReportDonationAndTweets.cs" />
+    <Compile Include="CampaignReportGeneral.cs" />
     <Compile Include="RegisterCompany.cs" />
     <Compile Include="ReportActivistUser.cs" />
     <Compile Include="ReportBusinessUser.cs" />

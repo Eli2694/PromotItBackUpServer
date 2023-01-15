@@ -101,6 +101,74 @@ namespace PromotIt.microService
                         PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about activist users");
                     }
                     break;
+                case "CAMPAIGNSTATS":
+                    try
+                    {
+
+                        int Users = MainManager.Instance.OwnerControl.GetCampaignStats();
+
+                        string json = JsonSerializer.Serialize(Users);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get total number of campaigns ");
+                    }
+                    break;
+                case "GETOTALCAMPAIGNS":
+                    try
+                    {
+
+                        List<CampaignReportGeneral> campaigns = MainManager.Instance.OwnerControl.GetAllRegisteredCampaigns(param);
+
+                        string json = JsonSerializer.Serialize(campaigns);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get all registered campaigns ");
+                    }
+                    break;
+                case "GETCAMPAIGNDONATION":
+                    try
+                    {
+
+                        List<CampaignReportDonationAndTweets> donationToCampaigns = MainManager.Instance.OwnerControl.GetInfoAboutDonationToCampaigns(param);
+
+                        string json = JsonSerializer.Serialize(donationToCampaigns);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get list of campaigns with donation amount");
+                    }
+                    break;
+                case "GETCAMPAIGNTWEETS":
+                    try
+                    {
+
+                        List<CampaignReportDonationAndTweets> tweetsOfCampaign = MainManager.Instance.OwnerControl.GetTweetsAboutCampaigns(param);
+
+                        string json = JsonSerializer.Serialize(tweetsOfCampaign);
+                        return new OkObjectResult(json);
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine(ex.Message);
+                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user");
+                    }
+                    break;
 
 
                 default:
