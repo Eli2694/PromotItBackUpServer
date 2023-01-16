@@ -39,7 +39,7 @@ namespace PromotIt.DataToSql
 
         public List<PersonalCampagin> GetListOfCampaigns()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("select CampaginName,CampaginWebsite,CampaginHashtag,CampaignsID from Campaigns", CreateListOfCampaignsForBusiness);
+            SqlQuery.GetAllInforamtionInSqlTable("select CampaginName,CampaginWebsite,CampaginHashtag,CampaignsID from Campaigns where isActive = 1 ", CreateListOfCampaignsForBusiness);
 
             if(campaignsForBusiness == null)
             {

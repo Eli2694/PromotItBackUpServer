@@ -82,7 +82,7 @@ namespace PromotIt.DataToSql
         {
             try
             {
-                SqlQuery.InsertInfoToTableInSql("delete from Campaigns where CampaignsID = " + ID);
+                SqlQuery.InsertInfoToTableInSql("exec deleteCampaignAndItsProducts" + " " + ID);
             }
             catch (Exception ex)
             {
