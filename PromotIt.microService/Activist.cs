@@ -14,11 +14,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using RestSharp;
-using Newtonsoft.Json.Linq;
 using System.Collections;
 using static System.Net.WebRequestMethods;
 using Tweetinvi;
 using Tweetinvi.Exceptions;
+using Newtonsoft.Json.Linq;
 
 namespace PromotIt.microService
 {
@@ -38,33 +38,19 @@ namespace PromotIt.microService
                     try
                     {
                         // Get Username,name and id of twitter user
-
-                        var urlUsername = "https://api.twitter.com/2/users/by?usernames=param";
-                        urlUsername = urlUsername.Replace("param", param);
-
-                        var client = new RestClient(urlUsername);
-                        var request = new RestRequest("", Method.Get);
-                        request.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAJKQlAEAAAAAWKtKxa67%2BYRUEITfP4nqREyhEfA%3DMYX2gdz2C9OblxoSNhRShM7bWTgt2wzEZJBxjEdPeOWv5vTgGf");
-
-                        var response = client.Execute(request);
-                        if (response.IsSuccessful)
-                        {
-                            
-                            var json =  JObject.Parse(response.Content);
-                            return new OkObjectResult(json);
-                        }
-                        else
+                        var json = MainManager.Instance.ActivistControl.SearchTwitterId(param);
+                        if(json == null)
                         {
                             PromotIt.DataToSql.Logger.LogError("Twitter user was not found");
                             return new NotFoundResult();
                         }
+                        else
+                        {
+                            return new OkObjectResult(json);
+                        }
 
                     }
-                    catch (TwitterException e)
-                    {
-                        PromotIt.DataToSql.Logger.LogError(e.Message);
-                        Console.WriteLine(e.ToString());
-                    }
+                    
                     catch (Exception ex)
                     {
                         PromotIt.DataToSql.Logger.LogError(ex.Message);
@@ -75,38 +61,20 @@ namespace PromotIt.microService
                     try
                     {
 
-
-                        //string urlUserTweetTimeline = "https://api.twitter.com/2/users/{0}/tweets";
-                        //string urlUserTweetTimelineOutput = String.Format(urlUserTweetTimeline, param);
-
-                        //string rfc3339DateTime = DateTimeOffset.Parse(param).ToString("yyyy-MM-ddTHH:mm:ssZ");
-
                         //Search for user tweets that include campaign website and campaign hashtag.
 
-                        string urlTimeline = "https://api.twitter.com/2/tweets/search/recent?tweet.fields=created_at&max_results=100&start_time={0}:00Z&query=from:{1} %23{2} url:{3} has:hashtags has:links";
-                        string urlTimelineOutput = String.Format(urlTimeline, param,param2,param3,param4);
-
-                        var client = new RestClient(urlTimelineOutput);
-                        var request = new RestRequest("", Method.Get);
-                        request.AddHeader("authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAJKQlAEAAAAAWKtKxa67%2BYRUEITfP4nqREyhEfA%3DMYX2gdz2C9OblxoSNhRShM7bWTgt2wzEZJBxjEdPeOWv5vTgGf");
-
-                        var response = client.Execute(request);
-                        if (response.IsSuccessful)
+                        var json = MainManager.Instance.ActivistControl.GetTweets(param, param2, param3, param4);
+                        
+                        if (json == null)
                         {
-                            var json = JObject.Parse(response.Content);
-                            return new OkObjectResult(json);
+                            PromotIt.DataToSql.Logger.LogError("Tweets were not found");
+                            return new NotFoundResult();
                         }
                         else
                         {
-                            PromotIt.DataToSql.Logger.LogError("Twitter user tweets about promotong a campaign was not found");
-                            return new NotFoundResult();
+                            return new OkObjectResult(json);
                         }
 
-                    }
-                    catch (TwitterException e)
-                    {
-                        PromotIt.DataToSql.Logger.LogError(e.Message);
-                        Console.WriteLine(e.ToString());
                     }
                     catch (Exception ex)
                     {
@@ -215,22 +183,10 @@ namespace PromotIt.microService
                     try
                     {
                         //After buying a product using points,The site will post a notice about it
-                        
 
-                        var userClient = new TwitterClient("rMkWttO130zoQ6UJ0lYRoCvj2", "9IeGrLFCn6SGBfCiNLfNkel7mpFCD4OoaR5vXHJW61KT7gqciv", "1525509104617279489-wD0UG7IFlDWYd7TXG9ONCZu9jIs1G5", "vzWvPtrtx3otb2x3tx9SMYAusbFIUrZsqzl9AUMWkykCg");
-
-                        Console.WriteLine(userClient);
-                        var user = await userClient.Users.GetAuthenticatedUserAsync();
-                        string str = $"Hello {param}, you purchase a product of {param2} company";
-                        var tweet = await userClient.Tweets.PublishTweetAsync(str);
-
-
-                    }
-                    catch (TwitterException e)
-                    {
-                        PromotIt.DataToSql.Logger.LogError(e.Message + "," + " problam sending a tweet about user purchase with points");
-                        Console.WriteLine(e.ToString());
-                    }
+                        MainManager.Instance.ActivistControl.SendMessageInTwitter(param,param2);
+                       
+                    }     
                     catch (Exception ex)
                     {
                         PromotIt.DataToSql.Logger.LogError(ex.Message);

@@ -45,6 +45,7 @@
     <Compile Include="Campaign.cs" />
     <Compile Include="CampaignReportDonationAndTweets.cs" />
     <Compile Include="CampaignReportGeneral.cs" />
+    <Compile Include="Keys.cs" />
     <Compile Include="RegisterCompany.cs" />
     <Compile Include="ReportActivistUser.cs" />
     <Compile Include="ReportBusinessUser.cs" />

@@ -10,11 +10,18 @@ using System.Threading.Tasks;
 
 namespace PromotIt.DataToSql
 {
-    public class DataActivist
+
+    interface ITwitter
+    {
+        Keys GetKeys();
+    }
+
+    public class DataActivist : ITwitter
     {
 
         //Global
         int Points;
+        Keys twitterKeys = new Keys();
         public void initiatePoints(string email)
         {
             try
@@ -56,7 +63,7 @@ namespace PromotIt.DataToSql
             catch (Exception ex)
             {
 
-                
+                Logger.LogError(ex.Message + "," + "can't update tweet points  of user   :" + " " + email );
             }
 
             
@@ -120,8 +127,58 @@ namespace PromotIt.DataToSql
 
                 Logger.LogError(ex.Message + "," + "can't decrease activist  points after purchase:" + " " + email);
             }
-
             
+        }
+
+        public Keys GetKeys()
+        {
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("select KeyValues from KeysAndTokens", TwitterKeysFromDB);
+                return twitterKeys;
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError(ex.Message + "," + "can't get twitter keys and tokens from database");
+                return null;
+            }
+        }
+
+        public void TwitterKeysFromDB(SqlDataReader reader)
+        {
+            int countRowsInDatabase = 0;
+            while (reader.Read())
+            {
+                if(countRowsInDatabase == 0)
+                {
+                    twitterKeys.apiKey = reader.GetString(0);
+                }
+                else if (countRowsInDatabase == 1)
+                {
+                    twitterKeys.apiKeySecret = reader.GetString(0);
+                }
+                else if (countRowsInDatabase == 2)
+                {
+                    twitterKeys.twitterToken = reader.GetString(0);
+                }
+                else if (countRowsInDatabase == 3)
+                {
+                    twitterKeys.accessToken = reader.GetString(0);
+                }
+                else if (countRowsInDatabase == 4)
+                {
+                    twitterKeys.accessTokenSecret = reader.GetString(0);
+                }
+                else
+                {
+                    continue;
+                }
+
+                countRowsInDatabase++;
+            }
+
+            return;
         }
     }
 }
