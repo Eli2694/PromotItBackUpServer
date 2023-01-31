@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using PersonalUtilities;
 
 namespace PromotIt.microService
 {
@@ -19,19 +20,17 @@ namespace PromotIt.microService
     {
         [FunctionName("Association")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
-
-            log.LogInformation("C# HTTP trigger function processed a request.");
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Model.Association association = new Model.Association();
             association = JsonSerializer.Deserialize<Model.Association>(requestBody);
             if (association.AssociationName == null || association.AssociationEmail == null || association.AssociationWebsite == null)
             {
-                string response = "faild to insert information into DB";
 
+                LogManager.AddLogItemToQueue("faild to insert association into DB", null, "Error");
+                string response = "faild to insert information into DB";      
                 return new OkObjectResult(response);
 
             }
@@ -46,7 +45,7 @@ namespace PromotIt.microService
                 }
                 catch (Exception ex)
                 {
-                    PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "register association information into DB");
+                    LogManager.AddLogItemToQueue(ex.Message + "," + "register association information into DB",ex,"Exception");
                     Console.WriteLine(ex.Message);
                 }
 

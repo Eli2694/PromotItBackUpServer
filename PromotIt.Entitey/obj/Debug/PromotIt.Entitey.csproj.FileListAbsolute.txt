@@ -54,3 +54,5 @@ C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\Tweetinvi.Credent
 C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\Tweetinvi.Logic.xml
 C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\Tweetinvi.Streams.xml
 C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\Tweetinvi.WebLogic.xml
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PersonalUtilities.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.Entitey\bin\Debug\PersonalUtilities.pdb

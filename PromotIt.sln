@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromotIt.Model", "PromotIt.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromotIt.Entitey", "PromotIt.Entitey\PromotIt.Entitey.csproj", "{702953D7-9E84-47B2-8964-D346C389ECCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalUtilities", "PersonalUtilities\PersonalUtilities.csproj", "{7BDCB17A-C099-4CFC-930D-497473D1E22F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{702953D7-9E84-47B2-8964-D346C389ECCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{702953D7-9E84-47B2-8964-D346C389ECCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{702953D7-9E84-47B2-8964-D346C389ECCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDCB17A-C099-4CFC-930D-497473D1E22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDCB17A-C099-4CFC-930D-497473D1E22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDCB17A-C099-4CFC-930D-497473D1E22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDCB17A-C099-4CFC-930D-497473D1E22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

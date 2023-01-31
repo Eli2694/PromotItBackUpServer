@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
@@ -24,64 +25,30 @@ namespace PromotIt.DataToSql
         Keys twitterKeys = new Keys();
         public void initiatePoints(string email)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeUserPoints" + " " + "'" + email + "'");
-            }
-            catch (Exception ex)
-            {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeUserPoints" + " " + "'" + email + "'");
 
-                Logger.LogError(ex.Message + "," + "cant initialize user points of:" + " " + email);
-            }
-
-            
         }
 
         public void initiateCampagin(int CampaignId, string email)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeTwitterCampaignPromotion" + " " + CampaignId + "," + "'" + email + "'");
-            }
-            catch (Exception ex)
-            {
-
-                Logger.LogError(ex.Message + "," + "cant initialize campaign to promote of twitter user:" + " " + email);
-            }
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeTwitterCampaignPromotion" + " " + CampaignId + "," + "'" + email + "'");
 
 
-            
+
         }
 
         public void UpdatePoints(string email, int points)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateUserPoints" + " " + "'" + email + "'" + "," + points);
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateUserPoints" + " " + "'" + email + "'" + "," + points);
 
-            }
-            catch (Exception ex)
-            {
 
-                Logger.LogError(ex.Message + "," + "can't update tweet points  of user   :" + " " + email );
-            }
 
-            
         }
 
         public void UpdateTweetsPerCampagin(string email, int tweets, int campaignId)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId);
-            }
-            catch (Exception ex)
-            {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId);
 
-                Logger.LogError(ex.Message + "," + "can't update tweet of campaign that the twitter user:" + " " + email + " " + " is promoting");
-            }
-
-            
         }
 
         public int ActivistPoints(string email)
@@ -94,55 +61,34 @@ namespace PromotIt.DataToSql
 
         public void GetSingleValueOrRowFromDB(SqlCommand command)
         {
-            try
+            //Get Activist Points
+            if (command.ExecuteScalar() == null)
             {
-                //Get Activist Points
-                if(command.ExecuteScalar() == null)
-                {
-                    Points = 0;
-                }
-                else
-                {
-                    Points = (int)command.ExecuteScalar();
-                }
-                
-                return;
+                Points = 0;
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
-                Logger.LogError(ex.Message + "," + "faild to get active points");
-                
+                Points = (int)command.ExecuteScalar();
             }
+
+            return;
         }
 
         public void DecreaseActivistPoints(int points, string email)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSql("exec decreaseActivistPoints" + " " + points + "," + "'" + email + "'");
-            }
-            catch (Exception ex)
-            {
+            SqlQuery.InsertInfoToTableInSql("exec decreaseActivistPoints" + " " + points + "," + "'" + email + "'");
 
-                Logger.LogError(ex.Message + "," + "can't decrease activist  points after purchase:" + " " + email);
-            }
-            
         }
 
         public Keys GetKeys()
         {
-            try
+            SqlQuery.GetAllInforamtionInSqlTable("select KeyValues from KeysAndTokens", TwitterKeysFromDB);
+            if (twitterKeys == null)
             {
-                SqlQuery.GetAllInforamtionInSqlTable("select KeyValues from KeysAndTokens", TwitterKeysFromDB);
-                return twitterKeys;
+                LogManager.AddLogItemToQueue("can't get twitter keys and tokens from database", null, "Error");
             }
-            catch (Exception ex)
-            {
 
-                Logger.LogError(ex.Message + "," + "can't get twitter keys and tokens from database");
-                return null;
-            }
+            return twitterKeys;
         }
 
         public void TwitterKeysFromDB(SqlDataReader reader)

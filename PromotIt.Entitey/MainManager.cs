@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PersonalUtilities;
+using static PersonalUtilities.LogManager;
 
 namespace PromotIt.Entitey
 {
     public class MainManager
     {
         //constructor
-        private MainManager() { }
+        private MainManager() { init(); }
+
+        public void init()
+        {
+            Target(LogProvider.File);
+        }
 
         // Singleton variable
         private static readonly MainManager instance = new MainManager();

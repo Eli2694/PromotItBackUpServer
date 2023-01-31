@@ -47,10 +47,13 @@
     <Compile Include="DataCampaign.cs" />
     <Compile Include="DataOwner.cs" />
     <Compile Include="DataUser.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PersonalUtilities\PersonalUtilities.csproj">
+      <Project>{7bdcb17a-c099-4cfc-930d-497473d1e22f}</Project>
+      <Name>PersonalUtilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PromotIt.DataLayer\PromotIt.DataLayer.csproj">
       <Project>{1931be45-20ad-42ed-b434-af058324cd81}</Project>
       <Name>PromotIt.DataLayer</Name>

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using PersonalUtilities;
 
 
 namespace PromotIt.microService
@@ -20,11 +21,10 @@ namespace PromotIt.microService
     {
         [FunctionName("LoginUsers")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
 
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Model.Users user = new Model.Users();
@@ -42,14 +42,14 @@ namespace PromotIt.microService
                 {
                     MainManager.Instance.userControl.UserInforamtion(user.FullName, user.Email);
                     string responseMessage = "Insert User information into DB";
-                    PromotIt.DataToSql.Logger.LogEvent(responseMessage);
+                    LogManager.AddLogItemToQueue(responseMessage,null,"Event");
                     return new OkObjectResult(responseMessage);
                 }
                 catch (Exception ex)
                 {
 
-                   Console.WriteLine(ex.Message);
-                    PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to insert user basic inforamtion into database");
+                   
+                    LogManager.AddLogItemToQueue(ex.Message + "," + "faild to insert user basic inforamtion into database",ex,"Exception");
                 }
 
             }

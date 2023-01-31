@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using PersonalUtilities;
 
 namespace PromotIt.microService
 {
@@ -20,12 +21,8 @@ namespace PromotIt.microService
     {
         [FunctionName("WebsiteUsers")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Users/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Users/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2)
         {
-
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
 
             string requestBody;
 
@@ -38,7 +35,7 @@ namespace PromotIt.microService
                     if (order.country == null || order.city == null || order.homeAddress == null || order.postalCode == null || order.phoneNumber == null)
                     {
                         string response = "faild to insert information into DB";
-                        PromotIt.DataToSql.Logger.LogError("faild to order a product");
+                        LogManager.AddLogItemToQueue("faild to order a product",null,"Error");
                         return new OkObjectResult(response);
 
                     }
@@ -53,8 +50,7 @@ namespace PromotIt.microService
                         catch (Exception ex)
                         {
 
-                            Console.WriteLine(ex.Message);
-                            PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to order a product and save the inforamtion in database");
+                            LogManager.AddLogItemToQueue(ex.Message + "," + "faild to order a product and save the inforamtion in database",ex,"Exception");
                         }
 
                     }
@@ -71,8 +67,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get list of campaigns ");
+                       
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETID":
@@ -86,8 +82,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get user id ");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get user id ",ex,"Exception");
                     }
                     break;
                 case "UpdateStock":
@@ -99,8 +94,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to update product stock");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to update product stock",ex,"Exception");
                     }
                     break;
                 case "InitWallet":
@@ -112,8 +106,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to initialze wallet of a user");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to initialze wallet of a user",ex,"Exception");
                     }
                     break;
                 case "GETUSERMONEY":
@@ -127,8 +120,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get user money from databse");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get user money from databse",ex,"Exception");
                     }
                     break;
                 case "ADDMONEY":
@@ -142,8 +134,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to add money to user");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to add money to user",ex,"Exception");
                     }
                     break;
                 case "DECREASEMONEY":
@@ -157,8 +148,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to Decrease money after purchase");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to Decrease money after purchase",ex,"Exception");
                     }
                     break;
                 case "ROLES":
@@ -172,8 +162,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to update user role from auth0, faild to change user role in database");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to update user role from auth0, faild to change user role in database",ex,"Exception");
 
                     }
                     break;

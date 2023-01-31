@@ -10,3 +10,5 @@ C:\Users\User\source\repos\PromotIt\PromotIt.DataToSql\obj\Debug\PromotIt.DataTo
 C:\Users\User\source\repos\PromotIt\PromotIt.DataToSql\obj\Debug\PromotIt.DataToSql.dll
 C:\Users\User\source\repos\PromotIt\PromotIt.DataToSql\obj\Debug\PromotIt.DataToSql.pdb
 C:\Users\User\source\repos\PromotIt\PromotIt.DataToSql\bin\Debug\PromotIt.DataLayer.dll.config
+C:\Users\User\source\repos\PromotIt\PromotIt.DataToSql\bin\Debug\PersonalUtilities.dll
+C:\Users\User\source\repos\PromotIt\PromotIt.DataToSql\bin\Debug\PersonalUtilities.pdb

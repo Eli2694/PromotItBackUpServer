@@ -19,6 +19,7 @@ using static System.Net.WebRequestMethods;
 using Tweetinvi;
 using Tweetinvi.Exceptions;
 using Newtonsoft.Json.Linq;
+using PersonalUtilities;
 
 namespace PromotIt.microService
 {
@@ -26,11 +27,9 @@ namespace PromotIt.microService
     {
         [FunctionName("TwitterActivist")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete","put", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete","put", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
+            
             switch (action)
             {
                 
@@ -41,7 +40,7 @@ namespace PromotIt.microService
                         var json = MainManager.Instance.ActivistControl.SearchTwitterId(param);
                         if(json == null)
                         {
-                            PromotIt.DataToSql.Logger.LogError("Twitter user was not found");
+                            LogManager.AddLogItemToQueue("Twitter user was not found",null,"Error");
                             return new NotFoundResult();
                         }
                         else
@@ -53,8 +52,8 @@ namespace PromotIt.microService
                     
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message);
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue(ex.Message, ex,"Exception");
+                        
                     }
                     break;
                 case "USERTWEETS":
@@ -67,7 +66,7 @@ namespace PromotIt.microService
                         
                         if (json == null)
                         {
-                            PromotIt.DataToSql.Logger.LogError("Tweets were not found");
+                            LogManager.AddLogItemToQueue("Tweets were not found",null,"Event");
                             return new NotFoundResult();
                         }
                         else
@@ -78,8 +77,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message);
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        
                     }
                     break;
                 case "INITIATECAMPAIGN":
@@ -95,8 +94,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam in intiating a campaign");
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue("Problam in intiating a campaign",ex,"Exception");
                     }
                     break;
                 case "INITIATEPOINTS":
@@ -111,8 +109,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam Initiate Activist Points");
-                        Console.WriteLine(ex.Message);
+                       
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "Problam Initiate Activist Points", ex,"Exception");
                     }
                     break;
                 case "UPDATEPOINTS":
@@ -126,8 +124,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam Update User Points After Tweets");
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "Problam Update User Points After Tweets",ex,"Exception");
+                        
                     }
                     break;
                 case "UPDATETWEETSAMOUNT":
@@ -142,7 +140,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "Problam Update Campagin Tweets Amount");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "Problam Update Campagin Tweets Amount",ex,"Exception");
                         Console.WriteLine(ex.Message);
                     }
                     break;
@@ -159,8 +157,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "get twitter user points");
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
                 case "DROPOINTS":
@@ -175,8 +172,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "problam decrease user points after purchase");
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
                 case "TWITTERMESSAGE":
@@ -185,12 +181,12 @@ namespace PromotIt.microService
                         //After buying a product using points,The site will post a notice about it
 
                         MainManager.Instance.ActivistControl.SendMessageInTwitter(param,param2);
-                       
+                        LogManager.AddLogItemToQueue("Purchase Product With Twitter Points",null, "Event");
+
                     }     
                     catch (Exception ex)
                     {
-                        PromotIt.DataToSql.Logger.LogError(ex.Message);
-                        Console.WriteLine(ex.Message);
+                        LogManager.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
 

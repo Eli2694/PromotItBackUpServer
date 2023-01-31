@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
@@ -43,7 +44,7 @@ namespace PromotIt.DataToSql
 
             if(campaignsForBusiness == null)
             {
-                Logger.LogError("Can't find list of personal campaigns for business user");
+                LogManager.AddLogItemToQueue("Can't find list of personal campaigns for business user",null,"Error");
             }
 
             return campaignsForBusiness;
@@ -51,17 +52,9 @@ namespace PromotIt.DataToSql
 
         public void DonateProductToCampaign(string name, decimal unitprice, int unitInStock, int campaignId,string email, string image)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," + unitprice + "," + unitInStock + "," + campaignId + "," + "'" + email + "'" + "," + "'" + image + "'");
-            }
-            catch (Exception ex)
-            {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," + unitprice + "," + unitInStock + "," + campaignId + "," + "'" + email + "'" + "," + "'" + image + "'");
 
-                Logger.LogError(ex.Message + "," + "Can't donate product  :" + name );
-            }
 
-            
         }
 
         
@@ -94,7 +87,7 @@ namespace PromotIt.DataToSql
 
             if(listOfProducts == null)
             {
-                Logger.LogError("Can't find list of personal donated products");
+                LogManager.AddLogItemToQueue("Can't find list of personal donated products",null,"Error");
             }
 
             return listOfProducts;
@@ -107,7 +100,7 @@ namespace PromotIt.DataToSql
 
             if(listOfProducts == null)
             {
-                Logger.LogError("Can't find list of all products donated by business representative");
+                LogManager.AddLogItemToQueue("Can't find list of all products donated by business representative",null,"Error");
             }
 
             return listOfProducts;
@@ -142,7 +135,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec GetOrdersThatBelongToMe" + " " + "'" + email + "'", CreateListOfOrdersToConfirm);
             if(listOfOrdersToConfirm == null)
             {
-                Logger.LogError("Can't find list of orders by users that purchase a product");
+                LogManager.AddLogItemToQueue("Can't find list of orders by users that purchase a product",null,"Error");
             }
 
             return listOfOrdersToConfirm;
@@ -150,18 +143,7 @@ namespace PromotIt.DataToSql
 
         public void DelProduct(int campaignId, string productName)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSql("delete from Products where CampaignID =" + " " + campaignId + " " + "and ProductName = " + " " + "'" + productName + "'");
-            }
-            catch (Exception ex)
-            {
-
-                Logger.LogError(ex.Message + "," + "Can't delete product:" + productName + " " + "from campaign with id:" + campaignId);
-            }
-
-
-            
+            SqlQuery.InsertInfoToTableInSql("delete from Products where CampaignID =" + " " + campaignId + " " + "and ProductName = " + " " + "'" + productName + "'");
 
         }
 
@@ -174,93 +156,51 @@ namespace PromotIt.DataToSql
 
         public void GetSingleValueOrRowFromDB(SqlCommand command)
         {
-            try
-            {
-                 ProductID = (int)command.ExecuteScalar();
-                return;
-            }
-            catch (Exception ex)
-            {
+            ProductID = (int)command.ExecuteScalar();
+            LogManager.AddLogItemToQueue("Can't find product ID", null, "Error");
+            return;
 
-                Console.WriteLine(ex.Message);
-                Logger.LogError("Can't find product id" + "," + ex.Message);
-            }
-            
         }
 
         public void UProduct(UpdatedProduct product)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdataProduct " + " " + "'" + product.productName + "'" + "," + decimal.Parse(product.unitPrice) + "," + int.Parse(product.unitsInStock) + "," + product.productId);
-            }
-            catch (Exception ex)
-            {
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdataProduct " + " " + "'" + product.productName + "'" + "," + decimal.Parse(product.unitPrice) + "," + int.Parse(product.unitsInStock) + "," + product.productId);
 
-                Logger.LogError(ex.Message + "," + "Can't update product:" + product.productName);
-            }
-
-            
         }
 
         public void ConfirmationOfOrder(int orderId, string email)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSql("exec OrderConfirmation" + " " + orderId + "," + "'" + email + "'");
-            }
-            catch (Exception ex)
-            {
-
-                Logger.LogError(ex.Message + "," + "Can't confirm order id:" + orderId);
-            }
-            
-            
+            SqlQuery.InsertInfoToTableInSql("exec OrderConfirmation" + " " + orderId + "," + "'" + email + "'");
         }
 
         public void CompanyRegistration(RegisterCompany company)
         {
-            try
-            {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec CreateBusinessCompany" + " " + "'" + company.companyName + "'" + "," + "'" + company.companyWebsite + "'" + "," + "'" + company.RegisteredCompany + "'" + "," + "'" + company.Email + "'");
-            }
-            catch (Exception ex)
-            {
-
-                Logger.LogError(ex.Message + "," + "Can't register business company " + company.companyName);
-            }
-
-            
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec CreateBusinessCompany" + " " + "'" + company.companyName + "'" + "," + "'" + company.companyWebsite + "'" + "," + "'" + company.RegisteredCompany + "'" + "," + "'" + company.Email + "'");
         }
 
         public string BusinessCompanyName(int ProductID)
         {
                
-
             SqlQuery.GetSingleRowOrValue("exec getCompanyName" + " " + ProductID, GetSingleStringFromDB);
+            if(companyName == "none")
+            {
+                LogManager.AddLogItemToQueue("Can't find company name in database", null, "Error");
+            }
             return companyName;
         }
 
         public void GetSingleStringFromDB(SqlCommand command)
         {
-            try
+            if (command.ExecuteScalar() == null)
             {
-                if(command.ExecuteScalar() == null)
-                {
-                    companyName = "none";
-                }
-                else
-                {
-                    companyName = (string)command.ExecuteScalar();
-                }
-                
-                return;
+                companyName = "none";
             }
-            catch (Exception ex)
+            else
             {
-                Logger.LogError(ex.Message + "," + "faild to get company name");
-                Console.WriteLine(ex.Message);
+                companyName = (string)command.ExecuteScalar();
             }
+
+            return;
 
         }
     }

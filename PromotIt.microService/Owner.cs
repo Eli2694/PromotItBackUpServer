@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using PersonalUtilities;
 
 namespace PromotIt.microService
 {
@@ -21,13 +22,8 @@ namespace PromotIt.microService
 
         [FunctionName("Owner")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Owner/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param, string param2,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Owner/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param, string param2)
         {
-
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-            
 
             switch (action)
             {
@@ -45,7 +41,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get statistics information about users");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get statistics information about users",ex,"Exception");
                     }
                     break;
                 case "GETNONPROFIT":
@@ -62,8 +58,7 @@ namespace PromotIt.microService
                     {
                         
 
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about nonprofit users");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about nonprofit users",ex,"Exception");
 
                     }
                     break;
@@ -80,8 +75,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about business users");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about business users",ex,"Exception");
                     }
                     break;
                 case "GETACTIVIST":
@@ -97,8 +91,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                        
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get information about activist users");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about activist users",ex,"Exception");
                     }
                     break;
                 case "CAMPAIGNSTATS":
@@ -114,8 +107,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get total number of campaigns ");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get total number of campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETOTALCAMPAIGNS":
@@ -131,8 +123,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get all registered campaigns ");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get all registered campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETCAMPAIGNDONATION":
@@ -148,8 +139,8 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get list of campaigns with donation amount");
+                        
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with donation amount",ex,"Exception");
                     }
                     break;
                 case "GETCAMPAIGNTWEETS":
@@ -165,8 +156,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        Console.WriteLine(ex.Message);
-                        PromotIt.DataToSql.Logger.LogError(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user");
+                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user",ex,"Exception");
                     }
                     break;
 

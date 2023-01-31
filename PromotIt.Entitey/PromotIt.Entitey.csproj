@@ -150,6 +150,10 @@
     <Compile Include="UserControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PersonalUtilities\PersonalUtilities.csproj">
+      <Project>{7bdcb17a-c099-4cfc-930d-497473d1e22f}</Project>
+      <Name>PersonalUtilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PromotIt.DataToSql\PromotIt.DataToSql.csproj">
       <Project>{807686d6-6def-4a96-9bfd-98223848fcdf}</Project>
       <Name>PromotIt.DataToSql</Name>

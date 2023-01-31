@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json.Linq;
+using PersonalUtilities;
 using PromotIt.DataToSql;
 using PromotIt.Model;
 using RestSharp;
@@ -82,13 +83,13 @@ namespace PromotIt.Entitey
                 }
                 else
                 {
-                    PromotIt.DataToSql.Logger.LogError("Twitter user was not found");
+                    LogManager.AddLogItemToQueue("Twitter user was not found",null,"Error");
                     return null;
                 }
             }
-            catch (TwitterException e)
+            catch (TwitterException exc)
             {
-                PromotIt.DataToSql.Logger.LogError(e.Message);
+                LogManager.AddLogItemToQueue(exc.Message, exc,"Exception");
                 return null;
             }
 
@@ -121,13 +122,12 @@ namespace PromotIt.Entitey
                 }
                 else
                 {
-                    PromotIt.DataToSql.Logger.LogError("Tweets were not found");
                     return null;
                 }
             }
-            catch (TwitterException e)
+            catch (TwitterException exc)
             {
-                PromotIt.DataToSql.Logger.LogError(e.Message);
+                LogManager.AddLogItemToQueue(exc.Message, exc, "Exception");
                 return null;
             }
 
@@ -154,7 +154,7 @@ namespace PromotIt.Entitey
             }
             catch (TwitterException e)
             {
-                PromotIt.DataToSql.Logger.LogError(e.Message + "," + " problam sending a tweet about user purchase with points");
+                LogManager.AddLogItemToQueue(e.Message + "," + " problam sending a tweet about user purchase with points",e,"Exception");
                 Console.WriteLine(e.ToString());
             }
             

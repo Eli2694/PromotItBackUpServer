@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
@@ -27,7 +28,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec CountDifferentUsers", GetStatistics);
             if (users == null)
             {
-                Logger.LogError("Can't report users statistics");
+                LogManager.AddLogItemToQueue("Can't report users statistics",null,"Error");
             }
             return users;
         }
@@ -54,7 +55,7 @@ namespace PromotIt.DataToSql
 
             if (nonprofitUsers == null)
             {
-                Logger.LogError("Can't report nonprofit users");
+                LogManager.AddLogItemToQueue("Can't report nonprofit users",null,"Error");
             }
             return nonprofitUsers;
         }
@@ -82,7 +83,7 @@ namespace PromotIt.DataToSql
 
             if(reportBusinessUsers == null)
             {
-                Logger.LogError("Can't report business users");
+                LogManager.AddLogItemToQueue("Can't report business users",null,"Error");
             }
             return reportBusinessUsers;
         }
@@ -109,7 +110,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec Activist", Activist);
             if(reportActivistUsers == null)
             {
-                Logger.LogError("Can't report activist users");
+                LogManager.AddLogItemToQueue("Can't report activist users",null,"Error");
             }
             return reportActivistUsers;
         }
@@ -140,17 +141,8 @@ namespace PromotIt.DataToSql
 
         public void GetTotalCampaginCount(SqlCommand command)
         {
-            try
-            {
-                totalCampaignCount = (int)command.ExecuteScalar();
-                return;
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine(ex.Message);
-                Logger.LogError("Can't get number of campaigns" + "," + ex.Message);
-            }
+            totalCampaignCount = (int)command.ExecuteScalar();
+            return;
 
         }
 
@@ -160,7 +152,7 @@ namespace PromotIt.DataToSql
 
             if(generalCampaignReport == null)
             {
-                Logger.LogError("Can't find campaigns for owner report");
+                LogManager.AddLogItemToQueue("Can't find campaigns for owner report",null,"Error");
             }
 
             return generalCampaignReport;
