@@ -9,7 +9,7 @@ namespace PersonalUtilities
     public class LogItem
     {
         public string type { get; set; } // warning,event,exception
-        public Exception exception { get; set; }
+        public Exception exceptionSource { get; set; }
         public string message { get; set; }
         public DateTime dateTime { get; set; }  
 

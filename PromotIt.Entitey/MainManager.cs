@@ -15,7 +15,7 @@ namespace PromotIt.Entitey
 
         public void init()
         {
-            Target(LogProvider.File);
+            Target(LogProvider.DB);
         }
 
         // Singleton variable

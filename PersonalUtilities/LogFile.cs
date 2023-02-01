@@ -27,13 +27,13 @@ namespace PersonalUtilities
             {
                 string log;
 
-                if (item.exception == null)
+                if (item.exceptionSource == null)
                 {
                     log = item.type + " - " + item.dateTime + " - " + item.message;
                 }
                 else
                 {
-                    log = item.type + " - " + item.dateTime + " - " + item.exception + ", " + item.message;
+                    log = item.type + " - " + item.dateTime + " - " + item.exceptionSource.StackTrace.ToString() + ", " + item.message;
                 }
 
                 streamWriter.WriteLine(log);

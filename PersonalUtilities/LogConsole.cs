@@ -14,6 +14,18 @@ namespace PersonalUtilities
         }
         public void Log(LogItem item)
         {
+            string log;
+
+            if (item.exceptionSource == null)
+            {
+                log = item.type + " - " + item.dateTime + " - " + item.message;
+            }
+            else
+            {
+                log = item.type + " - " + item.dateTime + " - " + item.exceptionSource.StackTrace.ToString() + ", " + item.message;
+            }
+
+            Console.WriteLine(log);
 
         }
         

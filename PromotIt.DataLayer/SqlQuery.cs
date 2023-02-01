@@ -38,9 +38,18 @@ namespace PromotIt.DataLayer
                 // Adapter
                 using (SqlCommand command = new SqlCommand(queryString, connection))
                 {
-
-                    // Execute insert command
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        // Execute insert command
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        Console.WriteLine(ex.Message);
+                        return;
+                    }
+                    
 
                 }
             }

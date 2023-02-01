@@ -66,7 +66,7 @@ namespace PersonalUtilities
         {
             LogItem item= new LogItem();
             item.message = msg;
-            item.exception = exc;
+            item.exceptionSource = exc;
             item.type = LogType;
             item.dateTime = DateTime.Now;
             itemsQueue.Enqueue(item);
@@ -96,9 +96,19 @@ namespace PersonalUtilities
             queueTask = Task.Run(() =>
             {
                 while (!stop)
-                {                 
-                    MyLog.LogCheckHoseKeeping();
-                    System.Threading.Thread.Sleep(1000 * 60 * 60);
+                {   
+                    if(MyLog is LogFile)
+                    {
+                        MyLog.LogCheckHoseKeeping();
+                        System.Threading.Thread.Sleep(1000 * 60 * 60);
+                    }
+                    
+                    if(MyLog is LogDB)
+                    {
+                        MyLog.LogCheckHoseKeeping();
+                        System.Threading.Thread.Sleep(1000 * 60 * 60 * 24);
+                    }
+                    
                 }
 
             });

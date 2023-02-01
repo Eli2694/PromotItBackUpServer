@@ -50,5 +50,11 @@
     <Compile Include="LogNone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PromotIt.DataLayer\PromotIt.DataLayer.csproj">
+      <Project>{1931be45-20ad-42ed-b434-af058324cd81}</Project>
+      <Name>PromotIt.DataLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
