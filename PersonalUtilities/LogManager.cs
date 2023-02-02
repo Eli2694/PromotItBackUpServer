@@ -64,6 +64,12 @@ namespace PersonalUtilities
 
         public static void AddLogItemToQueue(string msg, Exception exc, string LogType)
         {
+
+            if(itemsQueue == null)
+            {
+                itemsQueue = new Queue<LogItem>();
+            }
+
             LogItem item= new LogItem();
             item.message = msg;
             item.exceptionSource = exc;
@@ -106,7 +112,8 @@ namespace PersonalUtilities
                     if(MyLog is LogDB)
                     {
                         MyLog.LogCheckHoseKeeping();
-                        System.Threading.Thread.Sleep(1000 * 60 * 60 * 24);
+                        TimeSpan waitTime = new TimeSpan(90,0,0,0);
+                        System.Threading.Thread.Sleep(waitTime);
                     }
                     
                 }

@@ -1,4 +1,5 @@
-﻿using PromotIt.DataToSql;
+﻿using PersonalUtilities;
+using PromotIt.DataToSql;
 using PromotIt.Model;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,9 @@ namespace PromotIt.Entitey
     {
         public void GetCampaginInfo(string name, string website, string hashtag, string userEmail,string donation)
         {
-            try
-            {
-                DataCampaign campaign = new DataCampaign();
-                campaign.addCampagin(name, website, hashtag,  userEmail, donation);
-            }
-            catch (Exception ex)
-            {
 
-                Console.WriteLine(ex.Message);
-            }
-
+            DataCampaign campaign = new DataCampaign();
+            campaign.addCampagin(name, website, hashtag, userEmail, donation);
         }
 
         public List<PersonalCampagin> getListOfPersonalCampaigns(string email)

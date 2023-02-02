@@ -48,53 +48,26 @@ namespace PromotIt.microService
                             return new OkObjectResult(json);
                         }
 
-                    }
-                    
+                    }                   
                     catch (Exception ex)
                     {
                         LogManager.AddLogItemToQueue(ex.Message, ex,"Exception");
                         
                     }
                     break;
-                case "USERTWEETS":
-                    try
-                    {
-
-                        //Search for user tweets that include campaign website and campaign hashtag.
-
-                        var json = MainManager.Instance.ActivistControl.GetTweets(param, param2, param3, param4);
-                        
-                        if (json == null)
-                        {
-                            LogManager.AddLogItemToQueue("Tweets were not found",null,"Event");
-                            return new NotFoundResult();
-                        }
-                        else
-                        {
-                            return new OkObjectResult(json);
-                        }
-
-                    }
-                    catch (Exception ex)
-                    {
-                        LogManager.AddLogItemToQueue(ex.Message, ex, "Exception");
-                        
-                    }
-                    break;
                 case "INITIATECAMPAIGN":
                     try
-                    {
-                        // When User choose to promote a campaign and press the button "Promote"
-                        // User id,campaign id and number of tweets zero will be input in sql server.
+                    {                       
+                        // User id, Twitter Username,campaign id and zero number of tweets  will be input in sql server.
 
-                        MainManager.Instance.ActivistControl.initiateCampaginPromotion(int.Parse(param),param2);
+                        MainManager.Instance.ActivistControl.initiateCampaginPromotion(int.Parse(param),param2,param3);
                         string json = "Initiate Promotion For Campaign";
                         return new OkObjectResult(json);
 
                     }
                     catch (Exception ex)
                     {
-                        LogManager.AddLogItemToQueue("Problam in intiating a campaign",ex,"Exception");
+                        LogManager.AddLogItemToQueue("Problam in inserting to database User id,Twitter Username,campaign id and zero number of tweets", ex,"Exception");
                     }
                     break;
                 case "INITIATEPOINTS":
@@ -113,38 +86,6 @@ namespace PromotIt.microService
                         LogManager.AddLogItemToQueue(ex.Message + "," + "Problam Initiate Activist Points", ex,"Exception");
                     }
                     break;
-                case "UPDATEPOINTS":
-                    try
-                    {
-                        //after twitter user promote a campaign seccessfully, he will get points that will allow him to buy products
-
-                        MainManager.Instance.ActivistControl.UpdateUserPoints(param, int.Parse(param2));
-                        string json = "Update User Points After Tweets";
-                        return new OkObjectResult(json);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "Problam Update User Points After Tweets",ex,"Exception");
-                        
-                    }
-                    break;
-                case "UPDATETWEETSAMOUNT":
-                    try
-                    {
-                        //update how many times twitter user promoted a specific campaign
-
-                        MainManager.Instance.ActivistControl.UpdateTweetsAmount(param, int.Parse(param2), int.Parse(param3));
-                        string json = "Update Campagin Tweets Amount";
-                        return new OkObjectResult(json);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "Problam Update Campagin Tweets Amount",ex,"Exception");
-                        Console.WriteLine(ex.Message);
-                    }
-                    break;
-
                 case "GETPOINTS":
                     try
                     {

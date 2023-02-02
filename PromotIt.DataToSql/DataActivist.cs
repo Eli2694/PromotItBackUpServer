@@ -11,43 +11,53 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-
-    interface ITwitter
-    {
-        Keys GetKeys();
-    }
-
-    public class DataActivist : ITwitter
+    public class DataActivist 
     {
 
         //Global
-        int Points;
+        int Points { get; set; }
+
         Keys twitterKeys = new Keys();
+
+        List<TwitterCmpaignPromotion> twitterCmpaignPromotions= new List<TwitterCmpaignPromotion>();
+        DateTime lastTweetFromDatabase { get; set; }
         public void initiatePoints(string email)
         {
             SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeUserPoints" + " " + "'" + email + "'");
 
         }
 
-        public void initiateCampagin(int CampaignId, string email)
+        public void initiateCampagin(int CampaignId, string email,string username)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeTwitterCampaignPromotion" + " " + CampaignId + "," + "'" + email + "'");
-
-
-
+            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeTwitterCampaignPromotion" + " " + CampaignId + "," + "'" + email  + "'" + "," + "'" + username + "'");
         }
 
         public void UpdatePoints(string email, int points)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateUserPoints" + " " + "'" + email + "'" + "," + points);
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateUserPoints" + " " + "'" + email + "'" + "," + points);
+            }
+            catch (Exception ex)
+            {
 
-
-
+                LogManager.AddLogItemToQueue("Can not update user points", ex, "Exception");
+            }
         }
 
         public void UpdateTweetsPerCampagin(string email, int tweets, int campaignId)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId);
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId);
+            }
+            catch (Exception ex)
+            {
+
+                LogManager.AddLogItemToQueue("Can not update Tweets per campaign", ex, "Exception");
+            }
+
+            
 
         }
 
@@ -126,5 +136,66 @@ namespace PromotIt.DataToSql
 
             return;
         }
+
+        public List<TwitterCmpaignPromotion> GetListOfCampaignsAndTwitterUserNames()
+        {
+            SqlQuery.GetAllInforamtionInSqlTable("exec GetTwitterUsernameAndPromotedCampaigns", CreateListOfTwitterCmpaignPromotion);
+
+            return twitterCmpaignPromotions;
+        }
+
+        public void CreateListOfTwitterCmpaignPromotion(SqlDataReader reader)
+        {
+
+            while (reader.Read())
+            {
+                TwitterCmpaignPromotion perCamp = new TwitterCmpaignPromotion();
+                perCamp.twitterUserName = reader.GetString(0);
+                perCamp.website= reader.GetString(1);
+                perCamp.hashtag = reader.GetString(2);
+                perCamp.email = reader.GetString(3);
+                perCamp.campaignId = reader.GetInt32(4);
+
+                twitterCmpaignPromotions.Add(perCamp);
+            }
+
+            return;
+        }
+
+        public DateTime GetLastTweetDay()
+        {
+            SqlQuery.GetSingleRowOrValue("exec GetLastTweetDate", GetLastTweetDateFromDB);
+            return lastTweetFromDatabase;
+        }
+
+        public void GetLastTweetDateFromDB(SqlCommand command)
+        {
+            
+            if (command.ExecuteScalar() == null)
+            {
+                lastTweetFromDatabase = DateTime.Now;
+            }
+            else
+            {
+                lastTweetFromDatabase = (DateTime)command.ExecuteScalar();
+            }
+
+            return;
+        }
+
+        public void InsertTweetInformationToDB(string id,string text,string date)
+        {
+            if(date == null)
+            {
+                LogManager.AddLogItemToQueue("Can not find where tweet was created", null, "Error");
+                return;
+            }
+
+            SqlQuery.InsertInfoToTableInSql("exec InsertTweetInfomration" + " " + "'" + id + "'" + "," + "'" + text + "'" + "," + "'" + date + "'");
+
+        }
+
     }
+
+
 }

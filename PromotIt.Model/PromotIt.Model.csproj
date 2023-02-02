@@ -51,6 +51,7 @@
     <Compile Include="ReportBusinessUser.cs" />
     <Compile Include="ReportDifferentUsersCount.cs" />
     <Compile Include="ReportNonprofitUser.cs" />
+    <Compile Include="TwitterCmpaignPromotion.cs" />
     <Compile Include="Wallet.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrdersToConfirm.cs" />
