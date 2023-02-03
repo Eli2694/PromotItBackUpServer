@@ -50,10 +50,10 @@ namespace PromotIt.Entitey
             activist.UpdatePoints(email,points);
         }
 
-        public void UpdateTweetsAmount(string email,int tweets,int campaignId)
+        public void UpdateTweetsAmount(string email,int tweets,int campaignId,string username)
         {
             DataActivist tweetsAmount = new DataActivist();
-            tweetsAmount.UpdateTweetsPerCampagin(email,tweets,campaignId);
+            tweetsAmount.UpdateTweetsPerCampagin(email,tweets,campaignId,username);
         }
 
         public int GetActivistPoints(string email)
@@ -122,7 +122,7 @@ namespace PromotIt.Entitey
 
                     // Get Last Date Of A Tweet 
                     DateTime LastTweetDay = dataActivist.GetLastTweetDay();
-                    LastTweetDay = LastTweetDay.AddHours(-2);
+                    LastTweetDay = LastTweetDay.AddMinutes(1);
                     if (LastTweetDay.AddDays(7) < DateTime.Now)
                     {
                         TwitterStartSearchData = DateTime.Now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm");
@@ -157,8 +157,8 @@ namespace PromotIt.Entitey
 
                             if (resultCount != 0) 
                             {
-                                //UpdateUserPoints(twitter.email, resultCount);
-                                //UpdateTweetsAmount(twitter.email, resultCount, twitter.campaignId);
+                                UpdateUserPoints(twitter.email, resultCount);
+                                UpdateTweetsAmount(twitter.email, resultCount, twitter.campaignId,twitter.twitterUserName);
 
                                 JArray dataArray = (JArray)jsonObject["data"];
 

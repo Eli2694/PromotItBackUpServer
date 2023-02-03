@@ -45,11 +45,11 @@ namespace PromotIt.DataToSql
             }
         }
 
-        public void UpdateTweetsPerCampagin(string email, int tweets, int campaignId)
+        public void UpdateTweetsPerCampagin(string email, int tweets, int campaignId,string twitterUsername)
         {
             try
             {
-                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId);
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId + "," + "'" + twitterUsername + "'");
             }
             catch (Exception ex)
             {
@@ -191,7 +191,7 @@ namespace PromotIt.DataToSql
                 return;
             }
 
-            SqlQuery.InsertInfoToTableInSql("exec InsertTweetInfomration" + " " + "'" + id + "'" + "," + "'" + text + "'" + "," + "'" + date + "'");
+            SqlQuery.InsertInfoToTableInSql("exec InsertTweetInfomration" + " " + "'" + text + "'" + "," + "'" + id + "'" + "," + "'" + date + "'");
 
         }
 

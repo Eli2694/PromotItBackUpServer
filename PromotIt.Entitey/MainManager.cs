@@ -11,7 +11,10 @@ namespace PromotIt.Entitey
     public class MainManager
     {
         //constructor
-        private MainManager() { init(); }
+        private MainManager() 
+        {
+            init();
+        }
 
         public void init()
         {
