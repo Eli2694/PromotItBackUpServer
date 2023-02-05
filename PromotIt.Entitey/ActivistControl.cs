@@ -19,12 +19,14 @@ using Tweetinvi.Exceptions;
 
 namespace PromotIt.Entitey
 {
-    public class ActivistControl : BaseEntity
+    public class ActivistControl 
     {
+        
 
         public DataActivist activist= new DataActivist();
-        public ActivistControl()
+        public ActivistControl() 
         {
+            
             twitterKeysAndTokens = activist.GetKeys();
 
             Task.Run(GetTweets);
@@ -35,7 +37,7 @@ namespace PromotIt.Entitey
 
         public void initiateActivistPoints(string email)
         {
-
+            
             activist.initiatePoints(email);
         }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class AssociationControl : BaseEntity
+    public class AssociationControl 
     {
 
         public DataAssociation association = new DataAssociation();

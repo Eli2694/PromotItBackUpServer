@@ -18,7 +18,6 @@ namespace PromotIt.Entitey
         public ActivistControl ActivistControl { get; set; }
         public OwnerControl OwnerControl { get; set; }
 
-
         //constructor
         private MainManager() 
         {
@@ -28,6 +27,7 @@ namespace PromotIt.Entitey
         public void init()
         {
             Target(LogProvider.File);
+            //LogManager Log = new LogManager();
             userControl = new UserControl();
             AssociationControl = new AssociationControl();
             CampaignControl = new CampaignControl();

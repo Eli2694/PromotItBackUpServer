@@ -142,6 +142,8 @@
   <ItemGroup>
     <Compile Include="ActivistControl.cs" />
     <Compile Include="AssociationControl.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="BasePromotionSystem.cs" />
     <Compile Include="BusinessControl.cs" />
     <Compile Include="CampaignControl.cs" />
     <Compile Include="MainManager.cs" />

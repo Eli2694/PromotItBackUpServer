@@ -8,7 +8,7 @@ using PromotIt.Model;
 
 namespace PromotIt.Entitey
 {
-    public class UserControl : BaseEntity
+    public class UserControl 
     {
         public DataUser dataUser = new DataUser();
 

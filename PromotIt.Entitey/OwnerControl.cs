@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class OwnerControl : BaseEntity
+    public class OwnerControl 
     {
         public DataOwner dataOwner = new DataOwner();
         public ReportDifferentUsersCount UsersType()

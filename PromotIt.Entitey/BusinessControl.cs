@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class BusinessControl : BaseEntity
+    public class BusinessControl 
     {
 
         public DataBusiness dataBusiness = new DataBusiness();
