@@ -10,6 +10,15 @@ namespace PromotIt.Entitey
 {
     public class MainManager
     {
+
+        public UserControl userControl { get; set; }
+        public AssociationControl AssociationControl { get; set; }
+        public CampaignControl CampaignControl { get; set; }
+        public BusinessControl BusinessControl { get; set; }
+        public ActivistControl ActivistControl { get; set; }
+        public OwnerControl OwnerControl { get; set; }
+
+
         //constructor
         private MainManager() 
         {
@@ -19,6 +28,12 @@ namespace PromotIt.Entitey
         public void init()
         {
             Target(LogProvider.File);
+            userControl = new UserControl();
+            AssociationControl = new AssociationControl();
+            CampaignControl = new CampaignControl();
+            BusinessControl = new BusinessControl();
+            ActivistControl = new ActivistControl();
+            OwnerControl = new OwnerControl();
         }
 
         // Singleton variable
@@ -28,12 +43,6 @@ namespace PromotIt.Entitey
             get { return instance; }
         }
 
-        //Class instance to get access to its functions
-        public UserControl userControl = new UserControl();
-        public AssociationControl AssociationControl = new AssociationControl();
-        public CampaignControl CampaignControl = new CampaignControl();
-        public BusinessControl BusinessControl = new BusinessControl();
-        public ActivistControl ActivistControl = new ActivistControl();
-        public OwnerControl OwnerControl = new OwnerControl();
+        
     }
 }

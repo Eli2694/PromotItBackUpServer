@@ -13,8 +13,7 @@ namespace PromotIt.DataToSql
 {
     public class DataActivist 
     {
-
-        //Global
+       //Global
         int Points { get; set; }
 
         Keys twitterKeys = new Keys();
@@ -62,8 +61,7 @@ namespace PromotIt.DataToSql
         }
 
         public int ActivistPoints(string email)
-        {
-           
+        {     
 
             SqlQuery.GetSingleRowOrValue("getActivistPoints" + " " + "'" + email + "'", GetSingleValueOrRowFromDB);
             return Points;
@@ -192,7 +190,6 @@ namespace PromotIt.DataToSql
             }
 
             SqlQuery.InsertInfoToTableInSql("exec InsertTweetInfomration" + " " + "'" + text + "'" + "," + "'" + id + "'" + "," + "'" + date + "'");
-
         }
 
     }
