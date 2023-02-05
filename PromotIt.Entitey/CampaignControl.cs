@@ -9,47 +9,42 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class CampaignControl
+    public class CampaignControl : BaseEntity
     {
+        public DataCampaign campaign = new DataCampaign();
         public void GetCampaginInfo(string name, string website, string hashtag, string userEmail,string donation)
         {
-
-            DataCampaign campaign = new DataCampaign();
+       
             campaign.addCampagin(name, website, hashtag, userEmail, donation);
         }
 
         public List<PersonalCampagin> getListOfPersonalCampaigns(string email)
         {
             List<PersonalCampagin> list = new List<PersonalCampagin>();
-            DataCampaign getList = new DataCampaign();
-            list = getList.GetListOfPersonalCampaigns(email);
+            list = campaign.GetListOfPersonalCampaigns(email);
             return list;
             
         }
 
         public void UpdatePerCamp(PersonalCampagin campaing)
         {
-            DataCampaign update = new DataCampaign();
-            update.updateCampaign(campaing);
+            campaign.updateCampaign(campaing);
 
         }
 
         public void DeleteCampaign(int ID)
         {
-            DataCampaign delete = new DataCampaign();   
-            delete.deleteCampaign(ID);
+            campaign.deleteCampaign(ID);
         }
 
         public void UpdateDonationAmount(int campaignId,string unitprice)
         {
-            DataCampaign update = new DataCampaign();
-            update.DonationAmount(campaignId,unitprice);
+            campaign.DonationAmount(campaignId,unitprice);
         }
 
         public int GetCampaginID(int productID)
         {
-            DataCampaign id = new DataCampaign();
-            return id.CampaginID(productID);
+            return campaign.CampaginID(productID);
         }
     }
 }

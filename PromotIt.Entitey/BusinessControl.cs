@@ -8,91 +8,79 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class BusinessControl
+    public class BusinessControl : BaseEntity
     {
+
+        public DataBusiness dataBusiness = new DataBusiness();
         public List<PersonalCampagin> ListOfCampaignsBusiness()
         {
-            List<PersonalCampagin> list = new List<PersonalCampagin>();
-            DataBusiness get = new DataBusiness();  
-
-            
-            list = get.GetListOfCampaigns();
+            List<PersonalCampagin> list = new List<PersonalCampagin>();      
+            list = dataBusiness.GetListOfCampaigns();
             return list;
 
         }
 
         public void GetProductInfo(string name, decimal unitprice,int unitInStock,int campaignId,string email,string image)
         {
-            DataBusiness donate = new DataBusiness();
-            donate.DonateProductToCampaign(name,unitprice,unitInStock,campaignId, email, image);
+            
+            dataBusiness.DonateProductToCampaign(name,unitprice,unitInStock,campaignId, email, image);
         }
 
         public List<Product> ListOfCampaignProducts(int campaignId,string email)
         {
             List<Product> products = new List<Product>();
-            DataBusiness list = new DataBusiness();
-            products =  list.GetListOfProductsToSpecificCampaign(campaignId, email);
+            products = dataBusiness.GetListOfProductsToSpecificCampaign(campaignId, email);
             return products;
         }
 
         public List<Product> getProducts(int campaignId)
         {
             List<Product> products = new List<Product>();
-            DataBusiness list = new DataBusiness();
-            products = list.GetListOfProducts(campaignId);
+            products = dataBusiness.GetListOfProducts(campaignId);
             return products;
         }
 
         public List<OrdersToConfirm> getOrdersOfMyProducts(string email)
         {
             List<OrdersToConfirm> orders = new List<OrdersToConfirm>();
-            DataBusiness orderList = new DataBusiness();
-            orders = orderList.GetListOfPersonalOrders(email);
+            orders = dataBusiness.GetListOfPersonalOrders(email);
 
             return orders;
         }
 
         public void DeleteProduct(int campaignId,string productName)
         {
-            DataBusiness delete = new DataBusiness();
-            delete.DelProduct(campaignId, productName);
+            dataBusiness.DelProduct(campaignId, productName);
 
         }
 
         public int GetProductId(int campaignId,string productName)
         {
-            DataBusiness productId = new DataBusiness();
             
-            int id  = productId.RetriveProductID(campaignId, productName);
+            int id  = dataBusiness.RetriveProductID(campaignId, productName);
             return id;
         }
 
         public void UpdateProduct(UpdatedProduct product)
         {
-            DataBusiness newProduct = new DataBusiness();
-            newProduct.UProduct(product);
+            dataBusiness.UProduct(product);
         }
 
         public void OrderConfirmation(int orderId,string email)
         {
-            DataBusiness confirmation = new DataBusiness();
-            confirmation.ConfirmationOfOrder(orderId, email);
+            dataBusiness.ConfirmationOfOrder(orderId, email);
         }
 
         public void BusinessCompanyRegistration(RegisterCompany company)
         {
-            DataBusiness registration = new DataBusiness();
-            registration.CompanyRegistration(company);
+            dataBusiness.CompanyRegistration(company);
         }
 
         public string getBusinessCompanyName(int ProductID)
         {
-            DataBusiness companyName = new DataBusiness();
-            string name = companyName.BusinessCompanyName(ProductID);
+            string name = dataBusiness.BusinessCompanyName(ProductID);
             return name;
         }
-
-
 
     }
 }

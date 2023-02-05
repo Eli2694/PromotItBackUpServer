@@ -19,12 +19,13 @@ using Tweetinvi.Exceptions;
 
 namespace PromotIt.Entitey
 {
-    public class ActivistControl
+    public class ActivistControl : BaseEntity
     {
+
+        public DataActivist activist= new DataActivist();
         public ActivistControl()
         {
-            DataActivist keys = new DataActivist();
-            twitterKeysAndTokens = keys.GetKeys();
+            twitterKeysAndTokens = activist.GetKeys();
 
             Task.Run(GetTweets);
         }
@@ -34,39 +35,36 @@ namespace PromotIt.Entitey
 
         public void initiateActivistPoints(string email)
         {
-            DataActivist points = new DataActivist();
-            points.initiatePoints(email);
+
+            activist.initiatePoints(email);
         }
 
         public void initiateCampaginPromotion(int CampaignId,string email,string username)
         {
-            DataActivist campagin = new DataActivist();
-            campagin.initiateCampagin(CampaignId,email, username);
+            activist.initiateCampagin(CampaignId,email, username);
         }
 
         public void UpdateUserPoints(string email , int points)
         {
-            DataActivist activist = new DataActivist();
             activist.UpdatePoints(email,points);
         }
 
         public void UpdateTweetsAmount(string email,int tweets,int campaignId,string username)
         {
-            DataActivist tweetsAmount = new DataActivist();
-            tweetsAmount.UpdateTweetsPerCampagin(email,tweets,campaignId,username);
+            
+            activist.UpdateTweetsPerCampagin(email,tweets,campaignId,username);
         }
 
         public int GetActivistPoints(string email)
         {
-            DataActivist get = new DataActivist();
-            int points = get.ActivistPoints(email);
+            
+            int points = activist.ActivistPoints(email);
             return points;
         }
 
         public void DecreasePointsAmount(int points,string email)
         {
-            DataActivist decrease =new DataActivist();
-            decrease.DecreaseActivistPoints(points, email);
+            activist.DecreaseActivistPoints(points, email);
         }  
         public JObject SearchTwitterId(string username)
         {
@@ -74,8 +72,8 @@ namespace PromotIt.Entitey
             {
                 var urlUsername = "https://api.twitter.com/2/users/by?usernames=param";
                 urlUsername = urlUsername.Replace("param", username);
-                DataActivist keys= new DataActivist();
-                twitterKeysAndTokens = keys.GetKeys();
+                //DataActivist keys= new DataActivist();
+                twitterKeysAndTokens = activist.GetKeys();
 
                 var client = new RestClient(urlUsername);
                 var request = new RestRequest("", Method.Get);

@@ -8,14 +8,15 @@ using PromotIt.Model;
 
 namespace PromotIt.Entitey
 {
-    public class UserControl
+    public class UserControl : BaseEntity
     {
+        public DataUser dataUser = new DataUser();
+
         //create function in Entitey layer that get the user data from react and move it to dataTosql layer
         public void UserInforamtion(string FullName,string Email)
         {
             try
-            {
-                DataUser dataUser = new DataUser();
+            {     
                 dataUser.addUserToTableInSql(FullName, Email);
             }
             catch (Exception ex)
@@ -29,61 +30,54 @@ namespace PromotIt.Entitey
         public List<UsersCampaign> uCampaigns()
         {
             List<UsersCampaign> ret;
-            DataUser list = new DataUser();
-            ret = list.GetListOfCampaignsForUsers();
+            
+            ret = dataUser.GetListOfCampaignsForUsers();
             return ret;
         }
 
         public int GetUserId(string email)
         {
-            DataUser id = new DataUser();
-            int ID = id.ReceiveUserId(email);
+            
+            int ID = dataUser.ReceiveUserId(email);
             return ID;
             
         }
 
         public void UsersPurchaseInfo(Order order)
         {
-            DataUser purchase = new DataUser();
-            purchase.UserOrder(order);
+            dataUser.UserOrder(order);
         }
 
         public void DecreaseUnitsInStock(int ProductId)
         {
-            DataUser stock = new DataUser();
-            stock.decrUnitsInStock(ProductId);
+            dataUser.decrUnitsInStock(ProductId);
         }
 
         public void initUserWallet(string email)
         {
-            DataUser wallet = new DataUser();
-            wallet.initWallet(email);
+            dataUser.initWallet(email);
         }
 
         public string getUserMoney(string email)
         {
-            DataUser money = new DataUser();
-            return money.getUserMoneyFromDB(email);
+            return dataUser.getUserMoneyFromDB(email);
             
         }
 
         public void updateUserMoney(string money,string email)
         {
-            DataUser uMoney = new DataUser();
-            uMoney.updateMoney(money, email);
+            dataUser.updateMoney(money, email);
 
         }
 
         public void updateUserMoneyAfterPurchase(string money, string email)
         {
-            DataUser uMoney = new DataUser();
-            uMoney.updateMoneyAfterPurchase(money, email);
+            dataUser.updateMoneyAfterPurchase(money, email);
 
         }
         public void UpdateRole(string role,string email)
         {
-            DataUser UserRole = new DataUser();
-            UserRole.UpdateUserRole(role, email);
+            dataUser.UpdateUserRole(role, email);
         }
     }
 }
