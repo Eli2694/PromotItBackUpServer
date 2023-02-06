@@ -18,8 +18,17 @@ namespace PromotIt.DataToSql
         }
         public void addAssociationSql(string AssociationName, string AssociationEmail, string AssociationWebsite, string RegisteredAssociation, string FullName, string Email)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec checkAssociation" + " " + "'" + AssociationName + "'" + "," + "'" + AssociationEmail + "'" + "," + "'" + AssociationWebsite + "'" + "," + "'" + RegisteredAssociation + "'" + "," + "'" + FullName + "'" + "," + "'" + Email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec checkAssociation" + " " + "'" + AssociationName + "'" + "," + "'" + AssociationEmail + "'" + "," + "'" + AssociationWebsite + "'" + "," + "'" + RegisteredAssociation + "'" + "," + "'" + FullName + "'" + "," + "'" + Email + "'");
+            }
+            catch (Exception exc)
+            {
 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
         }
     }
 }

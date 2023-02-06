@@ -25,7 +25,17 @@ namespace PromotIt.DataToSql
 
         public void addCampagin(string name, string website, string hashtag, string Email, string donation)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InsertCampagin" + " " + "'" + name + "'" + "," + "'" + hashtag + "'" + "," + "'" + website + "'" + "," + "'" + Email + "'" + "," + decimal.Parse(donation));
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InsertCampagin" + " " + "'" + name + "'" + "," + "'" + hashtag + "'" + "," + "'" + website + "'" + "," + "'" + Email + "'" + "," + decimal.Parse(donation));
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
         }
         
@@ -60,24 +70,60 @@ namespace PromotIt.DataToSql
 
         public void updateCampaign(PersonalCampagin campaign)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdatePersonalCampaign" + " " + "'" + campaign.campaignName + "'" + "," + "'" + campaign.campaginHashtag + "'" + "," + "'" + campaign.campaignWebsite + "'" + "," + "'" + campaign.CampaignId + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdatePersonalCampaign" + " " + "'" + campaign.campaignName + "'" + "," + "'" + campaign.campaginHashtag + "'" + "," + "'" + campaign.campaignWebsite + "'" + "," + "'" + campaign.CampaignId + "'");
+            }
+            catch (Exception exc)
+            { 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
 
         }
 
         public void deleteCampaign(int ID)
         {
-            SqlQuery.InsertInfoToTableInSql("exec deleteCampaignAndItsProducts" + " " + ID);
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec deleteCampaignAndItsProducts" + " " + ID);
+            }
+            catch (Exception exc)
+            { 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
         }
 
         public void DonationAmount(int campaignID,string unitPrice)
         {
-            SqlQuery.InsertInfoToTableInSql("exec updateDonationAmount" + " " + campaignID + "," + decimal.Parse(unitPrice));
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec updateDonationAmount" + " " + campaignID + "," + decimal.Parse(unitPrice));
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
         }
 
         public int CampaginID(int productID)
         {
-            SqlQuery.GetSingleRowOrValue("select CampaignID from Products where ProductID =" + productID, GetSingleValueOrRowFromDB);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("select CampaignID from Products where ProductID =" + productID, GetSingleValueOrRowFromDB);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
             
             return ID;
 

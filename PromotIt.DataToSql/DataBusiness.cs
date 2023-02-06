@@ -58,8 +58,15 @@ namespace PromotIt.DataToSql
 
         public void DonateProductToCampaign(string name, decimal unitprice, int unitInStock, int campaignId,string email, string image)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," + unitprice + "," + unitInStock + "," + campaignId + "," + "'" + email + "'" + "," + "'" + image + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec DonateProduct" + " " + "'" + name + "'" + "," + unitprice + "," + unitInStock + "," + campaignId + "," + "'" + email + "'" + "," + "'" + image + "'");
+            }
+            catch (Exception exc)
+            {
 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
 
         }
 
@@ -149,39 +156,87 @@ namespace PromotIt.DataToSql
 
         public void DelProduct(int campaignId, string productName)
         {
-            SqlQuery.InsertInfoToTableInSql("delete from Products where CampaignID =" + " " + campaignId + " " + "and ProductName = " + " " + "'" + productName + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("delete from Products where CampaignID =" + " " + campaignId + " " + "and ProductName = " + " " + "'" + productName + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
         }
 
         public int RetriveProductID(int campaignId, string productName)
         {
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("select ProductID from Products where CampaignID =" + campaignId + "and ProductName =" + "'" + productName + "'", GetSingleValueOrRowFromDB);
 
-            SqlQuery.GetSingleRowOrValue("select ProductID from Products where CampaignID =" + campaignId + "and ProductName =" + "'" + productName + "'", GetSingleValueOrRowFromDB);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
             return ProductID;
         }
 
         public void GetSingleValueOrRowFromDB(SqlCommand command)
         {
             ProductID = (int)command.ExecuteScalar();
-            Log.AddLogItemToQueue("Can't find product ID", null, "Error");
+            
             return;
 
         }
 
         public void UProduct(UpdatedProduct product)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdataProduct " + " " + "'" + product.productName + "'" + "," + decimal.Parse(product.unitPrice) + "," + int.Parse(product.unitsInStock) + "," + product.productId);
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdataProduct " + " " + "'" + product.productName + "'" + "," + decimal.Parse(product.unitPrice) + "," + int.Parse(product.unitsInStock) + "," + product.productId);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+
+            }
 
         }
 
         public void ConfirmationOfOrder(int orderId, string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec OrderConfirmation" + " " + orderId + "," + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec OrderConfirmation" + " " + orderId + "," + "'" + email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
         }
 
         public void CompanyRegistration(RegisterCompany company)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec CreateBusinessCompany" + " " + "'" + company.companyName + "'" + "," + "'" + company.companyWebsite + "'" + "," + "'" + company.RegisteredCompany + "'" + "," + "'" + company.Email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec CreateBusinessCompany" + " " + "'" + company.companyName + "'" + "," + "'" + company.companyWebsite + "'" + "," + "'" + company.RegisteredCompany + "'" + "," + "'" + company.Email + "'");
+            }
+            catch (Exception exc )
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
         }
 
         public string BusinessCompanyName(int ProductID)

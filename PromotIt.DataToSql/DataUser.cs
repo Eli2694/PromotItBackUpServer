@@ -24,7 +24,17 @@ namespace PromotIt.DataToSql
         }
         public void addUserToTableInSql(string FullName, string Email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec checkNewSiteUser" + " " + "'" + FullName + "'" + "," + "'" + Email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec checkNewSiteUser" + " " + "'" + FullName + "'" + "," + "'" + Email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
         }
 
@@ -62,7 +72,17 @@ namespace PromotIt.DataToSql
 
         public int ReceiveUserId(string email)
         {
-            SqlQuery.GetSingleRowOrValue("select UserID from Users where Email = " + "'" + email + "'", GetSingleValueOrRowFromDB);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("select UserID from Users where Email = " + "'" + email + "'", GetSingleValueOrRowFromDB);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
             return userID;
         }
@@ -76,22 +96,46 @@ namespace PromotIt.DataToSql
 
         public void UserOrder(Order info)
         {
-            SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.postalCode + "'" + "," + "'" + info.phoneNumber + "'" + "," + "GetDate()" + "," + 0 + ")");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("insert into orders values(" + info.userId + "," + info.productId + "," + "'" + info.country + "'" + "," + "'" + info.city + "'" + "," + "'" + info.homeAddress + "'" + "," + "'" + info.postalCode + "'" + "," + "'" + info.phoneNumber + "'" + "," + "GetDate()" + "," + 0 + ")");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
 
         }
 
         public void decrUnitsInStock(int ProductId)
         {
-            SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
+
+            try
+            {
+
+                SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
+            }
+            catch (Exception exc) { Log.AddLogItemToQueue(exc.Message, exc, "Exception"); }
 
 
         }
 
         public void initWallet(string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec InitializeWallet" + " " + "'" + email + "'");
+            
 
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec InitializeWallet" + " " + "'" + email + "'");
+            }
+            catch (Exception exc)
+            { 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
             
 
         }
@@ -118,21 +162,50 @@ namespace PromotIt.DataToSql
         public void updateMoney(string money, string email)
         {
 
-            SqlQuery.InsertInfoToTableInSql("exec UpdateUserMoney" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec UpdateUserMoney" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
             
         }
 
         public void updateMoneyAfterPurchase(string money, string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec DecreaseUserMoneyAfterBuy" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+            
 
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec DecreaseUserMoneyAfterBuy" + " " + decimal.Parse(money) + "," + "'" + email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
             
 
         }
 
         public void UpdateUserRole(string role,string email)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdateRole" + " " + "'" + role + "'" + "," + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec UpdateRole" + " " + "'" + role + "'" + "," + "'" + email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
 
         }

@@ -141,7 +141,17 @@ namespace PromotIt.DataToSql
 
         public int CampaignStats()
         {
-            SqlQuery.GetSingleRowOrValue("select count(*) from Campaigns where Campaigns.isActive = 1 ", GetTotalCampaginCount);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("select count(*) from Campaigns where Campaigns.isActive = 1 ", GetTotalCampaginCount);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
             return totalCampaignCount;
         }
 

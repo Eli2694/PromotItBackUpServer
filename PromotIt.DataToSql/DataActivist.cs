@@ -27,13 +27,33 @@ namespace PromotIt.DataToSql
         }
         public void initiatePoints(string email)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeUserPoints" + " " + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeUserPoints" + " " + "'" + email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
         }
 
         public void initiateCampagin(int CampaignId, string email,string username)
         {
-            SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeTwitterCampaignPromotion" + " " + CampaignId + "," + "'" + email  + "'" + "," + "'" + username + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeTwitterCampaignPromotion" + " " + CampaignId + "," + "'" + email + "'" + "," + "'" + username + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
         }
 
         public void UpdatePoints(string email, int points)
@@ -42,10 +62,10 @@ namespace PromotIt.DataToSql
             {
                 SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateUserPoints" + " " + "'" + email + "'" + "," + points);
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
 
-                Log.AddLogItemToQueue("Can not update user points", ex, "Exception");
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
             }
         }
 
@@ -55,10 +75,10 @@ namespace PromotIt.DataToSql
             {
                 SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec updateTweetsPerCampaign" + " " + "'" + email + "'" + "," + tweets + "," + campaignId + "," + "'" + twitterUsername + "'");
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
 
-                Log.AddLogItemToQueue("Can not update Tweets per campaign", ex, "Exception");
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
             }
 
             
@@ -66,9 +86,18 @@ namespace PromotIt.DataToSql
         }
 
         public int ActivistPoints(string email)
-        {     
+        {
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("getActivistPoints" + " " + "'" + email + "'", GetSingleValueOrRowFromDB);
+            }
+            catch (Exception exc)
+            {
 
-            SqlQuery.GetSingleRowOrValue("getActivistPoints" + " " + "'" + email + "'", GetSingleValueOrRowFromDB);
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
             return Points;
         }
 
@@ -89,7 +118,15 @@ namespace PromotIt.DataToSql
 
         public void DecreaseActivistPoints(int points, string email)
         {
-            SqlQuery.InsertInfoToTableInSql("exec decreaseActivistPoints" + " " + points + "," + "'" + email + "'");
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec decreaseActivistPoints" + " " + points + "," + "'" + email + "'");
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
 
         }
 
@@ -142,7 +179,17 @@ namespace PromotIt.DataToSql
 
         public List<TwitterCmpaignPromotion> GetListOfCampaignsAndTwitterUserNames()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec GetTwitterUsernameAndPromotedCampaigns", CreateListOfTwitterCmpaignPromotion);
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec GetTwitterUsernameAndPromotedCampaigns", CreateListOfTwitterCmpaignPromotion);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
 
             return twitterCmpaignPromotions;
         }
@@ -167,7 +214,17 @@ namespace PromotIt.DataToSql
 
         public DateTime GetLastTweetDay()
         {
-            SqlQuery.GetSingleRowOrValue("exec GetLastTweetDate", GetLastTweetDateFromDB);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("exec GetLastTweetDate", GetLastTweetDateFromDB);
+                
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
             return lastTweetFromDatabase;
         }
 
