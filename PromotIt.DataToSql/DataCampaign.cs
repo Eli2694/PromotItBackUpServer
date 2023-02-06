@@ -11,11 +11,17 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-    public class DataCampaign
+    public class DataCampaign : BaseDataSql
     {
         //Global
         int ID;
         List<PersonalCampagin> listOfPersonalCampaigns = new List<PersonalCampagin>();
+
+        LogManager Log { get; set; }
+        public DataCampaign(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+        }
 
         public void addCampagin(string name, string website, string hashtag, string Email, string donation)
         {
@@ -47,7 +53,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec GetPersonalCampaignList" + "'" + email + "'", CreateListOfPersonalCampaigns);
             if(listOfPersonalCampaigns == null)
             {
-               LogManager.AddLogItemToQueue("Can't find list of personal campaigns for nonprofit user",null,"Error");
+                Log.AddLogItemToQueue("Can't find list of personal campaigns for nonprofit user",null,"Error");
             }
             return listOfPersonalCampaigns;
         }

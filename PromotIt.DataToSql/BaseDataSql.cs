@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PromotIt.Entitey
+namespace PromotIt.DataToSql
 {
-    public class BasePromotionSystem
+    public class BaseDataSql
     {
-        public BasePromotionSystem(LogManager Log) { LogInstance = Log; }
+        public BaseDataSql(LogManager Log) { LogInstance = Log; }
         public LogManager LogInstance { get; set; }
     }
 }

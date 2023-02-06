@@ -13,7 +13,7 @@ namespace PersonalUtilities
         Task queueTask = null;
         bool stop = false;
 
-        protected LogManager()
+        public LogManager()
         {
             itemsQueue = new Queue<LogItem>();
             PopItemsFromQueue();
@@ -27,7 +27,7 @@ namespace PersonalUtilities
             Console
         }
 
-        static  ILogger MyLog { get; set; }
+        static ILogger MyLog { get; set; }
         public static ILogger Target(LogProvider aProvider)
         {
             if(MyLog == null) 
@@ -62,7 +62,7 @@ namespace PersonalUtilities
             return MyLog;
         }
 
-        public static void AddLogItemToQueue(string msg, Exception exc, string LogType)
+        public void AddLogItemToQueue(string msg, Exception exc, string LogType)
         {
 
             if(itemsQueue == null)

@@ -146,6 +146,7 @@
     <Compile Include="BasePromotionSystem.cs" />
     <Compile Include="BusinessControl.cs" />
     <Compile Include="CampaignControl.cs" />
+    <Compile Include="CommandManager.cs" />
     <Compile Include="MainManager.cs" />
     <Compile Include="OwnerControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

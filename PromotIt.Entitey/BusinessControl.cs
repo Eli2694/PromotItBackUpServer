@@ -1,4 +1,5 @@
-﻿using PromotIt.DataToSql;
+﻿using PersonalUtilities;
+using PromotIt.DataToSql;
 using PromotIt.Model;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,21 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class BusinessControl 
+    public class BusinessControl : BaseEntity
     {
 
-        public DataBusiness dataBusiness = new DataBusiness();
+        public DataBusiness dataBusiness { get; set; }
+
+        LogManager Log;
+        public BusinessControl(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+
+            dataBusiness = new DataBusiness(LogInstance);
+
+        }
+
+
         public List<PersonalCampagin> ListOfCampaignsBusiness()
         {
             List<PersonalCampagin> list = new List<PersonalCampagin>();      

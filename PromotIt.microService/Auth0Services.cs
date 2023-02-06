@@ -22,6 +22,9 @@ namespace PromotIt.microService
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "roles/{userId}")] HttpRequest req,
              string userId)
         {
+
+            LogManager logManager = new LogManager();
+
             var urlGetRoles = $"https://dev-b5tr58oncnfs4qwo.us.auth0.com/api/v2/users/{userId}/roles";
 
             var client = new RestClient(urlGetRoles);
@@ -31,13 +34,13 @@ namespace PromotIt.microService
             var response = client.Execute(request);
             if (response.IsSuccessful)
             {
-                LogManager.AddLogItemToQueue("Seccessful role assignment",null,"Event");
+                logManager.AddLogItemToQueue("Seccessful role assignment",null,"Event");
                 var json = JArray.Parse(response.Content);
                 return new OkObjectResult(json);
             }
             else
             {
-                LogManager.AddLogItemToQueue("Role Not Found",null,"Error");
+                logManager.AddLogItemToQueue("Role Not Found",null,"Error");
                 return new NotFoundResult();
             }
 

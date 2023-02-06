@@ -3,14 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PersonalUtilities;
 using PromotIt.DataToSql;
 using PromotIt.Model;
 
 namespace PromotIt.Entitey
 {
-    public class UserControl 
+    public class UserControl : BaseEntity
     {
-        public DataUser dataUser = new DataUser();
+        public DataUser dataUser { get; set; }
+
+        LogManager Log;
+        public UserControl(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+
+            dataUser = new DataUser(LogInstance);
+
+        }
 
         //create function in Entitey layer that get the user data from react and move it to dataTosql layer
         public void UserInforamtion(string FullName,string Email)

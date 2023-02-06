@@ -10,14 +10,18 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-    public class DataUser
+    public class DataUser : BaseDataSql
     {
         //Global Variable
         List<UsersCampaign> uscampaigns = new List<UsersCampaign>();
         int userID;
         string money;
 
-
+        LogManager Log { get; set; }
+        public DataUser(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+        }
         public void addUserToTableInSql(string FullName, string Email)
         {
             SqlQuery.InsertInfoToTableInSql("exec checkNewSiteUser" + " " + "'" + FullName + "'" + "," + "'" + Email + "'");
@@ -51,7 +55,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec GetAllInfoAboutCampaigns", CreateListOfAssociationsAndCampaigns);
             if(uscampaigns == null)
             {
-                LogManager.AddLogItemToQueue("Can't get user campaigns from database",null,"Error");
+                Log.AddLogItemToQueue("Can't get user campaigns from database",null,"Error");
             }
             return uscampaigns;
         }

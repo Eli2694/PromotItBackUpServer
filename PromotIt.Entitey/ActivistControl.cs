@@ -19,14 +19,16 @@ using Tweetinvi.Exceptions;
 
 namespace PromotIt.Entitey
 {
-    public class ActivistControl 
+    public class ActivistControl : BaseEntity
     {
-        
-
-        public DataActivist activist= new DataActivist();
-        public ActivistControl() 
+        LogManager Log { get; set; }
+        public DataActivist activist { get; set; }
+        public ActivistControl(LogManager log) : base(log)
         {
-            
+            Log = LogInstance;
+
+            activist = new DataActivist(LogInstance);
+
             twitterKeysAndTokens = activist.GetKeys();
 
             Task.Run(GetTweets);
@@ -90,13 +92,13 @@ namespace PromotIt.Entitey
                 }
                 else
                 {
-                    LogManager.AddLogItemToQueue("Twitter user was not found",null,"Error");
+                    Log.AddLogItemToQueue("Twitter user was not found",null,"Error");
                     return null;
                 }
             }
             catch (TwitterException exc)
             {
-                LogManager.AddLogItemToQueue(exc.Message, exc,"Exception");
+                Log.AddLogItemToQueue(exc.Message, exc,"Exception");
                 return null;
             }
 
@@ -106,22 +108,18 @@ namespace PromotIt.Entitey
         {
             try
             {
-                DataActivist dataActivist = new DataActivist();
+                //DataActivist dataActivist = new DataActivist();
                 string TwitterStartSearchData;
 
                 while (true)
                 {
                     
-                    if (twitterKeysAndTokens.apiKeySecret == null)
-                    {
-                        DataActivist keys = new DataActivist();
-                        twitterKeysAndTokens = keys.GetKeys();
-                    }
+                    
                 
-                    List<TwitterCmpaignPromotion> CampaignsAndTwitterUserName = dataActivist.GetListOfCampaignsAndTwitterUserNames();
+                    List<TwitterCmpaignPromotion> CampaignsAndTwitterUserName = activist.GetListOfCampaignsAndTwitterUserNames();
 
                     // Get Last Date Of A Tweet 
-                    DateTime LastTweetDay = dataActivist.GetLastTweetDay();
+                    DateTime LastTweetDay = activist.GetLastTweetDay();
                     LastTweetDay = LastTweetDay.AddMinutes(1);
                     if (LastTweetDay.AddDays(7) < DateTime.Now)
                     {
@@ -149,7 +147,7 @@ namespace PromotIt.Entitey
                         var response = client.Execute(request);
                         if (response.IsSuccessful)
                         {
-                            LogManager.AddLogItemToQueue("Get Successful Response From Twitter", null, "Event");
+                            Log.AddLogItemToQueue("Get Successful Response From Twitter", null, "Event");
 
                             var jsonObject = JObject.Parse(response.Content);
 
@@ -168,14 +166,14 @@ namespace PromotIt.Entitey
                                     string text = (string)data["text"];
                                     string id = (string)data["id"];
 
-                                    dataActivist.InsertTweetInformationToDB(id,text,createdAt);
+                                    activist.InsertTweetInformationToDB(id,text,createdAt);
                                 }
                             }            
 
                         }
                         else
                         {
-                            LogManager.AddLogItemToQueue("Get Unsuccessful Response From Twitter", null, "Error");
+                            Log.AddLogItemToQueue("Get Unsuccessful Response From Twitter", null, "Error");
                         }
                     }
 
@@ -185,12 +183,12 @@ namespace PromotIt.Entitey
             }
             catch (TwitterException exc)
             {
-                LogManager.AddLogItemToQueue(exc.Message, exc, "Exception");
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
                 
             }
             catch (Exception exc)
             {
-                LogManager.AddLogItemToQueue(exc.Message, exc, "Exception");
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
 
             }
 
@@ -202,11 +200,7 @@ namespace PromotIt.Entitey
             try
             {
 
-                if (twitterKeysAndTokens.accessTokenSecret == null || twitterKeysAndTokens.apiKeySecret == null || twitterKeysAndTokens.accessToken == null || twitterKeysAndTokens.apiKey == null)
-                {
-                    DataActivist keys = new DataActivist();
-                    twitterKeysAndTokens = keys.GetKeys();
-                }
+                
 
                 var userClient = new TwitterClient(twitterKeysAndTokens.apiKey,twitterKeysAndTokens.apiKeySecret,twitterKeysAndTokens.accessToken,twitterKeysAndTokens.accessTokenSecret);
 
@@ -217,7 +211,7 @@ namespace PromotIt.Entitey
             }
             catch (TwitterException e)
             {
-                LogManager.AddLogItemToQueue(e.Message + "," + " problam sending a tweet about user purchase with points",e,"Exception");
+                Log.AddLogItemToQueue(e.Message + "," + " problam sending a tweet about user purchase with points",e,"Exception");
                 Console.WriteLine(e.ToString());
             }
             

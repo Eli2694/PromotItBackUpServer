@@ -25,6 +25,8 @@ namespace PromotIt.microService
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Owner/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param, string param2)
         {
 
+            LogManager logManager = new LogManager();
+
             switch (action)
             {
                 
@@ -41,7 +43,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get statistics information about users",ex,"Exception");
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get statistics information about users",ex,"Exception");
                     }
                     break;
                 case "GETNONPROFIT":
@@ -56,9 +58,9 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        
 
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about nonprofit users",ex,"Exception");
+
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about nonprofit users",ex,"Exception");
 
                     }
                     break;
@@ -74,8 +76,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about business users",ex,"Exception");
+
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about business users",ex,"Exception");
                     }
                     break;
                 case "GETACTIVIST":
@@ -90,8 +92,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                       
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about activist users",ex,"Exception");
+
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about activist users",ex,"Exception");
                     }
                     break;
                 case "CAMPAIGNSTATS":
@@ -107,7 +109,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get total number of campaigns ",ex,"Exception");
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get total number of campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETOTALCAMPAIGNS":
@@ -123,7 +125,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get all registered campaigns ",ex,"Exception");
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get all registered campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETCAMPAIGNDONATION":
@@ -139,8 +141,8 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with donation amount",ex,"Exception");
+
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with donation amount",ex,"Exception");
                     }
                     break;
                 case "GETCAMPAIGNTWEETS":
@@ -156,7 +158,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        LogManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user",ex,"Exception");
+                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user",ex,"Exception");
                     }
                     break;
 

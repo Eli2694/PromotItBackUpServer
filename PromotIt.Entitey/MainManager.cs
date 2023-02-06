@@ -10,7 +10,7 @@ namespace PromotIt.Entitey
 {
     public class MainManager
     {
-
+        public CommandManager CommandManager { get; set; }
         public UserControl userControl { get; set; }
         public AssociationControl AssociationControl { get; set; }
         public CampaignControl CampaignControl { get; set; }
@@ -26,14 +26,16 @@ namespace PromotIt.Entitey
 
         public void init()
         {
+            CommandManager = new CommandManager();
             Target(LogProvider.File);
-            //LogManager Log = new LogManager();
-            userControl = new UserControl();
-            AssociationControl = new AssociationControl();
-            CampaignControl = new CampaignControl();
-            BusinessControl = new BusinessControl();
-            ActivistControl = new ActivistControl();
-            OwnerControl = new OwnerControl();
+            LogManager Log = new LogManager();
+            
+            userControl = new UserControl(Log);
+            AssociationControl = new AssociationControl(Log);
+            CampaignControl = new CampaignControl(Log);
+            BusinessControl = new BusinessControl(Log);
+            ActivistControl = new ActivistControl(Log);
+            OwnerControl = new OwnerControl(Log);
         }
 
         // Singleton variable

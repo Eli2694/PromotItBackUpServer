@@ -9,9 +9,18 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class CampaignControl 
+    public class CampaignControl : BaseEntity
     {
-        public DataCampaign campaign = new DataCampaign();
+        public DataCampaign campaign { get; set; }
+
+        LogManager Log;
+        public CampaignControl(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+
+            campaign = new DataCampaign(LogInstance);
+
+        }
         public void GetCampaginInfo(string name, string website, string hashtag, string userEmail,string donation)
         {
        

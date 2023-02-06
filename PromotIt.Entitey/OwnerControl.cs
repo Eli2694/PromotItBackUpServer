@@ -1,4 +1,5 @@
-﻿using PromotIt.DataToSql;
+﻿using PersonalUtilities;
+using PromotIt.DataToSql;
 using PromotIt.Model;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,18 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey
 {
-    public class OwnerControl 
+    public class OwnerControl : BaseEntity
     {
-        public DataOwner dataOwner = new DataOwner();
+        public DataOwner dataOwner { get; set; }
+
+        LogManager Log;
+        public OwnerControl(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+
+            dataOwner = new DataOwner(LogInstance);
+
+        }
         public ReportDifferentUsersCount UsersType()
         {
             

@@ -11,7 +11,7 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-    public class DataBusiness
+    public class DataBusiness : BaseDataSql
     {
         //Global Variables
         List<PersonalCampagin> campaignsForBusiness = new List<PersonalCampagin>();
@@ -19,6 +19,12 @@ namespace PromotIt.DataToSql
         List<OrdersToConfirm> listOfOrdersToConfirm = new List<OrdersToConfirm>();
         int ProductID;
         string companyName;
+
+        LogManager Log { get; set; }
+        public DataBusiness(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+        }
         public void CreateListOfCampaignsForBusiness(SqlDataReader reader)
         {
            
@@ -44,7 +50,7 @@ namespace PromotIt.DataToSql
 
             if(campaignsForBusiness == null)
             {
-                LogManager.AddLogItemToQueue("Can't find list of personal campaigns for business user",null,"Error");
+                Log.AddLogItemToQueue("Can't find list of personal campaigns for business user",null,"Error");
             }
 
             return campaignsForBusiness;
@@ -87,7 +93,7 @@ namespace PromotIt.DataToSql
 
             if(listOfProducts == null)
             {
-                LogManager.AddLogItemToQueue("Can't find list of personal donated products",null,"Error");
+                Log.AddLogItemToQueue("Can't find list of personal donated products",null,"Error");
             }
 
             return listOfProducts;
@@ -100,7 +106,7 @@ namespace PromotIt.DataToSql
 
             if(listOfProducts == null)
             {
-                LogManager.AddLogItemToQueue("Can't find list of all products donated by business representative",null,"Error");
+                Log.AddLogItemToQueue("Can't find list of all products donated by business representative",null,"Error");
             }
 
             return listOfProducts;
@@ -135,7 +141,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec GetOrdersThatBelongToMe" + " " + "'" + email + "'", CreateListOfOrdersToConfirm);
             if(listOfOrdersToConfirm == null)
             {
-                LogManager.AddLogItemToQueue("Can't find list of orders by users that purchase a product",null,"Error");
+                Log.AddLogItemToQueue("Can't find list of orders by users that purchase a product",null,"Error");
             }
 
             return listOfOrdersToConfirm;
@@ -157,7 +163,7 @@ namespace PromotIt.DataToSql
         public void GetSingleValueOrRowFromDB(SqlCommand command)
         {
             ProductID = (int)command.ExecuteScalar();
-            LogManager.AddLogItemToQueue("Can't find product ID", null, "Error");
+            Log.AddLogItemToQueue("Can't find product ID", null, "Error");
             return;
 
         }
@@ -184,7 +190,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetSingleRowOrValue("exec getCompanyName" + " " + ProductID, GetSingleStringFromDB);
             if(companyName == "none")
             {
-                LogManager.AddLogItemToQueue("Can't find company name in database", null, "Error");
+                Log.AddLogItemToQueue("Can't find company name in database", null, "Error");
             }
             return companyName;
         }

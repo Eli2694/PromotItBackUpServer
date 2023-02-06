@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDataSql.cs" />
     <Compile Include="DataActivist.cs" />
     <Compile Include="DataAssociation.cs" />
     <Compile Include="DataBusiness.cs" />

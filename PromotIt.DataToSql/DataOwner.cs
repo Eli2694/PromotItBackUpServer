@@ -11,7 +11,7 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-    public class DataOwner
+    public class DataOwner : BaseDataSql
     {
         //Global Variable
         ReportDifferentUsersCount users = new ReportDifferentUsersCount();
@@ -23,12 +23,18 @@ namespace PromotIt.DataToSql
         List<CampaignReportDonationAndTweets> campaignReportDonationOrTweets = new List<CampaignReportDonationAndTweets>();
         int determineDonationOrTweets;
 
+        LogManager Log { get; set; }
+        public DataOwner(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+        }
+
         public ReportDifferentUsersCount UserStatistics()
         {
             SqlQuery.GetAllInforamtionInSqlTable("exec CountDifferentUsers", GetStatistics);
             if (users == null)
             {
-                LogManager.AddLogItemToQueue("Can't report users statistics",null,"Error");
+                Log.AddLogItemToQueue("Can't report users statistics",null,"Error");
             }
             return users;
         }
@@ -55,7 +61,7 @@ namespace PromotIt.DataToSql
 
             if (nonprofitUsers == null)
             {
-                LogManager.AddLogItemToQueue("Can't report nonprofit users",null,"Error");
+                Log.AddLogItemToQueue("Can't report nonprofit users",null,"Error");
             }
             return nonprofitUsers;
         }
@@ -83,7 +89,7 @@ namespace PromotIt.DataToSql
 
             if(reportBusinessUsers == null)
             {
-                LogManager.AddLogItemToQueue("Can't report business users",null,"Error");
+                Log.AddLogItemToQueue("Can't report business users",null,"Error");
             }
             return reportBusinessUsers;
         }
@@ -110,7 +116,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("exec Activist", Activist);
             if(reportActivistUsers == null)
             {
-                LogManager.AddLogItemToQueue("Can't report activist users",null,"Error");
+                Log.AddLogItemToQueue("Can't report activist users",null,"Error");
             }
             return reportActivistUsers;
         }
@@ -152,7 +158,7 @@ namespace PromotIt.DataToSql
 
             if(generalCampaignReport == null)
             {
-                LogManager.AddLogItemToQueue("Can't find campaigns for owner report",null,"Error");
+                Log.AddLogItemToQueue("Can't find campaigns for owner report",null,"Error");
             }
 
             return generalCampaignReport;

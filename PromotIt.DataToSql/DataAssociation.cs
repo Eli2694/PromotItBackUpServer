@@ -8,8 +8,14 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-    public class DataAssociation
+    public class DataAssociation : BaseDataSql
     {
+
+        LogManager Log { get; set; }
+        public DataAssociation(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+        }
         public void addAssociationSql(string AssociationName, string AssociationEmail, string AssociationWebsite, string RegisteredAssociation, string FullName, string Email)
         {
             SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec checkAssociation" + " " + "'" + AssociationName + "'" + "," + "'" + AssociationEmail + "'" + "," + "'" + AssociationWebsite + "'" + "," + "'" + RegisteredAssociation + "'" + "," + "'" + FullName + "'" + "," + "'" + Email + "'");

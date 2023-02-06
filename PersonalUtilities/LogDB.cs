@@ -17,24 +17,14 @@ namespace PersonalUtilities
         }
         public void Log(LogItem item)
         {
-            try
+            if (item.exceptionSource == null)
             {
-                if (item.exceptionSource == null)
-                {
-                    SqlQuery.InsertInfoToTableInSql("exec LoggingToDataBase" + " " + "'" + item.message + "'" + "," +"NULL"+ "," + "'" + item.type + "'" + "," + "'" + item.dateTime + "'");
-                }
-                else
-                {
-                    SqlQuery.InsertInfoToTableInSql("exec LoggingToDataBase" + " " + "'" + item.message + "'" + "," + "'" + item.exceptionSource.StackTrace.ToString() + "'" + "," + "'" + item.type + "'" + "," + "'" + item.dateTime + "'");
-                }
-
-                
+                SqlQuery.InsertInfoToTableInSql("exec LoggingToDataBase" + " " + "'" + item.message + "'" + "," + "NULL" + "," + "'" + item.type + "'" + "," + "'" + item.dateTime + "'");
             }
-            catch (Exception ex)
+            else
             {
-
-                LogManager.AddLogItemToQueue(ex.Message,ex, "Exception");
-            }    
+                SqlQuery.InsertInfoToTableInSql("exec LoggingToDataBase" + " " + "'" + item.message + "'" + "," + "'" + item.exceptionSource.StackTrace.ToString() + "'" + "," + "'" + item.type + "'" + "," + "'" + item.dateTime + "'");
+            }
         }
         
         public void LogCheckHoseKeeping()

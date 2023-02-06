@@ -11,7 +11,7 @@ using PersonalUtilities;
 
 namespace PromotIt.DataToSql
 {
-    public class DataActivist 
+    public class DataActivist :BaseDataSql
     {
        //Global
         int Points { get; set; }
@@ -20,6 +20,11 @@ namespace PromotIt.DataToSql
 
         List<TwitterCmpaignPromotion> twitterCmpaignPromotions= new List<TwitterCmpaignPromotion>();
         DateTime lastTweetFromDatabase { get; set; }
+        LogManager Log { get; set; }
+        public DataActivist(LogManager log) : base(log)
+        {
+            Log = LogInstance;
+        }
         public void initiatePoints(string email)
         {
             SqlQuery.InsertInfoToTableInSqlAndGetAnswer("exec InitializeUserPoints" + " " + "'" + email + "'");
@@ -40,7 +45,7 @@ namespace PromotIt.DataToSql
             catch (Exception ex)
             {
 
-                LogManager.AddLogItemToQueue("Can not update user points", ex, "Exception");
+                Log.AddLogItemToQueue("Can not update user points", ex, "Exception");
             }
         }
 
@@ -53,7 +58,7 @@ namespace PromotIt.DataToSql
             catch (Exception ex)
             {
 
-                LogManager.AddLogItemToQueue("Can not update Tweets per campaign", ex, "Exception");
+                Log.AddLogItemToQueue("Can not update Tweets per campaign", ex, "Exception");
             }
 
             
@@ -93,7 +98,7 @@ namespace PromotIt.DataToSql
             SqlQuery.GetAllInforamtionInSqlTable("select KeyValues from KeysAndTokens", TwitterKeysFromDB);
             if (twitterKeys == null)
             {
-                LogManager.AddLogItemToQueue("can't get twitter keys and tokens from database", null, "Error");
+                Log.AddLogItemToQueue("can't get twitter keys and tokens from database", null, "Error");
             }
 
             return twitterKeys;
@@ -185,7 +190,7 @@ namespace PromotIt.DataToSql
         {
             if(date == null)
             {
-                LogManager.AddLogItemToQueue("Can not find where tweet was created", null, "Error");
+                Log.AddLogItemToQueue("Can not find where tweet was created", null, "Error");
                 return;
             }
 
