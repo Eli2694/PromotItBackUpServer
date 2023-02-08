@@ -122,9 +122,7 @@ namespace PromotIt.DataToSql
 
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
             }
-
-            
-            
+      
             return ID;
 
         }
