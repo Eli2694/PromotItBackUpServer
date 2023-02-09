@@ -15,6 +15,7 @@ namespace PromotIt.DataLayer
 
         //Global ConnectionString 
         static string  connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=PromotIt;Data Source=localhost\sqlexpress";
+        
         public static void InsertInfoToTableInSql(string SqlQuery)
         {
             

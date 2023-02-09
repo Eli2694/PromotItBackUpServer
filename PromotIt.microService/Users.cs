@@ -36,7 +36,7 @@ namespace PromotIt.microService
                     if (order.country == null || order.city == null || order.homeAddress == null || order.postalCode == null || order.phoneNumber == null)
                     {
                         string response = "faild to insert information into DB";
-                        //logManager.AddLogItemToQueue("faild to order a product",null,"Error");
+                        MainManager.Instance.Log.AddLogItemToQueue("faild to order a product",null,"Error");
                         return new OkObjectResult(response);
 
                     }
@@ -51,7 +51,7 @@ namespace PromotIt.microService
                         catch (Exception ex)
                         {
 
-                            //logManager.AddLogItemToQueue(ex.Message + "," + "faild to order a product and save the inforamtion in database",ex,"Exception");
+                            MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to order a product and save the inforamtion in database",ex,"Exception");
                         }
 
                     }
@@ -69,7 +69,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                       // logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns ",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETID":
@@ -83,7 +83,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get user id ",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get user id ",ex,"Exception");
                     }
                     break;
                 case "UpdateStock":
@@ -95,7 +95,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                       // logManager.AddLogItemToQueue(ex.Message + "," + "faild to update product stock",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to update product stock",ex,"Exception");
                     }
                     break;
                 case "InitWallet":
@@ -107,7 +107,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to initialze wallet of a user",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to initialze wallet of a user",ex,"Exception");
                     }
                     break;
                 case "GETUSERMONEY":
@@ -121,7 +121,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get user money from databse",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get user money from databse",ex,"Exception");
                     }
                     break;
                 case "ADDMONEY":
@@ -135,7 +135,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to add money to user",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to add money to user",ex,"Exception");
                     }
                     break;
                 case "DECREASEMONEY":
@@ -149,7 +149,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to Decrease money after purchase",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to Decrease money after purchase",ex,"Exception");
                     }
                     break;
                 case "ROLES":
@@ -163,7 +163,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to update user role from auth0, faild to change user role in database",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to update user role from auth0, faild to change user role in database",ex,"Exception");
 
                     }
                     break;

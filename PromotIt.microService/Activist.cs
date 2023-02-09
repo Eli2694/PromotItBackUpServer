@@ -19,7 +19,7 @@ using static System.Net.WebRequestMethods;
 using Tweetinvi;
 using Tweetinvi.Exceptions;
 using Newtonsoft.Json.Linq;
-using PersonalUtilities;
+
 
 namespace PromotIt.microService
 {
@@ -42,7 +42,7 @@ namespace PromotIt.microService
                         var json = MainManager.Instance.ActivistControl.SearchTwitterId(param);
                         if(json == null)
                         {
-                            //logManager.AddLogItemToQueue("Twitter user was not found",null,"Error");
+                            MainManager.Instance.Log.AddLogItemToQueue("Twitter user was not found",null,"Error");
                             return new NotFoundResult();
                         }
                         else
@@ -53,7 +53,7 @@ namespace PromotIt.microService
                     }                   
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message, ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message, ex,"Exception");
                         
                     }
                     break;
@@ -69,7 +69,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue("Problam in inserting to database User id,Twitter Username,campaign id and zero number of tweets", ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue("Problam in inserting to database User id,Twitter Username,campaign id and zero number of tweets", ex,"Exception");
                     }
                     break;
                 case "INITIATEPOINTS":
@@ -85,7 +85,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "Problam Initiate Activist Points", ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "Problam Initiate Activist Points", ex,"Exception");
                     }
                     break;
                 case "GETPOINTS":
@@ -100,7 +100,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
                 case "DROPOINTS":
@@ -115,7 +115,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
                 case "TWITTERMESSAGE":
@@ -124,12 +124,12 @@ namespace PromotIt.microService
                         //After buying a product using points,The site will post a notice about it
 
                         MainManager.Instance.ActivistControl.SendMessageInTwitter(param,param2);
-                        //logManager.AddLogItemToQueue("Purchase Product With Twitter Points",null, "Event");
+                        MainManager.Instance.Log.AddLogItemToQueue("Purchase Product With Twitter Points",null, "Event");
 
                     }     
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
 

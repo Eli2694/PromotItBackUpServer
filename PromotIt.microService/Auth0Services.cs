@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 using PersonalUtilities;
+using PromotIt.Entitey;
 
 namespace PromotIt.microService
 {
@@ -33,13 +34,13 @@ namespace PromotIt.microService
             var response = client.Execute(request);
             if (response.IsSuccessful)
             {
-                //logManager.AddLogItemToQueue("Seccessful role assignment",null,"Event");
+                MainManager.Instance.Log.AddLogItemToQueue("Seccessful role assignment",null,"Event");
                 var json = JArray.Parse(response.Content);
                 return new OkObjectResult(json);
             }
             else
             {
-                //logManager.AddLogItemToQueue("Role Not Found",null,"Error");
+                MainManager.Instance.Log.AddLogItemToQueue("Role Not Found",null,"Error");
                 return new NotFoundResult();
             }
 

@@ -45,7 +45,7 @@ namespace PromotIt.microService
                 }
                 catch (Exception ex)
                 {
-                    //logManager.AddLogItemToQueue(ex.Message + "," + "register association information into DB",ex,"Exception");
+                    MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "register association information into DB",ex,"Exception");
                     Console.WriteLine(ex.Message);
                 }
 

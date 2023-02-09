@@ -12,10 +12,7 @@
     <PackageReference Include="TweetinviAPI" Version="5.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PersonalUtilities\PersonalUtilities.csproj" />
-    <ProjectReference Include="..\PromotIt.DataToSql\PromotIt.DataToSql.csproj" />
     <ProjectReference Include="..\PromotIt.Entitey\PromotIt.Entitey.csproj" />
-    <ProjectReference Include="..\PromotIt.Model\PromotIt.Model.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

@@ -43,7 +43,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get statistics information about users",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get statistics information about users",ex,"Exception");
                     }
                     break;
                 case "GETNONPROFIT":
@@ -60,7 +60,7 @@ namespace PromotIt.microService
                     {
 
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about nonprofit users",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get information about nonprofit users",ex,"Exception");
 
                     }
                     break;
@@ -77,7 +77,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about business users",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get information about business users",ex,"Exception");
                     }
                     break;
                 case "GETACTIVIST":
@@ -93,7 +93,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get information about activist users",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get information about activist users",ex,"Exception");
                     }
                     break;
                 case "CAMPAIGNSTATS":
@@ -109,7 +109,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get total number of campaigns ",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get total number of campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETOTALCAMPAIGNS":
@@ -125,7 +125,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get all registered campaigns ",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get all registered campaigns ",ex,"Exception");
                     }
                     break;
                 case "GETCAMPAIGNDONATION":
@@ -142,7 +142,7 @@ namespace PromotIt.microService
                     {
 
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with donation amount",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with donation amount",ex,"Exception");
                     }
                     break;
                 case "GETCAMPAIGNTWEETS":
@@ -158,7 +158,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get list of campaigns with number of tweets in twitter by activist user",ex,"Exception");
                     }
                     break;
 

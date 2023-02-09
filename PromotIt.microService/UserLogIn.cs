@@ -42,14 +42,14 @@ namespace PromotIt.microService
                 {
                     MainManager.Instance.userControl.UserInforamtion(user.FullName, user.Email);
                     string responseMessage = "Insert User information into DB";
-                    //logManager.AddLogItemToQueue(responseMessage,null,"Event");
+                    MainManager.Instance.Log.AddLogItemToQueue(responseMessage,null,"Event");
                     return new OkObjectResult(responseMessage);
                 }
                 catch (Exception ex)
                 {
 
 
-                    //logManager.AddLogItemToQueue(ex.Message + "," + "faild to insert user basic inforamtion into database",ex,"Exception");
+                    MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to insert user basic inforamtion into database",ex,"Exception");
                 }
 
             }

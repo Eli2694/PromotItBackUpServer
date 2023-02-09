@@ -36,7 +36,7 @@ namespace PromotIt.microService
                     if (campaign.campaignName == null || campaign.campaignWebsite == null || campaign.campaginHashtag == null || campaign.donationAmount == null )
                     {
                         string response = "faild to insert information into DB";
-                        //logManager.AddLogItemToQueue("faild to insert information into DB",null,"Error");
+                        MainManager.Instance.Log.AddLogItemToQueue("faild to insert information into DB",null,"Error");
 
                         return new OkObjectResult(response);
 
@@ -48,13 +48,13 @@ namespace PromotIt.microService
                             MainManager.Instance.CampaignControl.GetCampaginInfo(campaign.campaignName, campaign.campaignWebsite, campaign.campaginHashtag,  campaign.Email,campaign.donationAmount);
 
                             string responseMessage = "Insert campaign information into DB";
-                            //logManager.AddLogItemToQueue("Register campaign information into DB",null, "Event");
+                            MainManager.Instance.Log.AddLogItemToQueue("Register campaign information into DB",null, "Event");
                             return new OkObjectResult(responseMessage);
                         }
                         catch (Exception ex)
                         {
 
-                            //logManager.AddLogItemToQueue(ex.Message + "," + "faild to insert information into DB",ex,"Exception");
+                            MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to insert information into DB",ex,"Exception");
                         }
 
                     }
@@ -73,7 +73,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get personal campaigns from database",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get personal campaigns from database",ex,"Exception");
                     }
                     break;
                 case "DELETE":
@@ -86,7 +86,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to delete campaign from database",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to delete campaign from database",ex,"Exception");
                         
                     }
                     break;
@@ -97,7 +97,7 @@ namespace PromotIt.microService
                     if (personalCampagin.campaignName == null || personalCampagin.campaignWebsite == null || personalCampagin.campaginHashtag == null)
                     {
                         string response = "faild update";
-                        //logManager.AddLogItemToQueue("faild to update campaign",null,"Error");
+                        MainManager.Instance.Log.AddLogItemToQueue("faild to update campaign",null,"Error");
 
                         return new OkObjectResult(response);
                     }
@@ -112,7 +112,7 @@ namespace PromotIt.microService
                         }
                         catch (Exception ex)
                         {
-                            //logManager.AddLogItemToQueue(ex.Message + "," + "faild to update campaign information in database",ex,"Exception");
+                            MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to update campaign information in database",ex,"Exception");
                         }
                     }
                     break;
@@ -129,7 +129,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get campaign id",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get campaign id",ex,"Exception");
                     }
                     break;
                 case "DONATIONAMOUNT":
@@ -142,7 +142,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to update donation amount of campaign",ex,"Exception");
+                        MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to update donation amount of campaign",ex,"Exception");
                     }
                     break;
                 default:
