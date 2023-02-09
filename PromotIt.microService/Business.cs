@@ -24,7 +24,6 @@ namespace PromotIt.microService
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Business/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2)
         {
 
-            LogManager logManager = new LogManager();
 
             string requestBody;
 
@@ -37,7 +36,7 @@ namespace PromotIt.microService
                     if (product.productName == null || decimal.Parse(product.unitPrice) == 0 || int.Parse(product.unitsInStock) == 0 || product.Email == null)
                     {
                         string response = "faild to donate product";
-                        logManager.AddLogItemToQueue("faild to donate product",null,"Error");
+                        //logManager.AddLogItemToQueue("faild to donate product",null,"Error");
                         return new OkObjectResult(response);
 
                     }
@@ -49,13 +48,13 @@ namespace PromotIt.microService
                             MainManager.Instance.BusinessControl.GetProductInfo(product.productName, decimal.Parse(product.unitPrice), int.Parse(product.unitsInStock), product.CampaignId,product.Email,product.imageURL);
 
                             string responseMessage = "Donate Product";
-                            logManager.AddLogItemToQueue("Donate product to campaign",null,"Event");
+                            //logManager.AddLogItemToQueue("Donate product to campaign",null,"Event");
                             return new OkObjectResult(responseMessage);
                         }
                         catch (Exception ex)
                         {
-                            logManager.AddLogItemToQueue(ex.Message + "," + "Problam of donating product",ex,"Exception");
-                            Console.WriteLine(ex.Message);
+                            //logManager.AddLogItemToQueue(ex.Message + "," + "Problam of donating product",ex,"Exception");
+                           
                         }
 
                     }
@@ -74,8 +73,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message + "," +  "faild to get list of campaigns for business",ex,"Exception");
-                        Console.WriteLine(ex.Message);
+                        //logManager.AddLogItemToQueue(ex.Message + "," +  "faild to get list of campaigns for business",ex,"Exception");
+                        
                     }
                     break;
                 case "DELETEPRPDUCT":
@@ -87,8 +86,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to delete product",ex,"Exception");
-                        Console.WriteLine(ex.Message);
+                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to delete product",ex,"Exception");
+                        
                     }
                     break;
                 case "Update":
@@ -98,7 +97,7 @@ namespace PromotIt.microService
                         if (uProduct.productName == null)
                         {
 
-                        logManager.AddLogItemToQueue("faild to update product",null,"Error");
+                        //logManager.AddLogItemToQueue("faild to update product",null,"Error");
                             string response = "faild update";
                             return new OkObjectResult(response);
                         }
@@ -113,8 +112,8 @@ namespace PromotIt.microService
                             }
                             catch (Exception ex)
                             {
-                            logManager.AddLogItemToQueue(ex.Message + "," + "faild to update product", ex, "Exception");
-                                Console.WriteLine(ex.Message);
+                            //logManager.AddLogItemToQueue(ex.Message + "," + "faild to update product", ex, "Exception");
+                                
                             }
                         }
                     break;
@@ -128,8 +127,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get product id",ex,"Exception");
-                        Console.WriteLine(ex.Message);
+                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get product id",ex,"Exception");
+                       
 
                     }
 
@@ -145,8 +144,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of products",ex,"Exception");
+                        
+                        //logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of products",ex,"Exception");
 
                     }
 
@@ -162,7 +161,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        // log
 
                     }
                     break;
@@ -177,8 +176,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of orders to confirm",ex,"Exception");
+                        
+                       // logManager.AddLogItemToQueue(ex.Message + "," + "faild to get list of orders to confirm",ex,"Exception");
 
                     }
                     break;
@@ -194,8 +193,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        logManager.AddLogItemToQueue(ex.Message + "," + "unsuccessful Order Confirmation",ex,"Exception");
+                        
+                        //logManager.AddLogItemToQueue(ex.Message + "," + "unsuccessful Order Confirmation",ex,"Exception");
 
                     }
 
@@ -207,7 +206,7 @@ namespace PromotIt.microService
                     if (company.companyName == null || company.companyWebsite == null || company.Email == null)
                     {
                         string response = "faild registration of business company";
-                        logManager.AddLogItemToQueue("faild registration of business company",null,"Error");
+                        //logManager.AddLogItemToQueue("faild registration of business company",null,"Error");
 
 
                         return new OkObjectResult(response);
@@ -219,15 +218,15 @@ namespace PromotIt.microService
                             MainManager.Instance.BusinessControl.BusinessCompanyRegistration(company);
 
                             string response = "successful registration of business comapny ";
-                            logManager.AddLogItemToQueue("successful registration of business comapny",null,"Error");
+                            //logManager.AddLogItemToQueue("successful registration of business comapny",null,"Error");
                             return new OkObjectResult(response);
 
 
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(ex.Message);
-                            logManager.AddLogItemToQueue(ex.Message + "," + "faild registration of business company",ex,"Exception");
+                            
+                           // logManager.AddLogItemToQueue(ex.Message + "," + "faild registration of business company",ex,"Exception");
 
                         }
                     }
@@ -244,8 +243,8 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
-                        logManager.AddLogItemToQueue(ex.Message + "," + "Problam getting company name",ex,"Exception");
+                       
+                        //logManager.AddLogItemToQueue(ex.Message + "," + "Problam getting company name",ex,"Exception");
 
                     }
                     break;

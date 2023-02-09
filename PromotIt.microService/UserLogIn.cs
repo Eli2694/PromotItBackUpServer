@@ -24,7 +24,7 @@ namespace PromotIt.microService
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
 
-            LogManager logManager = new LogManager();
+ 
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Model.Users user = new Model.Users();
@@ -42,14 +42,14 @@ namespace PromotIt.microService
                 {
                     MainManager.Instance.userControl.UserInforamtion(user.FullName, user.Email);
                     string responseMessage = "Insert User information into DB";
-                    logManager.AddLogItemToQueue(responseMessage,null,"Event");
+                    //logManager.AddLogItemToQueue(responseMessage,null,"Event");
                     return new OkObjectResult(responseMessage);
                 }
                 catch (Exception ex)
                 {
 
 
-                    logManager.AddLogItemToQueue(ex.Message + "," + "faild to insert user basic inforamtion into database",ex,"Exception");
+                    //logManager.AddLogItemToQueue(ex.Message + "," + "faild to insert user basic inforamtion into database",ex,"Exception");
                 }
 
             }

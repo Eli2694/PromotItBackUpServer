@@ -30,8 +30,7 @@ namespace PromotIt.DataLayer
                 }
                 catch (SqlException ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    return;
+                    throw;
 
                 }
 
@@ -45,9 +44,9 @@ namespace PromotIt.DataLayer
                     }
                     catch (Exception ex)
                     {
-                        
-                        Console.WriteLine(ex.Message);
-                        return;
+
+                        throw;
+
                     }
                     
 
@@ -69,8 +68,8 @@ namespace PromotIt.DataLayer
                 }
                 catch (SqlException ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    return;
+                    throw;
+                    
 
                 }
 
@@ -105,9 +104,7 @@ namespace PromotIt.DataLayer
                     }
                     catch (SqlException ex)
                     {
-                        Console.WriteLine(ex.Message);
-
-                        return;
+                        throw;
 
                     }
                     //Reader
@@ -135,8 +132,7 @@ namespace PromotIt.DataLayer
                 }
                 catch (SqlException ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    return;
+                    throw;
 
                 }
 

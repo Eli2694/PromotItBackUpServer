@@ -33,7 +33,7 @@ namespace PersonalUtilities
             if(MyLog == null) 
             {
                 // Create a one-time instance of LogManager to run the constructor of the class
-                LogManager instance = new LogManager();
+                //LogManager instance = new LogManager();
 
                 // Determine where to write the log
                 if (aProvider == LogProvider.File)
@@ -106,7 +106,7 @@ namespace PersonalUtilities
                     if(MyLog is LogFile)
                     {
                         MyLog.LogCheckHoseKeeping();
-                        System.Threading.Thread.Sleep(1000 * 60 * 60);
+                        System.Threading.Thread.Sleep(1000 * 60 * 1);
                     }
                     
                     if(MyLog is LogDB)

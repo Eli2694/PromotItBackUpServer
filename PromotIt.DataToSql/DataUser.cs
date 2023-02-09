@@ -32,9 +32,7 @@ namespace PromotIt.DataToSql
             {
 
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
-            }
-
-            
+            }           
 
         }
 
@@ -62,8 +60,23 @@ namespace PromotIt.DataToSql
 
         public List<UsersCampaign> GetListOfCampaignsForUsers()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec GetAllInfoAboutCampaigns", CreateListOfAssociationsAndCampaigns);
-            if(uscampaigns == null)
+            if(uscampaigns.Count != 0)
+            {
+                uscampaigns.Clear();
+            }
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec GetAllInfoAboutCampaigns", CreateListOfAssociationsAndCampaigns);
+            }
+            catch (Exception ex)
+            {
+
+                Log.AddLogItemToQueue(ex.Message, ex, "Exception");
+            }
+
+            
+            if(uscampaigns.Count() == 0)
             {
                 Log.AddLogItemToQueue("Can't get user campaigns from database",null,"Error");
             }
@@ -106,9 +119,6 @@ namespace PromotIt.DataToSql
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
             }
 
-            
-
-
         }
 
         public void decrUnitsInStock(int ProductId)
@@ -119,7 +129,10 @@ namespace PromotIt.DataToSql
 
                 SqlQuery.InsertInfoToTableInSql("exec UpdateUnitsInStockAfterPurchase" + " " + ProductId);
             }
-            catch (Exception exc) { Log.AddLogItemToQueue(exc.Message, exc, "Exception"); }
+            catch (Exception exc)
+            { 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
 
 
         }
@@ -142,7 +155,18 @@ namespace PromotIt.DataToSql
 
         public string getUserMoneyFromDB(string email)
         {
-            SqlQuery.GetSingleRowOrValue("exec getUserMoney" + " " + "'" + email + "'", GetValueFromDB);
+            try
+            {
+                SqlQuery.GetSingleRowOrValue("exec getUserMoney" + " " + "'" + email + "'", GetValueFromDB);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+                throw;
+            }
+
+            
+
             if(money == null)
             {
                 return money = "0";
@@ -170,9 +194,7 @@ namespace PromotIt.DataToSql
             {
 
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
-            }
-
-            
+            }            
             
         }
 
@@ -205,11 +227,7 @@ namespace PromotIt.DataToSql
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
             }
 
-            
-
-
         }
-
 
     }
 }

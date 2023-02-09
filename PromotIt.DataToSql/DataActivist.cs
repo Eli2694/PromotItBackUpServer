@@ -79,9 +79,7 @@ namespace PromotIt.DataToSql
             {
 
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
-            }
-
-            
+            }         
 
         }
 
@@ -132,7 +130,19 @@ namespace PromotIt.DataToSql
 
         public Keys GetKeys()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("select KeyValues from KeysAndTokens", TwitterKeysFromDB);
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("select KeyValues from KeysAndTokens", TwitterKeysFromDB);
+            }
+            catch (Exception exc) 
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+            
+            
+
+
             if (twitterKeys == null)
             {
                 Log.AddLogItemToQueue("can't get twitter keys and tokens from database", null, "Error");
@@ -179,8 +189,14 @@ namespace PromotIt.DataToSql
 
         public List<TwitterCmpaignPromotion> GetListOfCampaignsAndTwitterUserNames()
         {
+            if (twitterCmpaignPromotions.Count() != 0)
+            {
+                twitterCmpaignPromotions.Clear();
+            }
+
             try
             {
+               
                 SqlQuery.GetAllInforamtionInSqlTable("exec GetTwitterUsernameAndPromotedCampaigns", CreateListOfTwitterCmpaignPromotion);
             }
             catch (Exception exc)
@@ -250,8 +266,16 @@ namespace PromotIt.DataToSql
                 Log.AddLogItemToQueue("Can not find where tweet was created", null, "Error");
                 return;
             }
+            try
+            {
+                SqlQuery.InsertInfoToTableInSql("exec InsertTweetInfomration" + " " + "'" + text + "'" + "," + "'" + id + "'" + "," + "'" + date + "'");
+            }
+            catch (Exception exc)
+            { 
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception"); 
+            }
 
-            SqlQuery.InsertInfoToTableInSql("exec InsertTweetInfomration" + " " + "'" + text + "'" + "," + "'" + id + "'" + "," + "'" + date + "'");
+            
         }
 
     }

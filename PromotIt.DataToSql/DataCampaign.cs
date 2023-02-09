@@ -33,12 +33,9 @@ namespace PromotIt.DataToSql
             {
 
                 Log.AddLogItemToQueue(exc.Message, exc, "Exception");
-            }
+            }       
 
-            
-
-        }
-        
+        }     
         public void CreateListOfPersonalCampaigns(SqlDataReader reader)
         {
 
@@ -60,8 +57,23 @@ namespace PromotIt.DataToSql
 
         public List<PersonalCampagin> GetListOfPersonalCampaigns(string email)
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec GetPersonalCampaignList" + "'" + email + "'", CreateListOfPersonalCampaigns);
-            if(listOfPersonalCampaigns == null)
+
+            if(listOfPersonalCampaigns.Count() != 0)
+            {
+                listOfPersonalCampaigns.Clear();
+            }
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec GetPersonalCampaignList" + "'" + email + "'", CreateListOfPersonalCampaigns);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
+            if(listOfPersonalCampaigns.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't find list of personal campaigns for nonprofit user",null,"Error");
             }

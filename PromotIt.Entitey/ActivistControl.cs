@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Core.Models;
 using Tweetinvi.Exceptions;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace PromotIt.Entitey
@@ -113,22 +114,25 @@ namespace PromotIt.Entitey
 
                 while (true)
                 {
-                    
+                    int tweetCounter = 0;
                     
                 
                     List<TwitterCmpaignPromotion> CampaignsAndTwitterUserName = activist.GetListOfCampaignsAndTwitterUserNames();
 
                     // Get Last Date Of A Tweet 
-                    DateTime LastTweetDay = activist.GetLastTweetDay();
-                    LastTweetDay = LastTweetDay.AddMinutes(1);
-                    if (LastTweetDay.AddDays(7) < DateTime.Now)
-                    {
-                        TwitterStartSearchData = DateTime.Now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm");
-                    }
-                    else
-                    {
-                        TwitterStartSearchData = LastTweetDay.ToString("yyyy-MM-ddTHH:mm");
-                    }
+                    DateTime LastTweetDate = activist.GetLastTweetDay();
+                    LastTweetDate = LastTweetDate.AddMinutes(1);
+
+                    //if (LastTweetDay.AddDays(7) < DateTime.Now)
+                    //{
+                    //    TwitterStartSearchData = DateTime.Now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm");
+                    //}
+                    //else
+                    //{
+                    //    TwitterStartSearchData = LastTweetDay.ToString("yyyy-MM-ddTHH:mm");
+                    //}
+
+                    TwitterStartSearchData = LastTweetDate.ToString("yyyy-MM-ddTHH:mm");
 
                     foreach (TwitterCmpaignPromotion twitter in CampaignsAndTwitterUserName)
                     {
@@ -155,6 +159,7 @@ namespace PromotIt.Entitey
 
                             if (resultCount != 0) 
                             {
+                                tweetCounter++;
                                 UpdateUserPoints(twitter.email, resultCount);
                                 UpdateTweetsAmount(twitter.email, resultCount, twitter.campaignId,twitter.twitterUserName);
 
@@ -168,7 +173,14 @@ namespace PromotIt.Entitey
 
                                     activist.InsertTweetInformationToDB(id,text,createdAt);
                                 }
-                            }            
+                            }
+                            
+                            if(tweetCounter == 0 && LastTweetDate.AddDays(7) < DateTime.Now)
+                            {
+                                TwitterStartSearchData = DateTime.Now.AddDays(7).ToString("yyyy-MM-ddTHH:mm");
+
+                                activist.InsertTweetInformationToDB("0000", "none", TwitterStartSearchData);
+                            }
 
                         }
                         else

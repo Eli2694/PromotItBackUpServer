@@ -22,7 +22,6 @@ namespace PromotIt.microService
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
-            LogManager logManager = new LogManager();
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Model.Association association = new Model.Association();
@@ -30,7 +29,7 @@ namespace PromotIt.microService
             if (association.AssociationName == null || association.AssociationEmail == null || association.AssociationWebsite == null)
             {
 
-                logManager.AddLogItemToQueue("faild to insert association into DB", null, "Error");
+                //logManager.AddLogItemToQueue("faild to insert association into DB", null, "Error");
                 string response = "faild to insert information into DB";      
                 return new OkObjectResult(response);
 
@@ -46,7 +45,7 @@ namespace PromotIt.microService
                 }
                 catch (Exception ex)
                 {
-                    logManager.AddLogItemToQueue(ex.Message + "," + "register association information into DB",ex,"Exception");
+                    //logManager.AddLogItemToQueue(ex.Message + "," + "register association information into DB",ex,"Exception");
                     Console.WriteLine(ex.Message);
                 }
 

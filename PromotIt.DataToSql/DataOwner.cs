@@ -31,7 +31,16 @@ namespace PromotIt.DataToSql
 
         public ReportDifferentUsersCount UserStatistics()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec CountDifferentUsers", GetStatistics);
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec CountDifferentUsers", GetStatistics);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
             if (users == null)
             {
                 Log.AddLogItemToQueue("Can't report users statistics",null,"Error");
@@ -57,9 +66,23 @@ namespace PromotIt.DataToSql
 
         public List<ReportNonprofitUser> NonprofitUserList()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec Nonprofit", Nonprofit);
 
-            if (nonprofitUsers == null)
+            if(nonprofitUsers.Count() != 0)
+            {
+                nonprofitUsers.Clear();
+            }
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec Nonprofit", Nonprofit);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }    
+
+            if (nonprofitUsers.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't report nonprofit users",null,"Error");
             }
@@ -85,9 +108,24 @@ namespace PromotIt.DataToSql
 
         public List<ReportBusinessUser> BusinessUserList()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec Buisness", Buisness);
+            if(reportBusinessUsers.Count != 0)
+            {
+                reportBusinessUsers.Clear();
+            }
 
-            if(reportBusinessUsers == null)
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec Buisness", Buisness);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
+
+            if(reportBusinessUsers.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't report business users",null,"Error");
             }
@@ -113,8 +151,22 @@ namespace PromotIt.DataToSql
 
         public List<ReportActivistUser> ActivistUserList()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec Activist", Activist);
-            if(reportActivistUsers == null)
+            if(reportActivistUsers.Count() != 0)
+            {
+                reportActivistUsers.Clear();
+            }
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec Activist", Activist);
+            }
+            catch (Exception exc) 
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+                
+            }
+         
+            if(reportActivistUsers.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't report activist users",null,"Error");
             }
@@ -164,9 +216,23 @@ namespace PromotIt.DataToSql
 
         public List<CampaignReportGeneral> AllRegisteredCampaigns(string date)
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec AllCampaignsForOwner" + " " + "'" + date + "'", GeneralCampaigns);
+            if(generalCampaignReport.Count() != 0)
+            {
+                generalCampaignReport.Clear();
+            }
 
-            if(generalCampaignReport == null)
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec AllCampaignsForOwner" + " " + "'" + date + "'", GeneralCampaigns);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+
+            }
+       
+
+            if(generalCampaignReport.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't find campaigns for owner report",null,"Error");
             }
@@ -194,8 +260,24 @@ namespace PromotIt.DataToSql
 
         public List<CampaignReportDonationAndTweets> GetCampaignDonation(string date)
         {
+            if(campaignReportDonationOrTweets.Count() != 0)
+            {
+                campaignReportDonationOrTweets.Clear();
+            }
+
             determineDonationOrTweets = 1;
-            SqlQuery.GetAllInforamtionInSqlTable("exec getDonationAmountOfCampaigns" + " " + "'" + date + "'" , DonationAmountOfCampaignsOrNumberOfTweets);
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec getDonationAmountOfCampaigns" + " " + "'" + date + "'", DonationAmountOfCampaignsOrNumberOfTweets);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+
+            }
+
+
             return campaignReportDonationOrTweets;
         }
 
@@ -206,7 +288,7 @@ namespace PromotIt.DataToSql
             {
                 CampaignReportDonationAndTweets campaigns = new CampaignReportDonationAndTweets();
 
-                if(determineDonationOrTweets ==1)
+                if(determineDonationOrTweets == 1)
                 {
                     campaigns.date = (reader.GetDateTime(0)).ToString();
                     campaigns.name = reader.GetString(1);
@@ -229,8 +311,24 @@ namespace PromotIt.DataToSql
 
         public List<CampaignReportDonationAndTweets> TweetsAboutCampaigns(string date)
         {
-            determineDonationOrTweets = 2;
-            SqlQuery.GetAllInforamtionInSqlTable("exec getTweetsOfCampaigns" + " " + "'" +  date + "'", DonationAmountOfCampaignsOrNumberOfTweets);
+            if(campaignReportDonationOrTweets.Count() != 0)
+            {
+                campaignReportDonationOrTweets.Clear();
+            }
+
+            try
+            {
+                determineDonationOrTweets = 2;
+                SqlQuery.GetAllInforamtionInSqlTable("exec getTweetsOfCampaigns" + " " + "'" + date + "'", DonationAmountOfCampaignsOrNumberOfTweets);
+            }
+            catch (Exception exc)
+            {
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+                
+            }
+
+            
+            
             return campaignReportDonationOrTweets;
         }
     }

@@ -46,9 +46,23 @@ namespace PromotIt.DataToSql
 
         public List<PersonalCampagin> GetListOfCampaigns()
         {
-            SqlQuery.GetAllInforamtionInSqlTable("select CampaginName,CampaginWebsite,CampaginHashtag,CampaignsID from Campaigns where isActive = 1 ", CreateListOfCampaignsForBusiness);
+            if (campaignsForBusiness.Count() != 0)
+            {
+                campaignsForBusiness.Clear();
+            }
 
-            if(campaignsForBusiness == null)
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("select CampaginName,CampaginWebsite,CampaginHashtag,CampaignsID from Campaigns where isActive = 1 ", CreateListOfCampaignsForBusiness);
+            }
+            catch (Exception ex)
+            {
+                Log.AddLogItemToQueue(ex.Message, ex, "Exception");
+                
+            }
+
+            
+            if(campaignsForBusiness.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't find list of personal campaigns for business user",null,"Error");
             }
@@ -96,9 +110,24 @@ namespace PromotIt.DataToSql
 
         public List<Product> GetListOfProductsToSpecificCampaign(int Id,string email)
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec GetProductsThatBelongToMe" +" "+ Id +"," + "'" + email + "'", CreateListOfCampaignProducts);
+            if (listOfProducts.Count() != 0)
+            {
+                listOfProducts.Clear();
+            }
 
-            if(listOfProducts == null)
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec GetProductsThatBelongToMe" + " " + Id + "," + "'" + email + "'", CreateListOfCampaignProducts);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
+
+            if(listOfProducts.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't find list of personal donated products",null,"Error");
             }
@@ -108,10 +137,25 @@ namespace PromotIt.DataToSql
 
         public List<Product> GetListOfProducts(int ID)
         {
-            // Get list of all donated products
-            SqlQuery.GetAllInforamtionInSqlTable("select ProductName,UnitPrice,UnitsInStock,CampaignID,ImageURL from Products where CampaignID = " + ID, CreateListOfCampaignProducts);
 
-            if(listOfProducts == null)
+            if(listOfProducts.Count() != 0)
+            {
+                listOfProducts.Clear();
+            }
+
+            try
+            {
+                // Get list of all donated products
+                SqlQuery.GetAllInforamtionInSqlTable("select ProductName,UnitPrice,UnitsInStock,CampaignID,ImageURL from Products where CampaignID = " + ID, CreateListOfCampaignProducts);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+
+            
+            if(listOfProducts.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't find list of all products donated by business representative",null,"Error");
             }
@@ -145,8 +189,23 @@ namespace PromotIt.DataToSql
         }
         public List<OrdersToConfirm> GetListOfPersonalOrders(string email)
         {
-            SqlQuery.GetAllInforamtionInSqlTable("exec GetOrdersThatBelongToMe" + " " + "'" + email + "'", CreateListOfOrdersToConfirm);
-            if(listOfOrdersToConfirm == null)
+            if (listOfOrdersToConfirm.Count() != 0)
+            {
+                listOfOrdersToConfirm.Clear();
+            }
+
+            try
+            {
+                SqlQuery.GetAllInforamtionInSqlTable("exec GetOrdersThatBelongToMe" + " " + "'" + email + "'", CreateListOfOrdersToConfirm);
+            }
+            catch (Exception exc)
+            {
+
+                Log.AddLogItemToQueue(exc.Message, exc, "Exception");
+            }
+      
+
+            if(listOfOrdersToConfirm.Count == 0)
             {
                 Log.AddLogItemToQueue("Can't find list of orders by users that purchase a product",null,"Error");
             }

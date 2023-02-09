@@ -56,7 +56,7 @@ namespace PersonalUtilities
 
                 if (!File.Exists(fullFileName))
                 {
-                    
+
                     File.Create(fullFileName).Close();
                     return;
                 }

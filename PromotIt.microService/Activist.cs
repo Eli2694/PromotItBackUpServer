@@ -25,12 +25,12 @@ namespace PromotIt.microService
 {
     public class Activist
     {
+
+
         [FunctionName("TwitterActivist")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete","put", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4)
         {
-
-            LogManager logManager = new LogManager();
 
             switch (action)
             {
@@ -42,7 +42,7 @@ namespace PromotIt.microService
                         var json = MainManager.Instance.ActivistControl.SearchTwitterId(param);
                         if(json == null)
                         {
-                            logManager.AddLogItemToQueue("Twitter user was not found",null,"Error");
+                            //logManager.AddLogItemToQueue("Twitter user was not found",null,"Error");
                             return new NotFoundResult();
                         }
                         else
@@ -53,7 +53,7 @@ namespace PromotIt.microService
                     }                   
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message, ex,"Exception");
+                        //logManager.AddLogItemToQueue(ex.Message, ex,"Exception");
                         
                     }
                     break;
@@ -69,7 +69,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue("Problam in inserting to database User id,Twitter Username,campaign id and zero number of tweets", ex,"Exception");
+                        //logManager.AddLogItemToQueue("Problam in inserting to database User id,Twitter Username,campaign id and zero number of tweets", ex,"Exception");
                     }
                     break;
                 case "INITIATEPOINTS":
@@ -85,7 +85,7 @@ namespace PromotIt.microService
                     catch (Exception ex)
                     {
 
-                        logManager.AddLogItemToQueue(ex.Message + "," + "Problam Initiate Activist Points", ex,"Exception");
+                        //logManager.AddLogItemToQueue(ex.Message + "," + "Problam Initiate Activist Points", ex,"Exception");
                     }
                     break;
                 case "GETPOINTS":
@@ -100,7 +100,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        //logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
                 case "DROPOINTS":
@@ -115,7 +115,7 @@ namespace PromotIt.microService
                     }
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        //logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
                 case "TWITTERMESSAGE":
@@ -124,12 +124,12 @@ namespace PromotIt.microService
                         //After buying a product using points,The site will post a notice about it
 
                         MainManager.Instance.ActivistControl.SendMessageInTwitter(param,param2);
-                        logManager.AddLogItemToQueue("Purchase Product With Twitter Points",null, "Event");
+                        //logManager.AddLogItemToQueue("Purchase Product With Twitter Points",null, "Event");
 
                     }     
                     catch (Exception ex)
                     {
-                        logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
+                        //logManager.AddLogItemToQueue(ex.Message, ex, "Exception");
                     }
                     break;
 
