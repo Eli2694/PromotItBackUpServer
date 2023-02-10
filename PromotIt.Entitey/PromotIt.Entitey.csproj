@@ -238,12 +238,17 @@
   <ItemGroup>
     <Compile Include="ActivistControl.cs" />
     <Compile Include="AssociationControl.cs" />
+    <Compile Include="azureCommands\Campaigns\AddCampaign.cs" />
+    <Compile Include="azureCommands\Campaigns\CampaginDonationAmount.cs" />
+    <Compile Include="azureCommands\Campaigns\DeleteOrDeactivateCampagin.cs" />
+    <Compile Include="azureCommands\Campaigns\GetCampaignID.cs" />
+    <Compile Include="azureCommands\Campaigns\GetPersonalCampaign.cs" />
+    <Compile Include="azureCommands\Campaigns\UpdateCampagin.cs" />
     <Compile Include="Base\BaseEntity.cs" />
     <Compile Include="Base\BasePromotionSystem.cs" />
     <Compile Include="BusinessControl.cs" />
     <Compile Include="CampaignControl.cs" />
-    <Compile Include="Command\CommandManager.cs" />
-    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="azureCommands\CommandManager.cs" />
     <Compile Include="MainManager.cs" />
     <Compile Include="OwnerControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

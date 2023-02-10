@@ -32,7 +32,8 @@ namespace PromotIt.Entitey
 
             Target(LogProvider.File);
             Log = new LogManager();
-            
+
+    
             userControl = new UserControl(Log);
             AssociationControl = new AssociationControl(Log);
             CampaignControl = new CampaignControl(Log);
