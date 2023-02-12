@@ -23,10 +23,24 @@ namespace PromotIt.microService
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = "Users/{action}/{param?}/{param2?}")] HttpRequest req, string action, string param,string param2)
         {
-           
 
+
+            string dictionaryKey = "Users." + action;
             string requestBody;
 
+            ICommand commmand = MainManager.Instance.CommandManager.CommandList[dictionaryKey];
+            if (commmand != null)
+            {
+                requestBody = await req.ReadAsStringAsync();
+                return new OkObjectResult(commmand.ExecuteCommand(param, param2, requestBody));
+            }
+            else
+            {
+                MainManager.Instance.Log.AddLogItemToQueue("Value In Command List Was Not Found", null, "Error");
+                return new BadRequestObjectResult("Problam Was Found");
+            }
+
+            /*
             switch (action)
             {
                 case "Order":
@@ -173,6 +187,8 @@ namespace PromotIt.microService
 
 
             return new OkObjectResult("Did not enter switch case");
+
+            */
         }
     }
 }

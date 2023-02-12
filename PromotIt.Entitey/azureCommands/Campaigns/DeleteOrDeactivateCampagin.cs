@@ -8,7 +8,7 @@ using Tweetinvi.Core.Events;
 
 namespace PromotIt.Entitey.azureCommands.Campaigns
 {
-    public class DeleteOrDeactivateCampagin : CommandManager, ICommand
+    public class DeleteOrDeactivateCampagin : ICommand
     {
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
         {
@@ -25,14 +25,14 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
                 {
                     MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to delete campaign from database", ex, "Exception");
 
-                    return "Faild Request";
+                    return "Failed Request";
                 }
             }
             else
             {
                 MainManager.Instance.Log.AddLogItemToQueue("Id Parameter was not found in DeleteOrDeactivateCampagin class", null, "Error");
 
-                return "Faild Request";
+                return "Failed Request";
 
             }
 

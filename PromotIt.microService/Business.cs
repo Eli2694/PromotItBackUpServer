@@ -25,8 +25,22 @@ namespace PromotIt.microService
         {
 
 
+            string dictionaryKey = "Business." + action;
             string requestBody;
 
+            ICommand commmand = MainManager.Instance.CommandManager.CommandList[dictionaryKey];
+            if (commmand != null)
+            {
+                requestBody = await req.ReadAsStringAsync();
+                return new OkObjectResult(commmand.ExecuteCommand(param, param2, requestBody));
+            }
+            else
+            {
+                MainManager.Instance.Log.AddLogItemToQueue("Value In Command List Was Not Found", null, "Error");
+                return new BadRequestObjectResult("Problam Was Found");
+            }
+
+            /*
             switch (action)
             {
                 case "Donate":
@@ -255,6 +269,8 @@ namespace PromotIt.microService
 
 
             return new OkObjectResult("");
+
+            */
         }
     }
 }

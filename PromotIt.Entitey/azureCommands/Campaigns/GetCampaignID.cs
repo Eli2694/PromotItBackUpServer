@@ -9,7 +9,7 @@ using Tweetinvi.Core.Events;
 
 namespace PromotIt.Entitey.azureCommands.Campaigns
 {
-    public class GetCampaignID :CommandManager,ICommand
+    public class GetCampaignID : ICommand
     {
 
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
@@ -29,14 +29,14 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
                 {
                     MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get campaign id", ex, "Exception");
 
-                    return "Faild Request";
+                    return "Failed Request";
                 }
             }
             else
             {
                 MainManager.Instance.Log.AddLogItemToQueue("ID Parameter was not found in GetCampaignID class", null, "Error");
 
-                return "Faild Request";
+                return "Failed Request";
             }
 
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey.azureCommands.Campaigns
 {
-    public class UpdateCampagin :CommandManager,ICommand
+    public class UpdateCampagin : ICommand
     {
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
         {
@@ -37,7 +37,7 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
                     {
                         MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to update campaign information in database", ex, "Exception");
 
-                        return "Faild Request";
+                        return "Failed Request";
                     }
                 }
             }
@@ -45,7 +45,7 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
             {
                 MainManager.Instance.Log.AddLogItemToQueue("Campaign Object Parameter was not found in UpdateCampagin class", null, "Error");
 
-                return "Faild Request";
+                return "Failed Request";
             }           
         }
     }

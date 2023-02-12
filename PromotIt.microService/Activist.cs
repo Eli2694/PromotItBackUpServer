@@ -32,6 +32,22 @@ namespace PromotIt.microService
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete","put", Route = "Activist/{action}/{param?}/{param2?}/{param3?}/{param4?}")] HttpRequest req, string action, string param, string param2,string param3,string param4)
         {
 
+            string dictionaryKey = "Activist." + action;
+            string requestBody;
+
+            ICommand commmand = MainManager.Instance.CommandManager.CommandList[dictionaryKey];
+            if (commmand != null)
+            {
+                requestBody = await req.ReadAsStringAsync();
+                return new OkObjectResult(commmand.ExecuteCommand(param, param2,param3,param4, requestBody));
+            }
+            else
+            {
+                MainManager.Instance.Log.AddLogItemToQueue("Value In Command List Was Not Found", null, "Error");
+                return new BadRequestObjectResult("Problam Was Found");
+            }
+
+            /*
             switch (action)
             {
                 
@@ -139,6 +155,8 @@ namespace PromotIt.microService
 
             
             return new OkObjectResult("");
+
+            */
         }
     }
 }

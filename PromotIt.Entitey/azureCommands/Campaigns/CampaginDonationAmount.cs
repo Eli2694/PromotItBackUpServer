@@ -8,7 +8,7 @@ using Tweetinvi.Core.Events;
 
 namespace PromotIt.Entitey.azureCommands.Campaigns
 {
-    public class CampaginDonationAmount : CommandManager,ICommand
+    public class CampaginDonationAmount : ICommand
     {
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
         {
@@ -25,14 +25,14 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
                 {
                     MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to update donation amount of campaign", ex, "Exception");
 
-                    return "Faild Request";
+                    return "Failed Request";
                 }
             }
             else
             {
                 MainManager.Instance.Log.AddLogItemToQueue("CampaignId Or UnitPrice Parameters were not found in CampaginDonationAmount class", null, "Error");
 
-                return "Faild Request";
+                return "Failed Request";
             }
 
         }

@@ -24,8 +24,6 @@ namespace PromotIt.microService
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
 
- 
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Model.Users user = new Model.Users();
             user = JsonSerializer.Deserialize<Model.Users>(requestBody);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey.azureCommands.Campaigns
 {
-    public class AddCampaign : CommandManager, ICommand
+    public class AddCampaign : ICommand
     {
         //
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
@@ -41,7 +41,7 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
 
                         MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to insert information into DB", ex, "Exception");
 
-                        return "Faild Response";
+                        return "Failed Request";
                     }
 
                 }
@@ -50,7 +50,7 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
             {
                 MainManager.Instance.Log.AddLogItemToQueue("Register campaign information into DB is faild - object not found", null, "Error");
 
-                return "Faild Response";
+                return "Failed Request";
             }
             
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PromotIt.Entitey.azureCommands.Campaigns
 {
-    public class GetPersonalCampaign : CommandManager,ICommand
+    public class GetPersonalCampaign : ICommand
     {
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
         {
@@ -29,14 +29,14 @@ namespace PromotIt.Entitey.azureCommands.Campaigns
                 {
                     MainManager.Instance.Log.AddLogItemToQueue(ex.Message + "," + "faild to get personal campaigns from database", ex, "Exception");
 
-                    return "Faild Request";
+                    return "Failed Request";
                 }
             }
             else
             {
                 MainManager.Instance.Log.AddLogItemToQueue("Email Parameter was not found in GetPersonalCampagin class", null, "Error");
 
-                return "Faild Request";
+                return "Failed Request";
             }
 
         }
