@@ -24,8 +24,8 @@ namespace PromotIt.microService
              string userId)
         {
 
+            var urlGetRoles = string.Format(Environment.GetEnvironmentVariable("urlGetRoles"), userId);
 
-            var urlGetRoles = $"https://dev-b5tr58oncnfs4qwo.us.auth0.com/api/v2/users/{userId}/roles";
 
             var client = new RestClient(urlGetRoles);
             var request = new RestRequest("", Method.Get);
