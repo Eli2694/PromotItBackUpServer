@@ -1,10 +1,11 @@
-C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.csproj.AssemblyReference.cache
-C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\PromotIt\PersonalUtilities\bin\Debug\PersonalUtilities.dll.config
 C:\Users\User\source\repos\PromotIt\PersonalUtilities\bin\Debug\PersonalUtilities.dll
 C:\Users\User\source\repos\PromotIt\PersonalUtilities\bin\Debug\PersonalUtilities.pdb
-C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.dll
-C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.pdb
 C:\Users\User\source\repos\PromotIt\PersonalUtilities\bin\Debug\PromotIt.DataLayer.dll
 C:\Users\User\source\repos\PromotIt\PersonalUtilities\bin\Debug\PromotIt.DataLayer.pdb
 C:\Users\User\source\repos\PromotIt\PersonalUtilities\bin\Debug\PromotIt.DataLayer.dll.config
+C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.csproj.CopyComplete
+C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.dll
+C:\Users\User\source\repos\PromotIt\PersonalUtilities\obj\Debug\PersonalUtilities.pdb

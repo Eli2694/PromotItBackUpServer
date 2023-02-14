@@ -11,9 +11,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.Json;
-using PersonalUtilities;
 
+using PersonalUtilities;
+using System.Text.Json;
 
 namespace PromotIt.microService
 {

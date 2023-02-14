@@ -22,6 +22,7 @@ namespace PersonalUtilities
       
         public void Log(LogItem item)
         {
+            if (item == null) return;
 
             using (StreamWriter streamWriter = new StreamWriter(fullFileName,true))
             {

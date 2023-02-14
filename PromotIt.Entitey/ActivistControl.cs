@@ -75,7 +75,7 @@ namespace PromotIt.Entitey
         {
             try
             {
-                var urlUsername = "https://api.twitter.com/2/users/by?usernames=param";
+                var urlUsername = Environment.GetEnvironmentVariable("urlUsername");
                 urlUsername = urlUsername.Replace("param", username);
                 //DataActivist keys= new DataActivist();
                 twitterKeysAndTokens = activist.GetKeys();
@@ -123,15 +123,6 @@ namespace PromotIt.Entitey
                     DateTime LastTweetDate = activist.GetLastTweetDay();
                     LastTweetDate = LastTweetDate.AddMinutes(1);
 
-                    //if (LastTweetDay.AddDays(7) < DateTime.Now)
-                    //{
-                    //    TwitterStartSearchData = DateTime.Now.AddDays(-7).ToString("yyyy-MM-ddTHH:mm");
-                    //}
-                    //else
-                    //{
-                    //    TwitterStartSearchData = LastTweetDay.ToString("yyyy-MM-ddTHH:mm");
-                    //}
-
                     TwitterStartSearchData = LastTweetDate.ToString("yyyy-MM-ddTHH:mm");
 
                     foreach (TwitterCmpaignPromotion twitter in CampaignsAndTwitterUserName)
@@ -141,8 +132,8 @@ namespace PromotIt.Entitey
                         int endIndex = twitter.website.IndexOf("/", startIndex);
                         string host = twitter.website.Substring(startIndex, endIndex - startIndex);
 
-                        string urlTimeline = "https://api.twitter.com/2/tweets/search/recent?start_time={0}:00Z&query=from:{1} %23{2} url:{3} has:hashtags has:links &tweet.fields=created_at,referenced_tweets&max_results=100";
-                        string urlTimelineOutput = String.Format(urlTimeline, TwitterStartSearchData, twitter.twitterUserName, twitter.hashtag, host);
+                        string urlSearchTweets = Environment.GetEnvironmentVariable("urlSearchTweets");
+                        string urlTimelineOutput = String.Format(urlSearchTweets, TwitterStartSearchData, twitter.twitterUserName, twitter.hashtag, host);
 
                         var client = new RestClient(urlTimelineOutput);
                         var request = new RestRequest("", Method.Get);

@@ -154,6 +154,7 @@ namespace PromotIt.DataToSql
         public void TwitterKeysFromDB(SqlDataReader reader)
         {
             int countRowsInDatabase = 0;
+
             while (reader.Read())
             {
                 if(countRowsInDatabase == 0)

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
 
 
 namespace PromotIt.DataLayer
@@ -13,9 +13,20 @@ namespace PromotIt.DataLayer
     public class SqlQuery
     {
 
+       
+
+        public SqlQuery()
+        {
+            
+        }
+
         //Global ConnectionString 
-        static string  connectionString = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=PromotIt;Data Source=localhost\sqlexpress";
-        
+
+
+        public static string connectionString = Environment.GetEnvironmentVariable("connectionString");
+
+
+
         public static void InsertInfoToTableInSql(string SqlQuery)
         {
             

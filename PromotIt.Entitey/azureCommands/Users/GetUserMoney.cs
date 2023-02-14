@@ -12,7 +12,7 @@ namespace PromotIt.Entitey.azureCommands.Users
     {
         public object ExecuteCommand(params object[] param) // param,param2, requestBody
         {
-            if (param[0] != null && param[1] != null)
+            if (param[0] != null )
             {
                 try
                 {

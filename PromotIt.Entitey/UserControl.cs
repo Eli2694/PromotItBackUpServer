@@ -32,7 +32,7 @@ namespace PromotIt.Entitey
             catch (Exception ex)
             {
 
-                Console.WriteLine(ex.Message);
+                Log.AddLogItemToQueue(ex.Message, ex, "exception");
             }
             
         }

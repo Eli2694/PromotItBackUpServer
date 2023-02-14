@@ -19,6 +19,6 @@ namespace PromotIt.Model
 
         public string accessTokenSecret { get; set; }
 
-        
+
     }
 }
