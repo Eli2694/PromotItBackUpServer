@@ -26,7 +26,6 @@ namespace PromotIt.microService
 
             var urlGetRoles = string.Format(Environment.GetEnvironmentVariable("urlGetRoles"), userId);
 
-
             var client = new RestClient(urlGetRoles);
             var request = new RestRequest("", Method.Get);
             request.AddHeader("authorization", Environment.GetEnvironmentVariable("Auth0Services"));
